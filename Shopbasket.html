@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlTag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السلة - Nova Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --main-bg: #0d1117; --neon-blue: #00d4ff; --gold: #ffcc00; --card-bg: #161b22; --red: #ff4b4b; }
+        body { margin: 0; padding: 0; background-color: var(--main-bg); font-family: 'Tajawal', sans-serif; color: white; min-height: 100vh; transition: 0.3s; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 4%; background: #0d1117; border-bottom: 2px solid var(--neon-blue); position: sticky; top: 0; z-index: 1000; }
+        .nav-controls { display: flex; gap: 10px; align-items: center; }
+        .pill-select { background: #21262d; border: 1px solid #30363d; border-radius: 15px; padding: 5px 10px; color: white; cursor: pointer; font-size: 11px; outline: none; }
+
+        .container { padding: 20px 4%; max-width: 800px; margin: auto; }
+        .cart-title { color: var(--gold); border-right: 4px solid var(--neon-blue); padding-right: 15px; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+
+        .cart-item { background: var(--card-bg); border-radius: 12px; border: 1px solid #30363d; display: flex; align-items: center; padding: 15px; margin-bottom: 15px; animation: fadeIn 0.3s ease; }
+        .item-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; border: 1px solid var(--neon-blue); background: #000; }
+        .item-details { flex-grow: 1; margin-right: 15px; }
+        .item-name { font-weight: bold; font-size: 15px; margin-bottom: 5px; }
+        .item-price { color: var(--gold); font-weight: bold; font-size: 14px; }
+        .remove-btn { background: none; border: none; color: var(--red); cursor: pointer; font-size: 18px; padding: 10px; transition: 0.3s; }
+        .remove-btn:hover { color: #ff0000; transform: scale(1.1); }
+
+        .summary-box { background: #161b22; border: 2px solid var(--neon-blue); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .total-text { font-size: 20px; font-weight: bold; color: var(--gold); margin-top: 10px; }
+        .instruction-box { background: rgba(0, 212, 255, 0.05); border: 1px dashed var(--neon-blue); border-radius: 10px; padding: 15px; font-size: 13px; line-height: 1.6; color: #c9d1d9; margin-bottom: 20px; }
+
+        #checkoutSection { display: none; margin-top: 30px; animation: slideUp 0.4s ease; }
+        .method-card { display: flex; align-items: center; background: #21262d; border: 1.5px solid #30363d; padding: 15px; border-radius: 12px; text-decoration: none; color: white; margin-bottom: 12px; transition: 0.2s; }
+        .method-card:hover { border-color: var(--neon-blue); background: #262c36; }
+        .method-card i { font-size: 22px; margin-left: 15px; width: 25px; text-align: center; }
+        
+        .btn-main { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; border: none; width: 100%; font-size: 16px; font-family: 'Tajawal'; transition: 0.3s; margin-bottom: 10px; }
+        .btn-checkout { background: var(--gold); color: black; }
+        .btn-back { background: transparent; color: white; border: 1px solid #30363d; }
+        .btn-main:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        /* صورة الدفع في السلة */
+        .payment-img-cart { height: 100px; width: auto; margin-top: 30px; filter: grayscale(10%); }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        [dir="ltr"] .item-details { margin-right: 0; margin-left: 15px; }
+        [dir="ltr"] .cart-title { border-right: none; border-left: 4px solid var(--neon-blue); padding-right: 0; padding-left: 15px; }
+        [dir="ltr"] .method-card i { margin-left: 0; margin-right: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div onclick="goBack()" style="font-size: 20px; cursor: pointer; color: var(--neon-blue);">
+            <i class="fas fa-chevron-right" id="backIcon"></i>
+        </div>
+        <div class="nav-controls">
+            <select class="pill-select" id="lang" onchange="changeLanguage()">
+                <option value="ar">العربية (AR)</option>
+                <option value="en">English (EN)</option>
+            </select>
+            <select class="pill-select" id="currency" onchange="changeCurrency()">
+                <option value="USD">دولار (USD $)</option>
+                <option value="EUR">يورو (EUR €)</option>
+                <option value="SAR">ريال سعودي (SAR)</option>
+                <option value="AED">درهم إماراتي (AED)</option>
+                <option value="QAR">ريال قطري (QAR)</option>
+                <option value="BHD">دينار بحريني (BHD)</option>
+                <option value="OMR">ريال عماني (OMR)</option>
+                <option value="KWD">دينار كويتي (KWD)</option>
+                <option value="EGP">جنيه مصري (EGP)</option>
+                <option value="LYD">دينار ليبي (LYD)</option>
+                <option value="MAD">درهم مغربي (MAD)</option>
+            </select>
+        </div>
+        <img src="https://i.ibb.co/5xXyd4jN/1774783408791.png" height="35">
+    </div>
+
+    <div class="container">
+        <div id="mainCartUI">
+            <h2 class="cart-title" id="pageTitle">
+                <i class="fas fa-shopping-basket"></i> <span>سلة المشتريات</span>
+            </h2>
+            <div id="cartItemsList"></div>
+            <div id="emptyMsg" style="display:none; text-align:center; padding: 50px 0; color:#8b949e;">
+                <i class="fas fa-shopping-cart" style="font-size: 50px; display: block; margin-bottom: 15px;"></i>
+                <span id="emptyText"></span>
+            </div>
+
+            <div id="cartSummary" style="display:none;">
+                <div class="summary-box">
+                    <span id="totalLabel">الإجمالي النهائي:</span>
+                    <div class="total-text" id="totalPrice">0.00</div>
+                </div>
+                <div class="instruction-box" id="instructionBox"></div>
+                <button class="btn-main btn-checkout" onclick="showCheckoutOptions()">
+                    <span id="btnCheckoutText">إتمام الشراء</span> <i class="fas fa-check-circle"></i>
+                </button>
+                <button class="btn-main btn-back" onclick="goBack()">
+                    <span id="btnBackText">الرجوع للمتجر</span> <i class="fas fa-store"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="checkoutSection">
+            <h2 class="cart-title" id="checkoutTitle">إتمام الطلب</h2>
+            <div class="instruction-box" id="checkoutNote" style="background: rgba(255, 204, 0, 0.1); border-color: var(--gold);"></div>
+            <div class="contact-methods">
+                <a href="https://www.tiktok.com/@novastoreox" class="method-card" target="_blank">
+                    <i class="fab fa-tiktok"></i> <span id="tkText"></span>
+                </a>
+                <a href="https://wa.me/qr/RHBWYWDXBM2UI1" class="method-card" target="_blank">
+                    <i class="fab fa-whatsapp" style="color:#25d366;"></i> <span id="waText"></span>
+                </a>
+                <a href="https://t.me/Novastoreofficialx" class="method-card" target="_blank">
+                    <i class="fab fa-telegram" style="color:#229ED9;"></i> <span id="tgText"></span>
+                </a>
+                <a href="https://discord.gg/zaVYm4zD8X" class="method-card" target="_blank">
+                    <i class="fab fa-discord" style="color:#5865F2;"></i> <span id="dsText"></span>
+                </a>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <div id="finalNote" style="color: var(--gold); font-weight: bold; margin-bottom: 10px;"></div>
+                <img src="https://i.ibb.co/4ZtBWPKd/1777212162381.png" class="payment-img-cart">
+            </div>
+            <button class="btn-main btn-back" style="margin-top: 20px;" onclick="hideCheckoutOptions()">
+                <i class="fas fa-edit"></i> <span id="btnReturnText">العودة لتعديل السلة</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const rates = { 'USD': 1, 'EUR': 0.93, 'SAR': 3.75, 'AED': 3.6725, 'QAR': 3.64, 'BHD': 0.376, 'OMR': 0.3845, 'KWD': 0.31, 'EGP': 52.63, 'LYD': 8, 'MAD': 10 };
+
+        function changeLanguage() {
+            localStorage.setItem('selectedLang', document.getElementById('lang').value);
+            renderCart();
+        }
+
+        function changeCurrency() {
+            const curr = document.getElementById('currency').value;
+            localStorage.setItem('selectedCurrency', curr);
+            localStorage.setItem('exchangeRate', rates[curr]);
+            renderCart();
+        }
+
+        function renderCart() {
+            const lang = localStorage.getItem('selectedLang') || 'ar';
+            const curr = localStorage.getItem('selectedCurrency') || 'USD';
+            const rate = rates[curr];
+            
+            document.getElementById('lang').value = lang;
+            document.getElementById('currency').value = curr;
+            
+            const html = document.getElementById('htmlTag');
+            const cart = JSON.parse(localStorage.getItem('nova_cart')) || [];
+            
+            html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('backIcon').className = lang === 'ar' ? 'fas fa-chevron-right' : 'fas fa-chevron-left';
+
+            // ترجمة النصوص
+            document.getElementById('pageTitle').querySelector('span').innerText = lang === 'ar' ? "سلة المشتريات" : "Shopping Cart";
+            document.getElementById('totalLabel').innerText = lang === 'ar' ? "الإجمالي النهائي:" : "Final Total:";
+            document.getElementById('btnCheckoutText').innerText = lang === 'ar' ? "إتمام الشراء" : "Checkout";
+            document.getElementById('btnBackText').innerText = lang === 'ar' ? "الرجوع للمتجر" : "Back to Store";
+            document.getElementById('emptyText').innerText = lang === 'ar' ? "السلة فارغة حالياً.." : "The cart is empty..";
+            document.getElementById('checkoutTitle').innerText = lang === 'ar' ? "إتمام الطلب" : "Complete Order";
+            document.getElementById('tkText').innerText = lang === 'ar' ? "إتمام الطلب عبر تيك توك" : "Order via TikTok";
+            document.getElementById('waText').innerText = lang === 'ar' ? "إتمام الطلب عبر واتساب" : "Order via WhatsApp";
+            document.getElementById('tgText').innerText = lang === 'ar' ? "إتمام الطلب عبر تيلجرام" : "Order via Telegram";
+            document.getElementById('dsText').innerText = lang === 'ar' ? "إتمام الطلب عبر ديسكورد" : "Order via Discord";
+            document.getElementById('finalNote').innerText = lang === 'ar' ? "اختار اي وسيلة و خبرنا وش ناوي تشتري من عندنا!" : "Choose a method and let us know what you want!";
+            document.getElementById('btnReturnText').innerText = lang === 'ar' ? "العودة لتعديل السلة" : "Return to Edit Cart";
+            
+            document.getElementById('instructionBox').innerHTML = lang === 'ar' ? 
+                `<strong>ملاحظة مهمة:</strong> 1. قم بعمل لقطة شاشة لهذه الصفحة. <br> 2. انقر على إتمام الشراء وارسلها لنا عبر وسيلة التواصل.` :
+                `<strong>Note:</strong> 1. Take a screenshot. <br> 2. Click checkout and send it to us.`;
+
+            document.getElementById('checkoutNote').innerText = lang === 'ar' ? "تعاملاتنا يدوية لضمان الأمان، اختر وسيلة تواصل وسنرسل لك رابط الدفع." : "Manual payments for safety. Choose a contact method.";
+
+            const listDiv = document.getElementById('cartItemsList');
+            const summaryDiv = document.getElementById('cartSummary');
+            const emptyMsg = document.getElementById('emptyMsg');
+
+            if (cart.length === 0) {
+                listDiv.innerHTML = ''; summaryDiv.style.display = 'none'; emptyMsg.style.display = 'block';
+                return;
+            }
+
+            emptyMsg.style.display = 'none'; summaryDiv.style.display = 'block'; listDiv.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const p = (item.price * rate).toFixed(2);
+                total += (item.price * rate);
+                listDiv.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.img || 'https://i.ibb.co/5xXyd4jN/1774783408791.png'}" class="item-img">
+                        <div class="item-details">
+                            <div class="item-name">${item.name}</div>
+                            <span class="item-price">${p} ${curr}</span>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(${index})"><i class="fas fa-trash-alt"></i></button>
+                    </div>`;
+            });
+            document.getElementById('totalPrice').innerText = `${total.toFixed(2)} ${curr}`;
+        }
+
+        function removeItem(i) {
+            let cart = JSON.parse(localStorage.getItem('nova_cart')) || [];
+            cart.splice(i, 1);
+            localStorage.setItem('nova_cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function showCheckoutOptions() {
+            document.getElementById('mainCartUI').style.display = 'none';
+            document.getElementById('checkoutSection').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function hideCheckoutOptions() {
+            document.getElementById('mainCartUI').style.display = 'block';
+            document.getElementById('checkoutSection').style.display = 'none';
+        }
+
+        function goBack() {
+            if(document.getElementById('checkoutSection').style.display === 'block') {
+                hideCheckoutOptions();
+            } else {
+                history.back();
+            }
+        }
+
+        window.onload = function() {
+            const savedLang = localStorage.getItem('selectedLang');
+            const savedCurrency = localStorage.getItem('selectedCurrency');
+            if(savedLang) document.getElementById('lang').value = savedLang;
+            if(savedCurrency) document.getElementById('currency').value = savedCurrency;
+            renderCart();
+        };
+    </script>
+</body>
+</html>

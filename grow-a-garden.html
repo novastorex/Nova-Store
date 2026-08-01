@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlTag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قريباً - Nova Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --main-bg: #0d1117; --neon-blue: #00d4ff; --gold: #ffcc00; --card-bg: #161b22; --text-gray: #8b949e; }
+        body { margin: 0; padding: 0; background-color: var(--main-bg); font-family: 'Tajawal', sans-serif; color: white; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 4%; background: #0d1117; border-bottom: 2px solid var(--neon-blue); position: sticky; top: 0; z-index: 1000; }
+        .pill-select { background: #21262d; border: 1px solid #30363d; border-radius: 15px; padding: 5px 10px; color: white; cursor: pointer; outline: none; }
+
+        .container { padding: 60px 5%; max-width: 600px; margin: auto; text-align: center; flex-grow: 1; }
+        
+        .icon-box { font-size: 60px; color: var(--gold); margin-bottom: 20px; animation: pulse 2s infinite; }
+        
+        .message-box h1 { font-size: 24px; color: var(--neon-blue); margin-bottom: 15px; }
+        .message-box p { color: var(--text-gray); font-size: 16px; line-height: 1.6; margin-bottom: 40px; }
+
+        .nav-options { display: flex; flex-direction: column; gap: 15px; }
+        
+        .nav-btn { display: flex; align-items: center; justify-content: center; gap: 15px; background: var(--card-bg); border: 1px solid #30363d; padding: 18px; border-radius: 15px; text-decoration: none; color: white; font-weight: bold; transition: 0.3s; }
+        .nav-btn:hover { border-color: var(--neon-blue); transform: translateX(-5px); background: #1c2128; }
+        [dir="ltr"] .nav-btn:hover { transform: translateX(5px); }
+
+        .nav-btn i { font-size: 20px; color: var(--gold); }
+        .btn-home { margin-top: 20px; background: transparent; border-color: var(--text-gray); color: var(--text-gray); font-size: 14px; }
+        .btn-home:hover { border-color: white; color: white; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div onclick="history.back()" style="font-size: 20px; cursor: pointer;">🔙</div>
+        <select class="pill-select" id="lang" onchange="updateLang()">
+            <option value="ar">العربية</option>
+            <option value="en">English</option>
+        </select>
+        <img src="https://i.ibb.co/5xXyd4jN/1774783408791.png" height="35">
+    </div>
+
+    <div class="container">
+        <div class="icon-box">
+            <i class="fas fa-tools"></i>
+        </div>
+
+        <div class="message-box">
+            <h1 id="msgTitle">نعمل على التحديث..</h1>
+            <p id="msgText">عذراً، مازلنا نعمل على إضافة منتجات لهذا الماب. حالياً يمكنك الإطلاع على باقي المابات المتوفرة لدينا:</p>
+        </div>
+
+        <div class="nav-options">
+            <a href="robux.html" class="nav-btn">
+                <i class="fas fa-coins"></i>
+                <span id="btnRobux">قسم الروبوكس (Robux)</span>
+            </a>
+
+            <a href="bloxfruits.html" class="nav-btn">
+                <i class="fas fa-sword"></i>
+                <span id="btnBlox">قسم بلوكس فروت (Blox Fruits)</span>
+            </a>
+
+            <a href="index.html" class="nav-btn btn-home">
+                <i class="fas fa-home"></i>
+                <span id="btnHome">العودة للصفحة الرئيسية</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function updateLang() {
+            const lang = document.getElementById('lang').value;
+            const html = document.getElementById('htmlTag');
+            
+            html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            html.lang = lang;
+
+            if (lang === 'en') {
+                document.getElementById('msgTitle').innerText = "Coming Soon..";
+                document.getElementById('msgText').innerText = "Sorry, we are still adding products for this map. For now, you can check our other available categories:";
+                document.getElementById('btnRobux').innerText = "Robux Section";
+                document.getElementById('btnBlox').innerText = "Blox Fruits Section";
+                document.getElementById('btnHome').innerText = "Back to Home Page";
+            } else {
+                document.getElementById('msgTitle').innerText = "نعمل على التحديث..";
+                document.getElementById('msgText').innerText = "عذراً، مازلنا نعمل على إضافة منتجات لهذا الماب. حالياً يمكنك الإطلاع على باقي المابات المتوفرة لدينا:";
+                document.getElementById('btnRobux').innerText = "قسم الروبوكس (Robux)";
+                document.getElementById('btnBlox').innerText = "قسم بلوكس فروت (Blox Fruits)";
+                document.getElementById('btnHome').innerText = "العودة للصفحة الرئيسية";
+            }
+        }
+    </script>
+</body>
+</html>

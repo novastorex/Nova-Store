@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Store | متجر نوفا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // تطبيق اللغة المحفوظة فوراً قبل رسم الصفحة لتجنب الوميض
+        (function() {
+            try {
+                const savedLang = localStorage.getItem('selectedLang');
+                const html = document.getElementById('mainHtml');
+                if (savedLang === 'en') {
+                    html.dir = "ltr"; html.lang = "en";
+                } else {
+                    html.dir = "rtl"; html.lang = "ar";
+                }
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        :root { --main-bg: #0d1117; --neon-blue: #00d4ff; --gold: #ffcc00; --card-bg: #161b22; }
+        body { margin: 0; padding: 0; background-color: var(--main-bg); font-family: 'Tajawal', sans-serif; color: white; overflow-x: hidden; transition: 0.3s; }
+
+        /* الهيدر المطور */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 3%; background: rgba(13, 17, 23, 0.98); border-bottom: 2px solid var(--neon-blue); position: sticky; top: 0; z-index: 1000; }
+        .controls-wrapper { display: flex; gap: 8px; align-items: center; }
+
+        .pill { display: flex; background: #21262d; border: 1px solid #30363d; border-radius: 20px; overflow: hidden; height: 35px; align-items: center; transition: 0.3s; }
+        .pill:hover { border-color: var(--neon-blue); }
+        .pill select { background: transparent; color: white; border: none; padding: 0 10px; font-family: 'Tajawal'; font-size: 11px; cursor: pointer; outline: none; }
+
+        .cart-link { text-decoration: none; display: flex; align-items: center; }
+        .cart-icon { position: relative; font-size: 22px; color: var(--gold); cursor: pointer; margin: 0 5px; transition: 0.3s; }
+        .cart-icon:hover { transform: scale(1.1); color: var(--neon-blue); }
+        .cart-count { position: absolute; top: -8px; right: -10px; background: #ff4d4d; color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; font-weight: bold; border: 1px solid white; }
+
+        .logo img { height: 45px; }
+        .menu-btn { font-size: 26px; color: var(--neon-blue); cursor: pointer; }
+
+        .banner-container { width: 100%; max-width: 1200px; margin: 15px auto; aspect-ratio: 16 / 9; overflow: hidden; display: flex; justify-content: center; }
+        .banner-container img { width: 100%; height: auto; object-fit: contain; }
+
+        .container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px 4%; }
+        @media (min-width: 768px) { .container { grid-template-columns: repeat(4, 1fr); gap: 25px; } }
+
+        .card { background: var(--card-bg); border-radius: 12px; border: 1px solid #30363d; text-align: center; transition: 0.4s; opacity: 0; position: relative; overflow: hidden; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .reveal { animation: fadeInUp 0.8s forwards; }
+
+        .card:hover { transform: translateY(-10px); border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0, 212, 255, 0.2); }
+        .card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+        .card h3 { font-size: 14px; margin: 12px 0; height: 30px; display: flex; align-items: center; justify-content: center; }
+        .btn { display: block; background: var(--gold); color: black; padding: 10px; margin: 0 12px 15px 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 12px; }
+
+        .side-menu { height: 100%; width: 0; position: fixed; z-index: 2000; top: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.4s; padding-top: 60px; border-left: 2px solid var(--neon-blue); }
+        .side-menu.right { right: 0; }
+        .side-menu.left { left: 0; border-left: none; border-right: 2px solid var(--neon-blue); }
+        .side-menu a { padding: 18px 25px; text-decoration: none; font-size: 17px; color: white; display: block; border-bottom: 1px solid #30363d; text-align: center; }
+        .closebtn { position: absolute; top: 10px; font-size: 35px; color: var(--neon-blue); cursor: pointer; }
+
+        /* تعديلات الفوتر وصورة الدفع */
+        .footer { background: #0d1117; border-top: 2px solid var(--neon-blue); padding: 30px 4%; text-align: center; margin-top: 40px; }
+        .footer-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 15px; }
+        .footer-links a { color: white; text-decoration: none; font-size: 14px; font-weight: bold; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .footer-links a i { color: var(--gold); }
+        .footer-links a:hover { color: var(--neon-blue); }
+
+        .payment-methods { margin: 30px auto; display: block; }
+        /* تم تكبير الصورة لتكون واضحة وجذابة */
+        .payment-methods img { height: 100px; width: auto; filter: grayscale(10%); transition: 0.3s; vertical-align: middle; }
+        .payment-methods img:hover { filter: grayscale(0%); }
+
+        .copyright { color: #8b949e; font-size: 11px; margin-top: 15px; }
+    </style>
+</head>
+<body id="bodyTag">
+
+    <div class="header">
+        <div class="menu-btn" onclick="openNav()">☰</div>
+
+        <div class="controls-wrapper">
+            <div class="pill">
+                <select id="langSelect" onchange="changeLanguage()">
+                    <option value="ar">العربية (AR)</option>
+                    <option value="en">English (EN)</option>
+                </select>
+            </div>
+            <div class="pill">
+                <select id="currencySelect" onchange="changeCurrency()">
+                    <option value="USD">دولار (USD $)</option>
+                    <option value="EUR">يورو (EUR €)</option>
+                    <option value="SAR">ريال سعودي (SAR)</option>
+                    <option value="AED">درهم إماراتي (AED)</option>
+                    <option value="QAR">ريال قطري (QAR)</option>
+                    <option value="BHD">دينار بحريني (BHD)</option>
+                    <option value="OMR">ريال عماني (OMR)</option>
+                    <option value="KWD">دينار كويتي (KWD)</option>
+                    <option value="EGP">جنيه مصري (EGP)</option>
+                    <option value="LYD">دينار ليبي (LYD)</option>
+                    <option value="MAD">درهم مغربي (MAD)</option>
+                </select>
+            </div>
+            <a href="Shopbasket.html" class="cart-link">
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="logo"><img src="https://i.ibb.co/5xXyd4jN/1774783408791.png" alt="Nova Store"></div>
+    </div>
+
+    <div id="mySidenav" class="side-menu right">
+        <span class="closebtn" id="closeBtn" style="left: 20px;" onclick="closeNav()">&times;</span>
+        <div id="sideLinks">
+            <a href="robux.html" data-ar="روبوكس" data-en="Robux">روبوكس</a>
+            <a href="blox-fruits.html" data-ar="بلوكس فروت" data-en="Blox Fruits">بلوكس فروت</a>
+            <a href="grow-a-garden-2.html" data-ar="ماب المزرعة 2" data-en="Grow a Garden 2">ماب المزرعة 2</a>
+            <a href="speed-keyboard-escape.html" data-ar="ماب الكيبورد" data-en="Speed keyboard escape">ماب الكيبورد</a>
+            <a href="mm2.html" data-ar="ماب mm2" data-en="Murder Mystery 2">ماب mm2</a>
+            <a href="steal-a-brainrot.html" data-ar="ماب السرقة" data-en="Steal a Brainrot">ماب السرقة</a>
+            <a href="escape-tsunami.html" data-ar="ماب التسونامي" data-en="Escape Tsunami">ماب التسونامي</a>
+            <a href="99-night.html" data-ar="ماب 99 ليلة" data-en="99 Night">ماب 99 ليلة</a>
+            <a href="grow-a-garden.html" data-ar="ماب المزرعة" data-en="Grow a Garden">ماب المزرعة</a>
+        </div>
+    </div>
+
+    <div class="banner-container reveal">
+        <img src="https://i.ibb.co/sdmTsnSS/20260329-202202.jpg" alt="Nova Store banner">
+    </div>
+
+    <!-- شبكة البطاقات: ترتيب الـ DOM (من اليمين لليسار في RTL) -->
+    <!-- صف 1: بلوكس فروت (يمين) | ماب المزرعة 2 (يسار) -->
+    <!-- صف 2: ماب الكيبورد (يمين) | ماب mm2 (يسار) -->
+    <!-- صف 3: ماب السرقة (يمين) | ماب التسونامي (يسار) -->
+    <!-- صف 4: ماب 99 ليلة (يمين) | ماب المزرعة (يسار) -->
+    <!-- صف 5: روبوكس (يمين) | مابات أخرى (يسار) -->
+    <div class="container" id="gameGrid">
+        <div class="card reveal" style="animation-delay: 0.1s;">
+            <img src="https://i.ibb.co/ZRWkt1dC/2.jpg" alt="Blox Fruits">
+            <h3 data-ar="بلوكس فروت" data-en="Blox Fruits">بلوكس فروت</h3>
+            <a href="blox-fruits.html" class="btn" data-ar="اضغط للذهاب" data-en="Go to Shop">اضغط للذهاب</a>
+        </div>
+        <div class="card reveal" style="animation-delay: 0.2s;">
+            <img src="https://i.ibb.co/hJJFyNCN/images.jpg" alt="Grow a Garden 2">
+            <h3 data-ar="ماب المزرعة 2" data-en="Grow a Garden 2">ماب المزرعة 2</h3>
+            <a href="grow-a-garden-2.html" class="btn" data-ar="اضغط للذهاب" data-en="Go to Shop">اضغط للذهاب</a>
+        </div>
+        <div class="card reveal" style="animation-delay: 0.3s;">
+            <img src="https://i.ibb.co/jv1kx2mB/20260801-214109.jpg" alt="Speed keyboard escape">
+            <h3 data-ar="ماب الكيبورد" data-en="Speed keyboard escape">ماب الكيبورد</h3>
+            <a href="speed-keyboard-escape.html" class="btn" data-ar="اضغط للذهاب" data-en="Go to Shop">اضغط للذهاب</a>
+        </div>
+        <div class="card reveal" style="animation-delay: 0.4s;">
+            <img src="https://i.ibb.co/cS23DfpD/no-Filter.jpg" alt="Murder Mystery 2">
+            <h3 data-ar="ماب mm2" data-en="Murder Mystery 2">ماب mm2</h3>
+            <a href="mm2.html" class="btn" data-ar="اضغط للذهاب" data-en="Go to Shop">اضغط للذهاب</a>
+        </div>
+        <div class="card reveal" style="animation-delay: 0.5s;">
+            <img src="https://i.ibb.co/qMwBBh7s/6.jpg" alt="Steal a Brainrot">
+            <h3 data-ar="ماب السرقة" data-en="Steal a Brainrot">ماب السرقة</h3>
+            <a href="steal-a-brainrot.html" class="btn" data-ar="اضغط للذهاب" data-en="Go to Shop">اضغط للذهاب</a>
+        </div>
+        <div class="card reveal" style="animation-delay: 0.6s;">
+            <img src="https://i.ibb.co/chkG6b6f/7.jpg" alt="Escape Tsunami">
+            <h3 data-ar="ماب التسونامي" data-en="Escape Tsunami">ماب التسونامي</h3>
+            <a href="escape-tsunami.html" class="btn" data-ar="اضغط للذهاب" data-en="Go to Shop">اضغط للذهاب</a>
+        </div>
+        <div class="card reveal" style="animation-delay: 0.7s;">
+            <img src="https://i.ibb.co/JRHCyPCt/5.jpg" alt="99 Night">
+            <h3 data-ar="ماب 99 ليلة" data-en="99 Night">ماب 99 ليلة</h3>
+            <a href="99-night.html" class="btn" data-ar="اضغط للذهاب" data-en="Go to Shop">اضغط للذهاب</a>
+        </div>
+        <div class="card reveal" style="animation-delay: 0.8s;">
+            <img src="https://i.ibb.co/zVNrKVLs/4.jpg" alt="Grow a Garden">
+            <h3 data-ar="ماب المزرعة" data-en="Grow a Garden">ماب المزرعة</h3>
+            <a href="grow-a-garden.html" class="btn" data-ar="اضغط للذهاب" data-en="Go to Shop">اضغط للذهاب</a>
+        </div>
+        <div class="card reveal" style="animation-delay: 0.9s;">
+            <img src="https://i.ibb.co/sTQkXVb/1.jpg" alt="Robux">
+            <h3 data-ar="روبوكس" data-en="Robux">روبوكس</h3>
+            <a href="robux.html" class="btn" data-ar="اضغط للذهاب" data-en="Go to Shop">اضغط للذهاب</a>
+        </div>
+        <div class="card reveal" style="animation-delay: 1.0s;">
+            <img src="https://i.ibb.co/Mmxcs7N/8.jpg" alt="Others">
+            <h3 data-ar="مابات اخرى" data-en="Others">مابات اخرى</h3>
+            <a href="others.html" class="btn" data-ar="عرض التفاصيل" data-en="View Details">عرض التفاصيل</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-links">
+            <a href="policy.html">
+                <i class="fas fa-file-contract"></i>
+                <span data-ar="الشروط والأحكام" data-en="Terms & Conditions">الشروط والأحكام</span>
+            </a>
+            <a href="contact.html">
+                <i class="fas fa-headset"></i>
+                <span data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</span>
+            </a>
+        </div>
+
+        <div class="payment-methods">
+            <img src="https://i.ibb.co/4ZtBWPKd/1777212162381.png" alt="Payment Methods">
+        </div>
+
+        <div class="copyright">
+            &copy; 2026 Nova Store. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        function openNav() { document.getElementById("mySidenav").style.width = "260px"; }
+        function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+        }
+
+        function changeLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            const html = document.getElementById('mainHtml');
+            const sideMenu = document.getElementById('mySidenav');
+            const closeBtn = document.getElementById('closeBtn');
+
+            if (lang === 'en') {
+                html.dir = "ltr"; html.lang = "en";
+                sideMenu.className = "side-menu left";
+                closeBtn.style.right = "20px"; closeBtn.style.left = "auto";
+            } else {
+                html.dir = "rtl"; html.lang = "ar";
+                sideMenu.className = "side-menu right";
+                closeBtn.style.left = "20px"; closeBtn.style.right = "auto";
+            }
+            applyTranslations(lang);
+            try { localStorage.setItem('selectedLang', lang); } catch(e) {}
+        }
+
+        function changeCurrency() {
+            const currency = document.getElementById('currencySelect').value;
+            const rates = {
+                'USD': 1,
+                'EUR': 0.93,
+                'SAR': 3.75,
+                'AED': 3.6725,
+                'QAR': 3.64,
+                'BHD': 0.376,
+                'OMR': 0.3845,
+                'KWD': 0.31,
+                'EGP': 52.63,
+                'LYD': 8,
+                'MAD': 10
+            };
+            try {
+                localStorage.setItem('selectedCurrency', currency);
+                localStorage.setItem('exchangeRate', rates[currency]);
+                window.dispatchEvent(new Event('storage'));
+            } catch(e) {}
+        }
+
+        function updateCartCount() {
+            const cartData = localStorage.getItem('cart');
+            let cart = [];
+            try { cart = cartData ? JSON.parse(cartData) : []; } catch (e) { cart = []; }
+            const count = cart.reduce((total, item) => total + (parseInt(item.quantity) || 0), 0);
+            const el = document.getElementById('cartCount');
+            if (el) el.textContent = count;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('selectedLang');
+            const savedCurrency = localStorage.getItem('selectedCurrency');
+
+            if (savedLang) {
+                document.getElementById('langSelect').value = savedLang;
+            }
+            changeLanguage();
+
+            if (savedCurrency) {
+                document.getElementById('currencySelect').value = savedCurrency;
+            }
+            changeCurrency();
+
+            updateCartCount();
+        });
+
+        window.addEventListener('storage', updateCartCount);
+    </script>
+</body>
+</html>
