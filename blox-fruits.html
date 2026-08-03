@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nova Store - Blox Fruits</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // تطبيق اللغة المحفوظة فوراً قبل رسم الصفحة لتجنب الوميض (نفس نظام index.html)
+        (function() {
+            try {
+                const savedLang = localStorage.getItem('selectedLang');
+                const html = document.getElementById('mainHtml');
+                if (savedLang === 'en') { html.dir = "ltr"; html.lang = "en"; }
+                else { html.dir = "rtl"; html.lang = "ar"; }
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        :root {
+            --main-bg: #0d1117;
+            --card-bg: #161b22;
+            --soft-card: #1c2128;
+            --neon-blue: #00d4ff;
+            --gold: #ffcc00;
+            --text-gray: #97a2b0;
+            --border: #30363d;
+            --success: #4ade80;
+            --danger: #ff6b6b;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(180deg, #0d1117 0%, #0b1220 100%);
+            color: #fff;
+            font-family: 'Tajawal', sans-serif;
+            overflow-x: hidden;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(13,17,23,.96);
+            border-bottom: 2px solid var(--neon-blue);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #21262d;
+            border: 1px solid var(--neon-blue);
+            color: white;
+            padding: 7px 12px;
+            border-radius: 12px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+        .home-btn:hover {
+            background: var(--neon-blue);
+            color: #00131b;
+        }
+        .home-btn i { color: var(--gold); }
+        .home-btn:hover i { color: #00131b; }
+        .logo-img { height: 32px; display: block; }
+        .nav-controls {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .pill {
+            display: flex;
+            background: #21262d;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            height: 32px;
+            align-items: center;
+            transition: 0.3s;
+            overflow: hidden;
+        }
+        .pill:hover { border-color: var(--neon-blue); }
+        .pill select {
+            background: transparent;
+            color: white;
+            border: none;
+            padding: 0 10px;
+            font-family: 'Tajawal';
+            font-size: 11px;
+            cursor: pointer;
+            outline: none;
+            height: 100%;
+        }
+        .cart-box {
+            color: var(--gold);
+            font-size: 13px;
+            background: rgba(255, 204, 0, 0.08);
+            padding: 7px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 204, 0, 0.25);
+            cursor: pointer;
+            transition: .2s ease;
+        }
+        .cart-box:hover { transform: translateY(-1px); box-shadow: 0 10px 18px rgba(255,204,0,.14); }
+        .hero {
+            padding: 18px 15px 8px;
+            background: radial-gradient(circle at top right, rgba(0,212,255,.18), transparent 35%), #111827;
+        }
+        .hero h1 { margin: 0 0 8px; color: var(--neon-blue); font-size: 24px; }
+        .hero p { margin: 0; color: #d1d7df; font-size: 13px; line-height: 1.8; }
+        .search-container { padding: 15px; background: #161b22; }
+        .search-box { width: 100%; position: relative; }
+        .search-box input {
+            width: 100%;
+            background: #0d1117;
+            border: 1.5px solid var(--neon-blue);
+            border-radius: 20px;
+            padding: 11px 15px;
+            color: white;
+            outline: none;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 13px;
+        }
+        [dir="rtl"] .search-box input { padding-right: 38px; }
+        [dir="ltr"] .search-box input { padding-left: 38px; }
+        .search-box i {
+            position: absolute; top: 50%; transform: translateY(-50%); color: var(--neon-blue);
+        }
+        [dir="rtl"] .search-box i { right: 13px; }
+        [dir="ltr"] .search-box i { left: 13px; }
+        .filter-container {
+            background: #161b22; padding: 10px 6px 12px; display: flex;
+            overflow-x: auto; gap: 8px; border-bottom: 1px solid var(--border); scrollbar-width: none;
+        }
+        .filter-container::-webkit-scrollbar { display: none; }
+        .filter-opt {
+            background: #21262d; border: 1px solid var(--neon-blue); color: white;
+            padding: 7px 16px; border-radius: 18px; cursor: pointer; white-space: nowrap;
+            font-size: 12px; flex-shrink: 0; transition: .2s ease;
+        }
+        .filter-opt.active {
+            background: var(--neon-blue); color: #000; font-weight: 800;
+            box-shadow: 0 0 18px rgba(0,212,255,.28);
+        }
+        .products-grid {
+            display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px; padding: 15px;
+        }
+        .product-card {
+            background: linear-gradient(180deg, rgba(22,27,34,1) 0%, rgba(19,24,31,1) 100%);
+            border-radius: 18px; padding: 10px; border: 1px solid var(--border);
+            position: relative; overflow: hidden; box-shadow: 0 10px 26px rgba(0,0,0,.2);
+        }
+        .product-card .thumb-wrap {
+            position: relative; border-radius: 14px; overflow: hidden; background: #000;
+        }
+        .product-card img {
+            width: 100%; display: block; object-fit: cover; background: #000;
+            aspect-ratio: 1/1;
+        }
+        .card-info-btn {
+            position: absolute; top: 8px; right: 8px; width: 28px; height: 28px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 5; border: 1px solid var(--neon-blue);
+            background: rgba(0,212,255,.18); color: var(--neon-blue);
+        }
+        .image-badge {
+            position: absolute; top: 12px; right: 12px;
+            background: linear-gradient(135deg, var(--gold), #ff9500); color: #111;
+            font-weight: 800; font-size: 11px; padding: 5px 10px; border-radius: 999px;
+            box-shadow: 0 8px 16px rgba(255,204,0,.28); z-index: 3;
+        }
+        .mini-tag {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 10px; padding: 5px 8px;
+            background: rgba(0,212,255,.12); color: var(--neon-blue);
+            border: 1px solid rgba(0,212,255,.22); border-radius: 999px;
+            margin-bottom: 8px;
+        }
+        .card-title {
+            font-size: 13px; font-weight: 800; line-height: 1.4;
+            min-height: 36px; margin-bottom: 6px;
+        }
+        .price-line { color: var(--gold); font-weight: 800; margin-bottom: 10px; font-size: 15px; }
+        .small-desc {
+            color: #cad3dd; font-size: 11px; line-height: 1.7;
+            min-height: 36px; margin-bottom: 10px;
+        }
+        .specs-preview {
+            list-style: none; padding: 0; margin: 0 0 10px;
+            display: grid; gap: 6px;
+        }
+        .specs-preview li {
+            color: #d5dce5; font-size: 11px;
+            background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.05);
+            padding: 7px 9px; border-radius: 10px;
+        }
+        .btn {
+            width: 100%; padding: 10px 12px; border: none;
+            border-radius: 11px; font-weight: 800; cursor: pointer;
+            transition: .2s ease; font-family: inherit;
+        }
+        .btn-primary { background: var(--neon-blue); color: #00131b; }
+        .btn-primary:hover { filter: brightness(1.06); }
+        .btn-secondary {
+            background: rgba(255,255,255,.06); color: #fff;
+            border: 1px solid rgba(255,255,255,.08);
+        }
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 20px; background: var(--card-bg);
+            border: 1px dashed var(--border); border-radius: 18px;
+            text-align: center; color: var(--text-gray);
+        }
+        .modal {
+            display: none; position: fixed; inset: 0; z-index: 9999;
+            background: rgba(3, 7, 13, .92); backdrop-filter: blur(8px);
+            overflow-y: auto;
+        }
+        .modal-content { max-width: 820px; margin: 0 auto; min-height: 100%; padding: 18px; }
+        .close-modal {
+            width: 40px; height: 40px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center;
+            background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+            color: var(--neon-blue); cursor: pointer; position: sticky;
+            top: 12px; margin-bottom: 10px; font-size: 24px;
+        }
+        .modal-card {
+            background: linear-gradient(180deg, #131922 0%, #0f141b 100%);
+            border: 1px solid var(--border); border-radius: 24px;
+            overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,.4);
+        }
+        .modal-top { padding: 18px; border-bottom: 1px solid rgba(255,255,255,.06); }
+        .modal-cover {
+            width: 100%; border-radius: 16px; aspect-ratio: 16/9;
+            object-fit: cover; background: #000;
+        }
+        .modal-body { padding: 18px; }
+        .modal-body h2 { margin: 12px 0 6px; color: var(--gold); font-size: 24px; }
+        .meta-line { color: #dce4ee; font-size: 14px; line-height: 1.9; }
+        .feature-grid {
+            margin: 18px 0; display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+        }
+        .feature-item {
+            background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
+            border-radius: 14px; padding: 12px;
+            color: #dbe4ef; font-size: 13px;
+        }
+        .section-title { color: var(--gold); margin: 22px 0 8px; font-size: 17px; }
+        .detail-text { color: #d5dde8; font-size: 14px; line-height: 2; }
+        .detail-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+        .detail-list li {
+            background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.05);
+            border-radius: 12px; padding: 11px 13px;
+            color: #dbe4ee; font-size: 13px;
+        }
+        .cta-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;
+        }
+        @media (max-width: 720px) {
+            .feature-grid, .cta-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeModal()">&times;</div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="header-left">
+            <a href="index.html" class="home-btn" title="العودة للرئيسية / Back to Home">
+                <i class="fas fa-home"></i>
+                <span data-ar="العودة للرئيسية" data-en="Back to Home">العودة للرئيسية</span>
+            </a>
+            <img src="https://i.ibb.co/5xXyd4jN/1774783408791.png" class="logo-img" alt="Nova Store">
+        </div>
+        <div class="nav-controls">
+            <div class="pill">
+                <select id="langSelect" onchange="changeLanguage()">
+                    <option value="ar">العربية (AR)</option>
+                    <option value="en">English (EN)</option>
+                </select>
+            </div>
+            <div class="pill">
+                <select id="currencySelect" onchange="changeCurrency()">
+                    <option value="USD">دولار (USD $)</option>
+                    <option value="EUR">يورو (EUR €)</option>
+                    <option value="SAR">ريال سعودي (SAR)</option>
+                    <option value="AED">درهم إماراتي (AED)</option>
+                    <option value="QAR">ريال قطري (QAR)</option>
+                    <option value="BHD">دينار بحريني (BHD)</option>
+                    <option value="OMR">ريال عماني (OMR)</option>
+                    <option value="KWD">دينار كويتي (KWD)</option>
+                    <option value="EGP">جنيه مصري (EGP)</option>
+                    <option value="LYD">دينار ليبي (LYD)</option>
+                    <option value="MAD">درهم مغربي (MAD)</option>
+                </select>
+            </div>
+            <div class="cart-box" onclick="openCartPage()" title="Cart / السلة"><i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span></div>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1 id="heroTitle">Nova Store</h1>
+        <p id="heroText">مرحبًا بك في Nova Store — وجهتك لشراء منتجات Blox Fruits بأسعار تنافسية، وتسليم سريع، وخدمة موثوقة.</p>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="ابحث عن منتج…" oninput="handleSearch()">
+        </div>
+    </div>
+
+    <div class="filter-container">
+        <div class="filter-opt active" id="btn-perm" onclick="setFilter('perm', this)">فواكه دائمة</div>
+        <div class="filter-opt" id="btn-normal" onclick="setFilter('normal', this)">فواكه عادية</div>
+        <div class="filter-opt" id="btn-pass" onclick="setFilter('pass', this)">قيم باس</div>
+        <div class="filter-opt" id="btn-acc" onclick="setFilter('acc', this)">حسابات</div>
+        <div class="filter-opt" id="btn-srv" onclick="setFilter('srv', this)">الخدمات</div>
+    </div>
+
+    <div class="products-grid" id="productGrid"></div>
+
+    <script>
+        const rates = { USD: 1, EUR: 0.93, SAR: 3.75, AED: 3.6725, QAR: 3.64, BHD: 0.376, OMR: 0.3845, KWD: 0.31, EGP: 52.63, LYD: 8, MAD: 10 };
+        const symbols = { USD: "$", EUR: "€", SAR: "ر.س", AED: "د.إ", QAR: "ر.ق", BHD: "د.ب", OMR: "ر.ع", KWD: "د.ك", EGP: "ج.م", LYD: "د.ل", MAD: "د.م" };
+
+        const products = [
+            // --- الفواكه الدائمة (Perm) ---
+            { nameAr: "فاكهة التنين بيرم (دائمة)", nameEn: "Dragon Perm", price: 30.00, img: "https://i.ibb.co/0yN7KDQg/Dragon-East-Fruit-1.webp", cat: "perm" },
+            { nameAr: "فاكهة الكيتسوني بيرم (دائمة)", nameEn: "Kitsune Perm", price: 25.00, img: "https://i.ibb.co/CKVRc3vz/Kitsune-Fruit-1.webp", cat: "perm" },
+            { nameAr: "فاكهة الكنترول بيرم (دائمة)", nameEn: "Control Perm", price: 24.50, img: "https://i.ibb.co/H9DWS7y/Control-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الفهد بيرم (دائمة)", nameEn: "Tiger Perm", price: 19.80, img: "https://i.ibb.co/rKBhvT4y/Tiger-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة اليتي بيرم (دائمة)", nameEn: "Yeti Perm", price: 19.80, img: "https://i.ibb.co/vWmttyK/Yeti-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة السبيريت بيرم (دائمة)", nameEn: "Spirit Perm", price: 17.28, img: "https://i.ibb.co/Z6PG2rxn/Spirit-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الغاز بيرم (دائمة)", nameEn: "Gas Perm", price: 17.50, img: "https://i.ibb.co/sJ5KrvYW/Gas-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الفينوم بيرم (دائمة)", nameEn: "Venom Perm", price: 16.72, img: "https://i.ibb.co/fVpDsfbr/Venom-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الشادو بيرم (دائمة)", nameEn: "Shadow Perm", price: 15.57, img: "https://i.ibb.co/hRR5wh6s/Shadow-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الموتشي بيرم (دائمة)", nameEn: "Dough Perm", price: 16.50, img: "https://i.ibb.co/355Jbr6G/Dough-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة التي-ركس بيرم (دائمة)", nameEn: "T-Rex Perm", price: 16.16, img: "https://i.ibb.co/kV4BXnHg/T-Rex-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الماموث بيرم (دائمة)", nameEn: "Mammoth Perm", price: 16.16, img: "https://i.ibb.co/5XZsNjt2/Mammoth-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الجاذبية بيرم (دائمة)", nameEn: "Gravity Perm", price: 15.88, img: "https://i.ibb.co/ZRF2PXjq/Gravity-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة البليزرد بيرم (دائمة)", nameEn: "Blizzard Perm", price: 15.60, img: "https://i.ibb.co/tMd0RwDq/Blizzard-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة البين بيرم (دائمة)", nameEn: "Pain Perm", price: 13.32, img: "https://i.ibb.co/gbsYKM74/Pain-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة البرق بيرم (دائمة)", nameEn: "Lightning Perm", price: 15.00, img: "https://i.ibb.co/CKWSStW9/Lightning-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة البورتال بيرم (دائمة)", nameEn: "Portal Perm", price: 14.50, img: "https://i.ibb.co/p6VbyLYS/Portal-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة العنقاء بيرم (دائمة)", nameEn: "Phoenix Perm", price: 11.20, img: "https://i.ibb.co/PGjvjBmT/Phoenix-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة السبايدر بيرم (دائمة)", nameEn: "Spider Perm", price: 10.64, img: "https://i.ibb.co/Lhg3pPB6/Spider-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الساوند بيرم (دائمة)", nameEn: "Sound Perm", price: 10.08, img: "https://i.ibb.co/zTKVcrgW/Sound-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة البناء بيرم (دائمة)", nameEn: "Creation Perm", price: 9.80, img: "https://i.ibb.co/b5r2P1Nv/Creation-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الحب بيرم (دائمة)", nameEn: "Love Perm", price: 11.00, img: "https://i.ibb.co/dwJLc9Wt/Love-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة البوذا بيرم (دائمة)", nameEn: "Buddha Perm", price: 10.24, img: "https://i.ibb.co/6RJgz0MZ/Buddha-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الزلزال بيرم (دائمة)", nameEn: "Quake Perm", price: 8.40, img: "https://i.ibb.co/pvn6wNyw/Quake-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الماغما بيرم (دائمة)", nameEn: "Magma Perm", price: 8.28, img: "https://i.ibb.co/cXYRM8sP/Magma-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الغوست بيرم (دائمة)", nameEn: "Ghost Perm", price: 7.13, img: "https://i.ibb.co/Kc1R8Ks4/Ghost-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة المطاط بيرم (دائمة)", nameEn: "Rubber Perm", price: 6.72, img: "https://i.ibb.co/v6WRdSWt/Rubber-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الضوء بيرم (دائمة)", nameEn: "Light Perm", price: 6.16, img: "https://i.ibb.co/Mx88pMt7/Light-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الدايموند بيرم (دائمة)", nameEn: "Diamond Perm", price: 5.60, img: "https://i.ibb.co/SwZT5rcb/Diamond-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة النسر بيرم (دائمة)", nameEn: "Eagle Perm", price: 5.45, img: "https://i.ibb.co/xSKxM1b0/Eagle-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الدارك بيرم (دائمة)", nameEn: "Dark Perm", price: 5.32, img: "https://i.ibb.co/fYZfnPtS/Dark-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الساند بيرم (دائمة)", nameEn: "Sand Perm", price: 4.76, img: "https://i.ibb.co/pj4bYVt1/Sand-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الثلج بيرم (دائمة)", nameEn: "Ice Perm", price: 4.20, img: "https://i.ibb.co/84G6yF0z/Ice-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الفليم بيرم (دائمة)", nameEn: "Flame Perm", price: 3.08, img: "https://i.ibb.co/WbGTzqF/Flame-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة السبايك بيرم (دائمة)", nameEn: "Spike Perm", price: 2.13, img: "https://i.ibb.co/5WJx9yPv/Spike-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة السموك بيرم (دائمة)", nameEn: "Smoke Perm", price: 1.40, img: "https://i.ibb.co/MybJ9B5s/Smoke-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة البومب بيرم (دائمة)", nameEn: "Bomb Perm", price: 1.23, img: "https://i.ibb.co/dwBxMLWM/Bomb-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة السبرينغ بيرم (دائمة)", nameEn: "Spring Perm", price: 1.30, img: "https://i.ibb.co/Jjjg6pSZ/Spring-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة البليد بيرم (دائمة)", nameEn: "Blade Perm", price: 1.26, img: "https://i.ibb.co/xSBLFgbg/Blade-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة السبن بيرم (دائمة)", nameEn: "Spin Perm", price: 1.00, img: "https://i.ibb.co/0pgRqYr1/Spin-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الروكيت بيرم (دائمة)", nameEn: "Rocket Perm", price: 0.50, img: "https://i.ibb.co/9HyLTVbD/Rocket-Fruit.webp", cat: "perm" },
+
+            // --- الفواكه العادية (Physical/Trade) ---
+            { nameAr: "فاكهة التنين (عادية)", nameEn: "Dragon Physical", price: 19.00, img: "https://i.ibb.co/0yN7KDQg/Dragon-East-Fruit-1.webp", cat: "normal" },
+            { nameAr: "فاكهة الكيتسوني (عادية)", nameEn: "Kitsune Physical", price: 7.00, img: "https://i.ibb.co/CKVRc3vz/Kitsune-Fruit-1.webp", cat: "normal" },
+            { nameAr: "الكنترول (عادية)", nameEn: "Control Physical", price: 4.00, img: "https://i.ibb.co/H9DWS7y/Control-Fruit.webp", cat: "normal" },
+            { nameAr: "اليتي (عادية)", nameEn: "Yeti Physical", price: 3.00, img: "https://i.ibb.co/vWmttyK/Yeti-Fruit.webp", cat: "normal" },
+            { nameAr: "التايغر (عادية)", nameEn: "Tiger Physical", price: 3.50, img: "https://i.ibb.co/rKBhvT4y/Tiger-Fruit.webp", cat: "normal" },
+            { nameAr: "الأرواح (عادية)", nameEn: "Spirit Physical", price: 1.10, img: "https://i.ibb.co/Z6PG2rxn/Spirit-Fruit.webp", cat: "normal" },
+            { nameAr: "الغاز (عادية)", nameEn: "Gas Physical", price: 2.00, img: "https://i.ibb.co/sJ5KrvYW/Gas-Fruit.webp", cat: "normal" },
+            { nameAr: "الفينوم (عادية)", nameEn: "Venom Physical", price: 1.50, img: "https://i.ibb.co/fVpDsfbr/Venom-Fruit.webp", cat: "normal" },
+            { nameAr: "الشادو (عادية)", nameEn: "Shadow Physical", price: 1.10, img: "https://i.ibb.co/hRR5wh6s/Shadow-Fruit.webp", cat: "normal" },
+            { nameAr: "الموتشي (عادية)", nameEn: "Dough Physical", price: 1.70, img: "https://i.ibb.co/355Jbr6G/Dough-Fruit.webp", cat: "normal" },
+            { nameAr: "التي-ركس (عادية)", nameEn: "T-Rex Physical", price: 1.30, img: "https://i.ibb.co/kV4BXnHg/T-Rex-Fruit.webp", cat: "normal" },
+            { nameAr: "الماموث (عادية)", nameEn: "Mammoth Physical", price: 1.20, img: "https://i.ibb.co/5XZsNjt2/Mammoth-Fruit.webp", cat: "normal" },
+            { nameAr: "الجاذبية (عادية)", nameEn: "Gravity Physical", price: 1.25, img: "https://i.ibb.co/ZRF2PXjq/Gravity-Fruit.webp", cat: "normal" },
+            { nameAr: "البرق (عادية)", nameEn: "Lightning Physical", price: 1.90, img: "https://i.ibb.co/CKWSStW9/Lightning-Fruit.webp", cat: "normal" },
+            { nameAr: "البين (عادية)", nameEn: "Pain Physical", price: 1.30, img: "https://i.ibb.co/gbsYKM74/Pain-Fruit.webp", cat: "normal" },
+            { nameAr: "البورتال (عادية)", nameEn: "Portal Physical", price: 1.10, img: "https://i.ibb.co/p6VbyLYS/Portal-Fruit.webp", cat: "normal" },
+            { nameAr: "البوذا (عادية)", nameEn: "Buddha Physical", price: 1.10, img: "https://i.ibb.co/6RJgz0MZ/Buddha-Fruit.webp", cat: "normal" },
+
+            // --- قيم باس (Game Passes) ---
+            { nameAr: "دبل تخزين الفواكه", nameEn: "Double Fruit Storage", price: 3.30, img: "https://i.ibb.co/pv1bCNdF/Badge-Fruit-Storage.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "دبل دروبات الزعماء", nameEn: "Double Boss Drops", price: 3.30, img: "https://i.ibb.co/bRjdhP60/Badge-Boss-Drops.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "قوارب سريعة", nameEn: "Fast Boats", price: 3.30, img: "https://i.ibb.co/chV3d6Xx/Badge-Boats.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "دبل ماستري", nameEn: "Double Mastery", price: 4.00, img: "https://i.ibb.co/pvHQcPJF/Badge-Masteryx2-1.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "دبل فلوس", nameEn: "Double Money", price: 4.00, img: "https://i.ibb.co/DgPZYrgF/Badge-Moneyx2.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "دارك بليد", nameEn: "Dark Blade", price: 8.00, img: "https://i.ibb.co/CpKP4544/Badge-Dark-Blade.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "فاكهة نوتيفاير", nameEn: "Fruit Notifier", price: 18.00, img: "https://i.ibb.co/b56BCRmM/Badge-Fruit-Notifier.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "إعادة لف الرِيس", nameEn: "Race Reroll", price: 0.50, img: "https://i.ibb.co/xq5xXJRk/Change-Race.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "إعادة تعيين النقاط", nameEn: "Stat Reset", price: 0.42, img: "https://i.ibb.co/7JbsWtqt/Stat-Reset.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "5 لفائف أسطورية", nameEn: "5x Legendary Scrolls", price: 6.48, img: "https://i.ibb.co/N6H7knkr/Badge-Legendary-Scrollx5.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "3 لفائف ميثيك", nameEn: "3x Mythical Scrolls", price: 9.40, img: "https://i.ibb.co/zVnyS5Yt/Badge-Mythical-Scrollx3.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "12 ساعة خبرة ×2", nameEn: "12h XP x2", price: 4.76, img: "https://i.ibb.co/s9V8dV3g/Boost12h.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "6000 بيانات محاكاة", nameEn: "6000 Simulation Data", price: 5.59, img: "https://i.ibb.co/67F54Mst/Simulation-Data4.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+
+            // --- الحسابات (Accounts) ---
+            { nameAr: "حساب أساسي لفل 2800", nameEn: "Basic Account Lv. 2800", price: 4.0, img: "https://i.ibb.co/XfG95Rz2/20260418-175539.jpg", cat: "acc",
+              specsAr: ["المستوى الأقصى 2800","جميع Fighting Styles ما عدا Blood","السلاح: Guitar Brok weapon","فاكهة ميثيك عشوائية","إكسسوارات جاهزة للاستخدام"],
+              specsEn: ["Max level 2800","All fighting styles except Blood","Weapon: Guitar Brok weapon","Random mythical fruit","Useful accessories included"] },
+            { nameAr: "حساب Ghoul V4 مع سيوف Oden", nameEn: "Ghoul V4 with Oden swords", price: 12.0, img: "https://i.ibb.co/4ZT34CYH/20260418-181512.jpg", cat: "acc",
+              specsAr: ["المستوى الأقصى 2800","العرق: Ghoul V4","Fighting styles كاملة","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
+              specsEn: ["Max level 2800","Race: Ghoul V4","Full fighting styles","Swords: Oden swords","Random mythical fruit + accessories"] },
+            { nameAr: "حساب Shark V4 مع سيوف Oden", nameEn: "Shark V4 with Oden swords", price: 13.0, img: "https://i.ibb.co/d0qYPkYZ/20260418-183724.jpg", cat: "acc",
+              specsAr: ["المستوى الأقصى 2800","العرق: Shark V4","Fighting styles كاملة","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
+              specsEn: ["Max level 2800","Race: Shark V4","Full fighting styles","Swords: Oden swords","Random mythical fruit + accessories"] },
+            { nameAr: "حساب Rabbit V4 مع سيوف Oden", nameEn: "Rabbit V4 (no Blood) with Oden swords", price: 11.5, img: "https://i.ibb.co/YTwWfPMm/20260418-184416.jpg", cat: "acc",
+              specsAr: ["المستوى الأقصى 2800","العرق: Rabbit V4","جميع Fighting Styles ما عدا Blood","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
+              specsEn: ["Max level 2800","Race: Rabbit V4","All fighting styles except Blood","Swords: Oden swords","Random mythical fruit + accessories"] },
+            { nameAr: "حساب Human V4 مع سيوف Oden", nameEn: "Human V4 with Oden swords", price: 12.75, img: "https://i.ibb.co/hRBTGdLz/20260418-190524.jpg", cat: "acc",
+              specsAr: ["المستوى الأقصى 2800","العرق: Human V4","Fighting styles كاملة","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
+              specsEn: ["Max level 2800","Race: Human V4","Full fighting styles","Swords: Oden swords","Random mythical fruit + accessories"] },
+            { nameAr: "حساب Cyborg V4 مع سيوف Oden", nameEn: "Cyborg V4 (no Blood) with Oden swords", price: 12.0, img: "https://i.ibb.co/9HRvmjxW/20260418-191203.jpg", cat: "acc",
+              specsAr: ["المستوى الأقصى 2800","العرق: Cyborg V4","جميع Fighting Styles ما عدا Blood","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
+              specsEn: ["Max level 2800","Race: Cyborg V4","All fighting styles except Blood","Swords: Oden swords","Random mythical fruit + accessories"] },
+            { nameAr: "حساب Angel V4 مع سيوف Oden", nameEn: "Angel V4 (no Blood) with Oden swords", price: 11.9, img: "https://i.ibb.co/67DwXK24/20260418-194705.jpg", cat: "acc",
+              specsAr: ["المستوى الأقصى 2800","العرق: Angel V4","جميع Fighting Styles ما عدا Blood","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
+              specsEn: ["Max level 2800","Race: Angel V4","All fighting styles except Blood","Swords: Oden swords","Random mythical fruit + accessories"] },
+            { nameAr: "حساب Draco V4 مع Oden + Dragon Sword", nameEn: "Draco V4 with Oden + Dragon sword", price: 16.0, img: "https://i.ibb.co/Qv24yt5n/20260418-201605.jpg", cat: "acc",
+              specsAr: ["المستوى الأقصى 2800","العرق: Draco V4","Fighting styles كاملة","الأسلحة: Oden swords + Dragon sword","فاكهة ميثيك عشوائية + إكسسوارات"],
+              specsEn: ["Max level 2800","Race: Draco V4","Full fighting styles","Weapons: Oden swords + Dragon sword","Random mythical fruit + accessories"] },
+            { nameAr: "حساب كل الأعراق V4", nameEn: "All races V4 with Oden swords", price: 30.0, img: "https://i.ibb.co/vv1NDJLZ/20260418-204408.jpg", cat: "acc", badgeAr: "أقوى حساب", badgeEn: "Strongest Account",
+              specsAr: ["المستوى الأقصى 2800","جميع الأعراق V4","السيوف: Oden swords","الأسلحة: Draco spear وغيرها","فاكهة ميثيك عشوائية + إكسسوارات قوية"],
+              specsEn: ["Max level 2800","All races V4","Swords: Oden swords","Weapons: Draco spear and more","Random mythical fruit + powerful accessories"] },
+
+            // --- الخدمات (Services) — معاد بناءها بنفس شكل البطاقات العادية ---
+            { nameAr: "تلفيل 2800 لفل (ماكس) + غود هيومن", nameEn: "Leveling 2800(max) + god human",
+              price: 9.00, img: "https://i.ibb.co/mr2vNDXz/20260803-123243.jpg", cat: "srv", badgeAr: "أقوى عرض", badgeEn: "Best Deal",
+              descAr: "أقوى عروض Nova Store! سنقوم برفع مستوى حسابك إلى الماكس، وكذلك سنقوم بفتح جميع أساليب اللعبة (عدا أسلوب الدم) كل هذا في خدمة واحدة فقط (يستغرق الأمر كأقصى حد 3 أيام فقط!)",
+              descEn: "Nova Store's strongest offer! We will boost your account to the max level and unlock every fighting style in the game (except the Blood style) — all in a single service. (Maximum 3 days!)" },
+
+            { nameAr: "تلفيل 2800 لفل (ماكس)", nameEn: "Leveling 2800 (max)",
+              price: 6.00, img: "https://i.ibb.co/YB5tnMZT/20260803-122518.jpg", cat: "srv",
+              descAr: "هل تعبت من رفع مستوى حسابك؟ أو تريد أن تصل إلى مستوى ماكس بأسرع وقت؟ اطلب هذه الخدمة، سنقوم برفع مستوى حسابك إلى الماكس لفل بأسرع وقت ممكن! (يستغرق الأمر كأقصى حد 3 أيام فقط!)",
+              descEn: "Tired of grinding your account level? Want to reach the max level quickly? Order this service and we'll boost your account to max level as fast as possible! (Maximum 3 days!)" },
+
+            { nameAr: "تلفيل 800 لفل", nameEn: "Leveling 800 up",
+              price: 4.00, img: "https://i.ibb.co/LdX5Rjnm/20260803-124058.jpg", cat: "srv",
+              descAr: "",
+              descEn: "" },
+
+            { nameAr: "تلفيل ماستري (اسلوب/فاكهة/قن/سيف) 350 لفل", nameEn: "+350 mastery on (mele/sword/gun/fruit)",
+              price: 3.00, img: "https://i.ibb.co/Fqcxy7wN/20260803-125613.jpg", cat: "srv",
+              descAr: "اختر أي غرض تريد نرفعلك الماستري حقه (سواء أسلوب أو فاكهة أو قن أو سيف) وبنرفعك مستواه لين 350 ماستري! ولو طلبت الخدمة مرتين بنرفعلك ياه 600 (ماكس)! خلال أقل من يوم واحد.",
+              descEn: "Pick any item you want us to boost — fighting style, fruit, gun, or sword — and we'll raise its mastery to 350! Order the service twice and we'll go up to 600 (max)! Delivered in under one day." }
+        ];
+
+        const CART_PAGE_LOCAL = 'Shopbasket.html';
+
+        // === السلة (متوافقة مع index.html) ===
+        function findProductByName(name) {
+            return products.find(p => p.nameAr === name || p.nameEn === name);
+        }
+        function normalizeCartItem(item) {
+            if (!item) return null;
+            if (typeof item === 'object' && item.name && typeof item.price !== 'undefined') return item;
+            if (typeof item === 'string') {
+                const matched = findProductByName(name);
+                return { name: matched ? matched.nameAr : name, price: matched ? Number(matched.price||0) : 0, img: matched ? matched.img : 'https://i.ibb.co/5xXyd4jN/1774783408791.png', cat: matched ? matched.cat : 'misc' };
+            }
+            return null;
+        }
+        const storedCartRaw = JSON.parse(localStorage.getItem('nova_cart')) || [];
+        const cart = Array.isArray(storedCartRaw) ? storedCartRaw.map(normalizeCartItem).filter(Boolean) : [];
+        localStorage.setItem('nova_cart', JSON.stringify(cart));
+
+        let currentFilter = 'perm';
+        let searchQuery = '';
+
+        // === النصوص ===
+        const texts = {
+            ar: {
+                heroTitle: 'Nova Store',
+                heroText: 'مرحبًا بك في Nova Store — وجهتك لشراء منتجات Blox Fruits بأسعار تنافسية، وتسليم سريع، وخدمة موثوقة.',
+                filters: ['فواكه دائمة', 'فواكه عادية', 'قيم باس', 'حسابات', 'الخدمات'],
+                search: 'ابحث عن منتج…',
+                add: 'إضافة للسلة', details: 'التفاصيل', added: 'تمت الإضافة إلى السلة', available: 'متاح حالياً',
+                description: 'الوصف', delivery: 'طريقة الدفع والاستلام',
+                features: ['تسليم سريع وآمن', 'دعم مستمر', 'خيارات دفع مرنة', 'ضمان ترتيب واضح للطلب'],
+                commonDesc: 'بعد إضافة المنتج إلى السلة وإتمام الطلب سيتم التواصل معك لتأكيد البيانات، ثم يتم التسليم داخل اللعبة عبر Gift أو من خلال بيانات الحساب بحسب نوع المنتج.',
+                commonDelivery: 'الخطوات: أضف المنتج إلى السلة ← أكمل الطلب ← أرسل يوزر Roblox أو بيانات الحساب المطلوبة ← يتم التسليم عبر Gift داخل اللعبة أو عبر تسليم بيانات الحساب.',
+                category: 'التصنيف', product: 'اسم المنتج', status: 'الحالة', total: 'السعر الإجمالي',
+                send: 'أرسل لنا بعد الطلب', requestItems: ['اسم المنتج أو الخدمة', 'اسم مستخدم Roblox أو بيانات الحساب المطلوبة'],
+                backAdd: 'إضافة للسلة والعودة', close: 'إغلاق', gamePassTag: 'Blox Fruits Values', accountTag: 'حساب جاهز', 
+                noResults: 'لا توجد نتائج مطابقة حالياً.', specs: 'المواصفات',
+                serviceNoDesc: 'لا يوجد وصف متاح لهذا المنتج حالياً.',
+                backHome: 'العودة للرئيسية'
+            },
+            en: {
+                heroTitle: 'Nova Store',
+                heroText: 'Welcome to Nova Store — your destination for Blox Fruits products at competitive prices, fast delivery, and reliable service.',
+                filters: ['Perm Fruits', 'Normal Fruits', 'Game Pass', 'Accounts', 'Services'],
+                search: 'Search for a product…',
+                add: 'Add to Cart', details: 'Details', added: 'Added to cart', available: 'Available now',
+                description: 'Description', delivery: 'Payment & Delivery',
+                features: ['Fast & secure delivery', 'Responsive support', 'Flexible payment options', 'Clear order process'],
+                commonDesc: 'After adding the product to cart and completing the order, we will confirm your details and then deliver in-game via Gift or through account credentials depending on the product type.',
+                commonDelivery: 'Steps: add to cart → complete checkout → send your Roblox username or required account details → receive your order through in-game Gift or account credentials.',
+                category: 'Category', product: 'Product', status: 'Status', total: 'Total price',
+                send: 'Please send after ordering', requestItems: ['Product or service name', 'Your Roblox username or the required account details'],
+                backAdd: 'Add to Cart & Return', close: 'Close', gamePassTag: 'Blox Fruits Values', accountTag: 'Ready account',
+                noResults: 'No matching results right now.', specs: 'Specs',
+                serviceNoDesc: 'No description is available for this product yet.',
+                backHome: 'Back to Home'
+            }
+        };
+
+        function currentLang() { return document.getElementById('langSelect').value || 'ar'; }
+        function currentCurr() { return document.getElementById('currencySelect').value || 'USD'; }
+        function t() { return texts[currentLang()]; }
+        function formatPrice(price) {
+            const curr = currentCurr();
+            return `${(price * rates[curr]).toFixed(2)} ${symbols[curr]}`;
+        }
+        function updateCartCount() {
+            const el = document.getElementById('cartCount');
+            if (el) el.textContent = cart.length;
+        }
+
+        // === تبديل اللغة (نفس المنطق في index.html) ===
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+        }
+        function changeLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            const html = document.getElementById('mainHtml');
+            if (lang === 'en') { html.dir = "ltr"; html.lang = "en"; }
+            else { html.dir = "rtl"; html.lang = "ar"; }
+            applyTranslations(lang);
+            try {
+                localStorage.setItem('selectedLang', lang);
+                localStorage.setItem('nova_lang', lang); // توافق قديم
+            } catch(e) {}
+            applySettings();
+        }
+        function changeCurrency() {
+            const currency = document.getElementById('currencySelect').value;
+            try {
+                localStorage.setItem('selectedCurrency', currency);
+                localStorage.setItem('exchangeRate', rates[currency]);
+                localStorage.setItem('nova_curr', currency); // توافق قديم
+            } catch(e) {}
+            updateAll(); // لإعادة رسم الأسعار بكل الفلاتر
+        }
+
+        function updateAll() {
+            applySettings();
+        }
+
+        // === تطبيق اللغة والإعدادات عند التحميل ===
+        function applySettings() {
+            const lang = currentLang();
+            const heroTitle = texts[lang].heroTitle;
+            const heroText = texts[lang].heroText;
+            document.getElementById('heroTitle').textContent = heroTitle;
+            document.getElementById('heroText').textContent = heroText;
+            document.getElementById('btn-perm').textContent = texts[lang].filters[0];
+            document.getElementById('btn-normal').textContent = texts[lang].filters[1];
+            document.getElementById('btn-pass').textContent = texts[lang].filters[2];
+            document.getElementById('btn-acc').textContent = texts[lang].filters[3];
+            document.getElementById('btn-srv').textContent = texts[lang].filters[4];
+            document.getElementById('searchInput').placeholder = texts[lang].search;
+            applyTranslations(lang);
+            renderProducts();
+        }
+
+        // === البحث والعرض ===
+        function getSearchBlob(product) {
+            let blob = `${product.nameAr || ''} ${product.nameEn || ''}`;
+            if (product.specsAr) blob += ' ' + product.specsAr.join(' ');
+            if (product.specsEn) blob += ' ' + product.specsEn.join(' ');
+            if (product.descAr) blob += ' ' + product.descAr;
+            if (product.descEn) blob += ' ' + product.descEn;
+            return blob.toLowerCase();
+        }
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            const lang = currentLang();
+            const tx = t();
+            // البحث يتجاوز الفلتر النشط: لو فيه نص بحث نعرض النتائج من كل المنتجات
+            const filtered = searchQuery
+                ? products.filter(p => getSearchBlob(p).includes(searchQuery))
+                : products.filter(p => p.cat === currentFilter);
+
+            if (!filtered.length) {
+                grid.innerHTML = `<div class="empty-state">${tx.noResults}</div>`;
+                return;
+            }
+
+            filtered.forEach((p) => {
+                const originalIndex = products.findIndex(item => item.nameAr === p.nameAr && item.cat === p.cat);
+                const tag = p.cat === 'pass' ? tx.gamePassTag : (p.cat === 'acc' ? tx.accountTag : '');
+                const badge = lang === 'ar' ? p.badgeAr : p.badgeEn;
+                const previewSpecs = (lang === 'ar' ? p.specsAr : p.specsEn) || [];
+                const shortDesc = (lang === 'ar' ? p.descAr : p.descEn) || '';
+
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="thumb-wrap">
+                            <div class="card-info-btn" onclick="openDetails(${originalIndex})"><i class="fas fa-info"></i></div>
+                            ${badge ? `<div class="image-badge">${badge}</div>` : ''}
+                            <img src="${p.img}" alt="${lang === 'ar' ? p.nameAr : p.nameEn}">
+                        </div>
+                        ${tag ? `<div class="mini-tag"><i class="fas fa-bolt"></i>${tag}</div>` : ''}
+                        <div class="card-title">${lang === 'ar' ? p.nameAr : p.nameEn}</div>
+                        <div class="price-line">${formatPrice(p.price)}</div>
+                        ${previewSpecs.length ? `<ul class="specs-preview">${previewSpecs.slice(0,2).map(x => `<li>${x}</li>`).join('')}</ul>` 
+                          : (shortDesc ? `<div class="small-desc">${shortDesc.substring(0, 110)}${shortDesc.length>110?'…':''}</div>` : '')}
+                        <button class="btn btn-primary" onclick="addProductToCart(${originalIndex})">${tx.add}</button>
+                    </div>`;
+            });
+        }
+
+        // === التفاصيل (modal موحّد لكل الفئات) ===
+        function getCategoryLabel(p) {
+            const lang = currentLang();
+            if (p.cat === 'perm') return lang === 'ar' ? 'فاكهة دائمة' : 'Permanent Fruit';
+            if (p.cat === 'normal') return lang === 'ar' ? 'فاكهة عادية' : 'Normal Fruit';
+            if (p.cat === 'pass') return lang === 'ar' ? 'قيم باس' : 'Game Pass';
+            if (p.cat === 'acc') return lang === 'ar' ? 'حساب Roblox' : 'Roblox Account';
+            return lang === 'ar' ? 'خدمة' : 'Service';
+        }
+        function getServiceDescription(p) {
+            const lang = currentLang();
+            const d = lang === 'ar' ? p.descAr : p.descEn;
+            return (d && d.trim()) ? d : t().serviceNoDesc;
+        }
+        function openDetails(idx) {
+            const p = products[idx];
+            if (!p) return;
+            const lang = currentLang();
+            const tx = t();
+            const modalBody = document.getElementById('modalBody');
+            const name = lang === 'ar' ? p.nameAr : p.nameEn;
+            const specs = lang === 'ar' ? (p.specsAr || []) : (p.specsEn || []);
+            const badge = lang === 'ar' ? p.badgeAr : p.badgeEn;
+
+            let descriptionHtml = '';
+            if (p.cat === 'srv') {
+                const d = lang === 'ar' ? p.descAr : p.descEn;
+                if (d && d.trim()) {
+                    descriptionHtml = `<p class="detail-text">${d}</p>`;
+                } else {
+                    descriptionHtml = `<div class="detail-list"><li style="color:var(--text-gray);font-style:italic;">${tx.serviceNoDesc}</li></div>`;
+                }
+            } else {
+                let extraNotes = '';
+                if (p.cat === 'acc') {
+                    extraNotes = `<p class="detail-text">${lang === 'ar' ? 'الحسابات تُسلم ببيانات الدخول كاملة بعد تأكيد الطلب. يُفضَّل تغيير كلمة المرور فور الاستلام.' : 'Accounts are delivered with full credentials after order confirmation. It is recommended to change the password immediately after receiving the account.'}</p>`;
+                } else if (p.cat === 'pass') {
+                    extraNotes = `<p class="detail-text">${lang === 'ar' ? 'يمكن تسليم أغلب عناصر هذه الفئة عبر Gift داخل اللعبة أو حسب نوع الطلب.' : 'Most items in this category can be delivered via in-game Gift depending on the order type.'}</p>`;
+                }
+                descriptionHtml = `<p class="detail-text">${tx.commonDesc}</p>${extraNotes}`;
+            }
+
+            modalBody.innerHTML = `
+                <div class="modal-card">
+                    <div class="modal-top">
+                        <img class="modal-cover" src="${p.img}" alt="${name}">
+                    </div>
+                    <div class="modal-body">
+                        ${badge ? `<div class="mini-tag">${badge}</div>` : ''}
+                        <h2>${name}</h2>
+                        <div class="meta-line">
+                            <strong>${tx.product}:</strong> ${name}<br>
+                            <strong>${tx.category}:</strong> ${getCategoryLabel(p)}<br>
+                            <strong>${tx.status}:</strong> <span style="color:var(--success)">${tx.available}</span><br>
+                            <strong>${tx.total}:</strong> ${formatPrice(p.price)}
+                        </div>
+                        <div class="feature-grid">
+                            ${tx.features.map(item => `<div class="feature-item"><i class="fas fa-check-circle" style="color:var(--neon-blue);margin-inline-end:6px"></i>${item}</div>`).join('')}
+                        </div>
+                        <div class="section-title">${tx.description}</div>
+                        ${descriptionHtml}
+                        ${specs.length ? `<div class="section-title">${tx.specs}</div><ul class="detail-list">${specs.map(s => `<li>${s}</li>`).join('')}</ul>` : ''}
+                        <div class="section-title">${tx.delivery}</div>
+                        <p class="detail-text">${tx.commonDelivery}</p>
+                        <div class="section-title">${tx.send}</div>
+                        <ul class="detail-list">${tx.requestItems.map(it => `<li>${it}</li>`).join('')}</ul>
+                        <div class="cta-row">
+                            <button class="btn btn-primary" onclick="handleModalAddToCart(${idx})">${tx.backAdd}</button>
+                            <button class="btn btn-secondary" onclick="closeModal()">${tx.close}</button>
+                        </div>
+                    </div>
+                </div>`;
+            document.getElementById('detailsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            document.getElementById('detailsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        function setFilter(cat, el) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-opt').forEach(opt => opt.classList.remove('active'));
+            el.classList.add('active');
+            renderProducts();
+        }
+        function handleSearch() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            // عند البحث نوقف الفلتر النشط بصرياً كي يعرف المستخدم أن البحث شامل
+            if (searchQuery) {
+                document.querySelectorAll('.filter-opt').forEach(opt => opt.classList.remove('active'));
+            } else {
+                // أعد تنشيط الفلتر السابق
+                const map = { perm:'btn-perm', normal:'btn-normal', pass:'btn-pass', acc:'btn-acc', srv:'btn-srv' };
+                const active = document.getElementById(map[currentFilter]);
+                if (active) active.classList.add('active');
+            }
+            renderProducts();
+        }
+        function addToCart(item) {
+            const normalized = normalizeCartItem(item);
+            if (!normalized) return;
+            cart.push(normalized);
+            persistCart();
+            alert(t().added);
+        }
+        function persistCart() {
+            localStorage.setItem('nova_cart', JSON.stringify(cart));
+            localStorage.setItem('selectedLang', currentLang());
+            localStorage.setItem('selectedCurrency', currentCurr());
+            localStorage.setItem('exchangeRate', rates[currentCurr()]);
+            updateCartCount();
+        }
+        function addProductToCart(index) {
+            const p = products[index];
+            if (!p) return;
+            addToCart({
+                name: currentLang() === 'ar' ? p.nameAr : p.nameEn,
+                nameAr: p.nameAr, nameEn: p.nameEn,
+                price: Number(p.price || 0),
+                img: p.img || 'https://i.ibb.co/5xXyd4jN/1774783408791.png',
+                cat: p.cat
+            });
+        }
+        function handleModalAddToCart(idx) {
+            const p = products[idx];
+            if (!p) return;
+            addProductToCart(idx);
+            closeModal();
+        }
+        function openCartPage() {
+            try {
+                localStorage.setItem('selectedLang', currentLang());
+                localStorage.setItem('selectedCurrency', currentCurr());
+                localStorage.setItem('exchangeRate', rates[currentCurr()]);
+            } catch(e) {}
+            window.location.href = CART_PAGE_LOCAL;
+        }
+
+        // === أحداث النوافذ لمزامنة الإعدادات بين الصفحات ===
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'selectedLang' && e.newValue) {
+                document.getElementById('langSelect').value = e.newValue;
+                applySettings();
+            }
+            if (e.key === 'selectedCurrency' && e.newValue) {
+                document.getElementById('currencySelect').value = e.newValue;
+                applySettings();
+            }
+        });
+        window.addEventListener('pageshow', function() {
+            // عند الرجوع إلى هذه الصفحة بصيغة bfcache
+            try {
+                const savedLang = localStorage.getItem('selectedLang');
+                if (savedLang && document.getElementById('langSelect').value !== savedLang) {
+                    document.getElementById('langSelect').value = savedLang;
+                }
+                const savedCurr = localStorage.getItem('selectedCurrency');
+                if (savedCurr && document.getElementById('currencySelect').value !== savedCurr) {
+                    document.getElementById('currencySelect').value = savedCurr;
+                }
+                applySettings();
+            } catch(e) {}
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const savedLang = localStorage.getItem('selectedLang');
+                if (savedLang) document.getElementById('langSelect').value = savedLang;
+                const savedCurr = localStorage.getItem('selectedCurrency');
+                if (savedCurr) document.getElementById('currencySelect').value = savedCurr;
+            } catch(e) {}
+            updateCartCount();
+            applySettings();
+        });
+
+        window.onclick = function(e) {
+            if (e.target === document.getElementById('detailsModal')) closeModal();
+        };
+    </script>
+</body>
+</html>
