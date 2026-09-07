@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nova Store — إضافة تقييم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        (function() {
+            try {
+                const l = localStorage.getItem('selectedLang');
+                const h = document.getElementById('mainHtml');
+                if (l === 'en') { h.dir = 'ltr'; h.lang = 'en'; } else { h.dir = 'rtl'; h.lang = 'ar'; }
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        :root { --main-bg: #0d1117; --card-bg: #161b22; --neon-blue: #00d4ff; --gold: #ffcc00; --border: #30363d; --success: #4ade80; --danger: #ff6b6b; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: linear-gradient(180deg, #0d1117 0%, #0b1220 100%); color: #fff; font-family: 'Tajawal', sans-serif; min-height: 100vh; }
+        .header { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; background: rgba(13,17,23,.96); border-bottom: 2px solid var(--neon-blue); position: sticky; top: 0; z-index: 1000; }
+        .home-btn { display: inline-flex; align-items: center; gap: 8px; background: #21262d; border: 1px solid var(--neon-blue); color: #fff; padding: 7px 12px; border-radius: 12px; font-family: inherit; font-size: 12px; font-weight: 700; text-decoration: none; cursor: pointer; transition: .2s; }
+        .home-btn:hover { background: var(--neon-blue); color: #00131b; }
+        .home-btn i { color: var(--gold); }
+        .nav-controls { display: flex; gap: 6px; align-items: center; }
+        .pill { display: flex; background: #21262d; border: 1px solid var(--border); border-radius: 20px; height: 32px; align-items: center; overflow: hidden; }
+        .pill select { background: transparent; color: #fff; border: none; padding: 0 10px; font-family: 'Tajawal'; font-size: 11px; cursor: pointer; outline: none; height: 100%; }
+        .wrap { max-width: 640px; margin: 0 auto; padding: 22px 15px 46px; }
+        .page-title { text-align: center; color: var(--neon-blue); font-size: 22px; font-weight: 800; text-shadow: 0 0 16px rgba(0,212,255,.4); margin: 0 0 4px; }
+        .page-sub { text-align: center; color: #8b949e; font-size: 12px; margin: 0 0 18px; }
+        .form-card { background: linear-gradient(180deg, #141922, #0e1219); border: 1px solid var(--border); border-radius: 20px; padding: 18px; }
+        .field-label { display: block; color: var(--gold); font-weight: 700; font-size: 13px; margin: 14px 0 8px; }
+        .avatar-up { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 4px; }
+        .avatar { width: 88px; height: 88px; border-radius: 50%; background: #2a3140; border: 2px solid var(--neon-blue); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar i { color: #5b6472; font-size: 38px; }
+        .text-input { width: 100%; background: #0d1117; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; color: #fff; font-family: inherit; font-size: 13px; outline: none; }
+        .text-input:focus { border-color: var(--neon-blue); }
+        textarea.text-input { min-height: 110px; resize: vertical; line-height: 1.8; }
+        .star-row { display: flex; justify-content: center; gap: 8px; font-size: 32px; }
+        .star-row .star { color: #3a4351; cursor: pointer; transition: .15s; }
+        .star-row .star.active, .star-row .star:hover { color: var(--gold); text-shadow: 0 0 12px rgba(255,204,0,.6); }
+        .proof-up { margin-top: 14px; background: #0d1117; border: 2px dashed rgba(0,212,255,.4); border-radius: 14px; padding: 22px; text-align: center; color: #8b949e; font-size: 13px; cursor: pointer; transition: .2s; }
+        .proof-up:hover { border-color: var(--neon-blue); color: #fff; }
+        .proof-up i { font-size: 26px; color: var(--neon-blue); display: block; margin-bottom: 8px; }
+        .proof-prev { width: 100%; max-height: 260px; object-fit: cover; border-radius: 12px; margin-top: 10px; border: 1px solid var(--neon-blue); }
+        .note-box { margin-top: 14px; background: rgba(255,204,0,.07); border: 1px solid rgba(255,204,0,.25); border-radius: 12px; padding: 11px 13px; color: #ffe9b3; font-size: 12px; line-height: 1.9; }
+        .form-alert { margin-top: 14px; border-radius: 12px; padding: 11px 13px; font-size: 13px; line-height: 1.8; display: none; }
+        .form-alert.err { display: block; background: rgba(255,107,107,.1); border: 1px solid rgba(255,107,107,.4); color: #ffc9c9; }
+        .form-alert.ok { display: block; background: rgba(74,222,128,.12); border: 1px solid rgba(74,222,128,.45); color: #c8f5dc; }
+        .submit-btn { width: 100%; margin-top: 16px; background: linear-gradient(90deg, #00d4ff, #7b2ff7); color: #00131b; border: none; border-radius: 12px; padding: 13px; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; transition: .2s; }
+        .submit-btn:hover { filter: brightness(1.12); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="home-btn"><i class="fas fa-home"></i><span data-ar="العودة للرئيسية" data-en="Back to Home">العودة للرئيسية</span></a>
+        <div class="nav-controls">
+            <div class="pill">
+                <select id="langSelect" onchange="changeLanguage()">
+                    <option value="ar">العربية (AR)</option>
+                    <option value="en">English (EN)</option>
+                </select>
+            </div>
+            <div class="pill">
+                <select id="currencySelect" onchange="changeCurrency()">
+                    <option value="USD">دولار (USD $)</option>
+                    <option value="EUR">يورو (EUR €)</option>
+                    <option value="SAR">ريال سعودي (SAR)</option>
+                    <option value="AED">درهم إماراتي (AED)</option>
+                    <option value="QAR">ريال قطري (QAR)</option>
+                    <option value="BHD">دينار بحريني (BHD)</option>
+                    <option value="OMR">ريال عماني (OMR)</option>
+                    <option value="KWD">دينار كويتي (KWD)</option>
+                    <option value="EGP">جنيه مصري (EGP)</option>
+                    <option value="LYD">دينار ليبي (LYD)</option>
+                    <option value="MAD">درهم مغربي (MAD)</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <h1 class="page-title" data-ar="إضافة تقييم" data-en="Add a Review">إضافة تقييم</h1>
+        <p class="page-sub" data-ar="شاركنا تجربتك بعد استلام طلبك" data-en="Share your experience after receiving your order">شاركنا تجربتك بعد استلام طلبك</p>
+
+        <div class="form-card">
+            <div class="avatar-up">
+                <div class="avatar" id="avatarPreview"><i class="fas fa-user"></i></div>
+                <button type="button" class="home-btn" onclick="document.getElementById('avatarInput').click()"><i class="fas fa-camera"></i><span data-ar="إضافة صورة شخصية (اختياري)" data-en="Add profile photo (optional)">إضافة صورة شخصية (اختياري)</span></button>
+                <input type="file" id="avatarInput" accept="image/*" hidden>
+            </div>
+
+            <label class="field-label" data-ar="الاسم" data-en="Name">الاسم</label>
+            <input type="text" id="nameInput" class="text-input" placeholder="اكتب اسمك..." data-ar="اكتب اسمك..." data-en="Type your name...">
+
+            <label class="field-label" data-ar="عدد النجوم" data-en="Star rating">عدد النجوم</label>
+            <div class="star-row" id="starRow">
+                <span class="star" data-v="1"><i class="fas fa-star"></i></span>
+                <span class="star" data-v="2"><i class="fas fa-star"></i></span>
+                <span class="star" data-v="3"><i class="fas fa-star"></i></span>
+                <span class="star" data-v="4"><i class="fas fa-star"></i></span>
+                <span class="star" data-v="5"><i class="fas fa-star"></i></span>
+            </div>
+
+            <label class="field-label" data-ar="تعليقك" data-en="Your review">تعليقك</label>
+            <textarea id="textInput" class="text-input" placeholder="اكتب تعليقك عن الخدمة والمنتج..." data-ar="اكتب تعليقك عن الخدمة والمنتج..." data-en="Write your review about the service and product..."></textarea>
+
+            <label class="field-label" data-ar="صورة إثبات التسليم (مطلوبة)" data-en="Delivery proof image (required)">صورة إثبات التسليم (مطلوبة)</label>
+            <div class="proof-up" onclick="document.getElementById('proofInput').click()">
+                <i class="fas fa-camera"></i>
+                <span data-ar="اضغط هنا لرفع صورة تثبت استلامك المنتج" data-en="Click here to upload a photo proving you received the product">اضغط هنا لرفع صورة تثبت استلامك المنتج</span>
+            </div>
+            <input type="file" id="proofInput" accept="image/*" hidden>
+            <img id="proofPreview" class="proof-prev" alt="إثبات التسليم" style="display:none">
+
+            <div class="note-box">وضع صورة اثبات التسليم ضروري من  اجل نشر التعليق منعا للتعليقات الزائفة، وهي ان تضع اي صورة تدل على انك استلمت المنتج بنجاح، يسعدنا ان تضع تعليقا ايجابيا إذا اعجتك خدماتنا!</div>
+
+            <div id="formAlert" class="form-alert"></div>
+            <button class="submit-btn" onclick="submitReview()" data-ar="نشر التقييم" data-en="Publish Review">نشر التقييم</button>
+        </div>
+    </main>
+
+    <script>
+        const rates = { USD: 1, EUR: 0.93, SAR: 3.75, AED: 3.6725, QAR: 3.64, BHD: 0.376, OMR: 0.3845, KWD: 0.31, EGP: 54.8, LYD: 9.3, MAD: 10 };
+        let rating = 0;
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                const val = el.getAttribute('data-' + lang);
+                if (!val) return;
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') { el.placeholder = val; }
+                else { el.textContent = val; }
+            });
+        }
+        function changeLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            const h = document.getElementById('mainHtml');
+            h.dir = lang === 'en' ? 'ltr' : 'rtl';
+            h.lang = lang === 'en' ? 'en' : 'ar';
+            applyTranslations(lang);
+            try { localStorage.setItem('selectedLang', lang); } catch(e) {}
+        }
+        function changeCurrency() {
+            const cur = document.getElementById('currencySelect').value;
+            try { localStorage.setItem('selectedCurrency', cur); localStorage.setItem('exchangeRate', rates[cur]); } catch(e) {}
+        }
+
+        // اختيار النجوم
+        const starRow = document.getElementById('starRow');
+        starRow.querySelectorAll('.star').forEach(s => {
+            s.addEventListener('click', () => { rating = Number(s.dataset.v); paintStars(); });
+        });
+        function paintStars() {
+            starRow.querySelectorAll('.star').forEach(s => s.classList.toggle('active', Number(s.dataset.v) <= rating));
+        }
+
+        // معاينة الصور قبل الرفع
+        function previewFile(input, targetId) {
+            const f = input.files[0];
+            if (!f) return;
+            const r = new FileReader();
+            r.onload = e => {
+                if (targetId === 'avatarPreview') {
+                    document.getElementById('avatarPreview').innerHTML = '<img src="' + e.target.result + '" alt="">';
+                } else {
+                    const img = document.getElementById('proofPreview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                }
+            };
+            r.readAsDataURL(f);
+        }
+        document.getElementById('avatarInput').addEventListener('change', function() { previewFile(this, 'avatarPreview'); });
+        document.getElementById('proofInput').addEventListener('change', function() { previewFile(this, 'proofPreview'); });
+
+        // ضغط الصور قبل الحفظ في التخزين المحلي
+        function readResized(file, maxDim) {
+            return new Promise(resolve => {
+                const r = new FileReader();
+                r.onload = ev => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const c = document.createElement('canvas');
+                        let w = img.width, h = img.height;
+                        const scale = Math.min(1, maxDim / Math.max(w, h));
+                        c.width = Math.max(1, Math.round(w * scale));
+                        c.height = Math.max(1, Math.round(h * scale));
+                        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+                        resolve(c.toDataURL('image/jpeg', 0.72));
+                    };
+                    img.src = ev.target.result;
+                };
+                r.readAsDataURL(file);
+            });
+        }
+
+        function submitReview() {
+            const alertEl = document.getElementById('formAlert');
+            const show = (msg, ok) => { alertEl.textContent = msg; alertEl.className = 'form-alert ' + (ok ? 'ok' : 'err'); };
+            const name = document.getElementById('nameInput').value.trim();
+            const text = document.getElementById('textInput').value.trim();
+            const proofFile = document.getElementById('proofInput').files[0];
+            const avatarFile = document.getElementById('avatarInput').files[0];
+
+            if (!proofFile) { show('لا يمكن نشر تعليقك لأنك لم تعرض صورة تثبت استلامك المنتج', false); return; }
+            if (!name) { show('يرجى كتابة اسمك أولاً', false); return; }
+            if (!text) { show('يرجى كتابة تعليقك أولاً', false); return; }
+            if (!rating) { show('يرجى تحديد عدد النجوم أولاً', false); return; }
+
+            Promise.all([
+                avatarFile ? readResized(avatarFile, 160) : Promise.resolve(null),
+                readResized(proofFile, 420)
+            ]).then(([avatar, proof]) => {
+                let reviews = [];
+                try { reviews = JSON.parse(localStorage.getItem('nova_reviews')) || []; } catch(e) { reviews = []; }
+                reviews.push({ id: Date.now(), name: name, stars: rating, text: text, avatar: avatar, proof: proof, date: new Date().toLocaleDateString() });
+                localStorage.setItem('nova_reviews', JSON.stringify(reviews));
+                show('تم نشر تقييمك بنجاح! شكرًا لثقتكم بـ Nova Store ❤️', true);
+                setTimeout(() => window.location.href = 'index.html', 1800);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const l = localStorage.getItem('selectedLang');
+                if (l) document.getElementById('langSelect').value = l;
+                const c = localStorage.getItem('selectedCurrency');
+                if (c) document.getElementById('currencySelect').value = c;
+            } catch(e) {}
+            applyTranslations(document.getElementById('langSelect').value || 'ar');
+        });
+    </script>
+</body>
+</html>
