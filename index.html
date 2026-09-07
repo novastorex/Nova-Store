@@ -74,9 +74,100 @@
         .payment-methods img:hover { filter: grayscale(0%); }
 
         .copyright { color: #8b949e; font-size: 11px; margin-top: 15px; }
+    
+        /* ====== إعلان التحديث 1.1V — وميض البرق وانقسام الشاشة ====== */
+        #announceOverlay { position: fixed; inset: 0; z-index: 9000; display: none; }
+        #announceOverlay.show { display: block; }
+        .split-flash { position: absolute; inset: 0; z-index: 1; background: radial-gradient(circle at 50% 50%, rgba(0,212,255,.30), rgba(123,47,247,.12) 45%, transparent 70%); opacity: 0; transition: opacity .15s; }
+        #announceOverlay.flash-on .split-flash { opacity: 1; }
+        .split-panel { position: absolute; top: 0; bottom: 0; width: 50%; background: #04060a; z-index: 2; transition: transform .5s cubic-bezier(.7,0,.3,1); will-change: transform; }
+        #splitLeft { left: 0; transform: translateX(-100%); }
+        #splitRight { right: 0; transform: translateX(100%); }
+        #announceOverlay.split #splitLeft, #announceOverlay.split #splitRight { transform: translateX(0); }
+        #announceOverlay.opened #splitLeft { transform: translateX(-100%); }
+        #announceOverlay.opened #splitRight { transform: translateX(100%); }
+        .lightning-bolt { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 3; font-size: 110px; color: #fff; opacity: 0; pointer-events: none; text-shadow: 0 0 25px #00d4ff, 0 0 70px #00d4ff, 0 0 140px #7b2ff7; }
+        #announceOverlay.flash-on .lightning-bolt { opacity: 1; animation: boltFlicker .55s steps(2, start) 2; }
+        @keyframes boltFlicker { 0% { opacity: 0; } 25% { opacity: 1; } 45% { opacity: 0; } 65% { opacity: 1; } 80% { opacity: .35; } 100% { opacity: 1; } }
+        .announce-stage { position: absolute; inset: 0; z-index: 4; display: flex; align-items: center; justify-content: center; padding: 16px; opacity: 0; }
+        #announceOverlay.pop .announce-stage { opacity: 1; transition: opacity .25s; }
+        .announce-card { width: 100%; max-width: 460px; max-height: 94vh; overflow-y: auto; background: linear-gradient(180deg, #12161f, #0a0e15); border: 1px solid rgba(0,212,255,.5); border-radius: 22px; padding: 20px; box-shadow: 0 0 42px rgba(0,212,255,.28), 0 34px 80px rgba(0,0,0,.65); transform: scale(.25); transition: transform .55s cubic-bezier(.2,1.2,.3,1); }
+        #announceOverlay.pop .announce-card { transform: scale(1); }
+        .announce-eyebrow { color: var(--neon-blue); font-size: 11px; letter-spacing: 3px; text-align: center; opacity: .9; }
+        .announce-title { color: #fff; font-size: 21px; font-weight: 800; text-align: center; margin: 6px 0 2px; text-shadow: 0 0 20px rgba(0,212,255,.55); }
+        .announce-date { color: #97a2b0; text-align: center; font-size: 12px; margin-bottom: 10px; }
+        .announce-img { width: 100%; border-radius: 14px; margin: 4px 0 12px; border: 1px solid rgba(0,212,255,.25); }
+        .announce-list { list-style: none; padding: 0; margin: 0 0 14px; display: grid; gap: 9px; }
+        .announce-list li { color: #d5dde8; font-size: 13px; line-height: 1.75; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 12px; padding: 9px 11px; }
+        .neon-emoji { display: inline-block; margin-inline-end: 4px; animation: emojiNeon 2.6s ease-in-out infinite alternate; }
+        @keyframes emojiNeon { from { transform: rotate(-10deg) scale(1); filter: drop-shadow(0 0 4px #00d4ff) drop-shadow(0 0 10px #7b2ff7); } to { transform: rotate(10deg) scale(1.14); filter: drop-shadow(0 0 8px #ffcc00) drop-shadow(0 0 18px #00d4ff); } }
+        .announce-thanks { color: var(--gold); text-align: center; font-size: 13px; margin-bottom: 14px; }
+        .announce-btns { display: grid; gap: 9px; }
+        .rbtn { display: block; width: 100%; box-sizing: border-box; text-align: center; background: rgba(255,255,255,.06); color: #fff; border: 1px solid rgba(255,255,255,.14); padding: 11px 14px; border-radius: 12px; font-weight: 700; font-size: 13px; font-family: inherit; cursor: pointer; text-decoration: none; transition: .2s; }
+        .rbtn:hover { border-color: var(--neon-blue); background: rgba(0,212,255,.07); }
+        .rbtn.primary { background: linear-gradient(90deg, #00d4ff, #7b2ff7); color: #00131b; border: none; }
+        .rbtn.primary:hover { filter: brightness(1.12); }
+        /* إشعار "استمتع بمنتجاتنا الجديدة" */
+        #enjoyToast { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(160%); z-index: 9500; width: min(92vw, 380px); background: linear-gradient(180deg, #12161f, #0a0e15); border: 1px solid rgba(0,212,255,.45); border-radius: 18px; padding: 18px 20px; text-align: center; box-shadow: 0 0 36px rgba(0,212,255,.32); transition: transform .55s cubic-bezier(.2,1.2,.3,1); }
+        #enjoyToast.show { transform: translateX(-50%) translateY(0); }
+        #enjoyToast .msg { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+        /* ====== قسم التقييمات ====== */
+        .reviews-section { padding: 22px 4% 8px; }
+        .reviews-title { text-align: center; margin: 0 0 4px; color: var(--neon-blue); font-size: 20px; font-weight: 800; text-shadow: 0 0 16px rgba(0,212,255,.4); }
+        .reviews-sub { text-align: center; color: #8b949e; font-size: 12px; margin: 0 0 16px; }
+        .reviews-layout { display: flex; gap: 16px; align-items: stretch; }
+        .reviews-box { flex: 1; min-width: 0; background: var(--card-bg); border: 1px solid #30363d; border-radius: 18px; padding: 14px; max-height: 540px; overflow-y: auto; }
+        .review-card { background: #1a2029; border: 1px solid #30363d; border-radius: 16px; padding: 13px; margin-bottom: 12px; }
+        .review-card:last-child { margin-bottom: 0; }
+        .review-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .avatar { width: 46px; height: 46px; border-radius: 50%; background: #2a3140; border: 2px solid var(--neon-blue); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar i { color: #5b6472; font-size: 22px; }
+        .review-name { color: #fff; font-weight: 800; font-size: 14px; }
+        .review-stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; text-shadow: 0 0 8px rgba(255,204,0,.5); }
+        .review-text { color: #d5dde8; font-size: 13px; line-height: 1.8; margin: 0 0 10px; }
+        .review-proof { width: 100%; max-height: 260px; object-fit: cover; border-radius: 12px; border: 1px solid #30363d; cursor: zoom-in; }
+        .reviews-actions { display: flex; flex-direction: column; gap: 10px; justify-content: center; min-width: 160px; }
+        .reviews-actions .rbtn { font-size: 13px; }
+        @media (max-width: 760px) { .reviews-layout { flex-direction: column; } .reviews-actions { flex-direction: row; min-width: 0; } }
+
     </style>
 </head>
 <body id="bodyTag">
+    <!-- إعلان التحديث 1.1V — انقسام الشاشة بوميض البرق -->
+    <div id="announceOverlay" aria-hidden="true">
+        <div class="split-flash"></div>
+        <div class="split-panel" id="splitLeft"></div>
+        <div class="split-panel" id="splitRight"></div>
+        <div class="lightning-bolt">⚡</div>
+        <div class="announce-stage">
+            <div class="announce-card">
+                <div class="announce-eyebrow">NOVA STORE</div>
+                <div class="announce-title"><span class="neon-emoji">🚀</span> تحديث Nova Store 1.1V</div>
+                <div class="announce-date">7 سبتمبر 2026</div>
+                <img class="announce-img" src="https://i.ibb.co/JWj3Ty4j/20260907-
+.jpg" alt="Nova Store Update">
+                <ul class="announce-list">
+                    <li><span class="neon-emoji">🧲</span> إضافة منتجات تحديث الماجنيت في Blox Fruits.</li>
+                    <li><span class="neon-emoji">🎨</span> إضافة ألوان الفواكه الليمتد بأسعار تنافسية.</li>
+                    <li><span class="neon-emoji">🔧</span> صيانة شاملة للمتجر وإجراء مجموعة من التحسينات والتعديلات.</li>
+                    <li><span class="neon-emoji">🍎</span> فاكهة الماجنيت متوفرة الآن بنسختيها العادية والدائمة.</li>
+                    <li><span class="neon-emoji">🌍</span> ميزة تحديد العملة تلقائيًا حسب البلد لتسهيل تجربة التسوق.</li>
+                </ul>
+                <div class="announce-thanks">شكرًا لثقتكم بـ Nova Store ❤️</div>
+                <div class="announce-btns">
+                    <button class="rbtn primary" onclick="doneAnnounce()"><span data-ar="قرأت التحديثات الجديدة" data-en="I've read the new updates">قرأت التحديثات الجديدة</span></button>
+                    <button class="rbtn" onclick="closeAnnounce()"><span data-ar="إغلاق الصفحة" data-en="Close">إغلاق الصفحة</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="enjoyToast" aria-hidden="true">
+        <div class="msg"><span data-ar="استمتع بمنتجاتنا الجديدة ❤️" data-en="Enjoy our new products ❤️">استمتع بمنتجاتنا الجديدة ❤️</span></div>
+        <button class="rbtn primary" onclick="hideEnjoy()"><span data-ar="إغلاق الصفحة" data-en="Close">إغلاق الصفحة</span></button>
+    </div>
+
+
 
     <div class="header">
         <div class="menu-btn" onclick="openNav()">☰</div>
@@ -111,7 +202,7 @@
             </a>
         </div>
 
-        <div class="logo"><img src="https://i.ibb.co/5xXyd4jN/1774783408791.png" alt="Nova Store"></div>
+        <div class="logo"><img src="https://i.ibb.co/xKqV05h8/file-00000000bafc81f48eebdf12caf8ce4a.png" alt="Nova Store"></div>
     </div>
 
     <div id="mySidenav" class="side-menu right">
@@ -130,7 +221,7 @@
     </div>
 
     <div class="banner-container reveal">
-        <img src="https://i.ibb.co/sdmTsnSS/20260329-202202.jpg" alt="Nova Store banner">
+        <img src="https://i.ibb.co/JRkxsB6g/20260907-215043.jpg" alt="Nova Store banner">
     </div>
 
     <!-- شبكة البطاقات: ترتيب الـ DOM (من اليمين لليسار في RTL) -->
@@ -139,9 +230,22 @@
     <!-- صف 3: ماب السرقة (يمين) | ماب التسونامي (يسار) -->
     <!-- صف 4: ماب 99 ليلة (يمين) | ماب المزرعة (يسار) -->
     <!-- صف 5: روبوكس (يمين) | مابات أخرى (يسار) -->
+        <!-- قسم تقييمات العملاء -->
+    <section class="reviews-section" id="reviewsSection">
+        <h2 class="reviews-title"><span data-ar="✨ تقييمات عملائنا" data-en="✨ Our Customers' Reviews">✨ تقييمات عملائنا</span></h2>
+        <p class="reviews-sub"><span data-ar="آراء حقيقية بعد استلام الطلب — لا نشر دون صورة إثبات التسليم" data-en="Real reviews after order delivery — no publish without delivery proof">آراء حقيقية بعد استلام الطلب — لا نشر دون صورة إثبات التسليم</span></p>
+        <div class="reviews-layout">
+            <div class="reviews-box" id="reviewsBox"></div>
+            <div class="reviews-actions">
+                <a href="Reviews.html" class="rbtn primary"><i class="fas fa-list-ul" style="margin-inline-end:6px"></i><span data-ar="عرض جميع التقييمات" data-en="View All Reviews">عرض جميع التقييمات</span></a>
+                <a href="add-review.html" class="rbtn"><i class="fas fa-plus" style="margin-inline-end:6px"></i><span data-ar="إضافة تقييم" data-en="Add a Review">إضافة تقييم</span></a>
+            </div>
+        </div>
+    </section>
+
     <div class="container" id="gameGrid">
         <div class="card reveal" style="animation-delay: 0.1s;">
-            <img src="https://i.ibb.co/ZRWkt1dC/2.jpg" alt="Blox Fruits">
+            <img src="https://i.ibb.co/FNyXpGG/1788813089848.png" alt="Blox Fruits">
             <h3 data-ar="بلوكس فروت" data-en="Blox Fruits">بلوكس فروت</h3>
             <a href="blox-fruits.html" class="btn" data-ar="اضغط للذهاب" data-en="Go to Shop">اضغط للذهاب</a>
         </div>
@@ -253,8 +357,8 @@
                 'BHD': 0.376,
                 'OMR': 0.3845,
                 'KWD': 0.31,
-                'EGP': 55,
-                'LYD': 8.6,
+                'EGP': 54.80,
+                'LYD': 9.3,
                 'MAD': 10
             };
             try {
@@ -292,5 +396,96 @@
 
         window.addEventListener('storage', updateCartCount);
     </script>
+    <script>
+        /* ====== إعلان التحديث 1.1V ====== */
+        function showAnnounce() {
+            const ov = document.getElementById('announceOverlay');
+            if (!ov) return;
+            ov.classList.remove('opened', 'pop');
+            ov.classList.add('show', 'split', 'flash-on');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => ov.classList.remove('flash-on'), 700);
+            setTimeout(() => { ov.classList.add('opened'); ov.classList.remove('split'); }, 820);
+            setTimeout(() => ov.classList.add('pop'), 1280);
+        }
+        function doneAnnounce() {
+            const ov = document.getElementById('announceOverlay');
+            if (!ov) return;
+            ov.classList.remove('pop');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => ov.classList.remove('show'), 450);
+            const toast = document.getElementById('enjoyToast');
+            if (toast) setTimeout(() => toast.classList.add('show'), 200);
+        }
+        function closeAnnounce() {
+            const ov = document.getElementById('announceOverlay');
+            if (ov) { ov.classList.remove('pop', 'show'); document.body.style.overflow = 'auto'; }
+        }
+        function hideEnjoy() {
+            const toast = document.getElementById('enjoyToast');
+            if (toast) toast.classList.remove('show');
+        }
+
+        /* ====== تحديد العملة تلقائيًا حسب البلد (أول زيارة فقط) ====== */
+        const CC_CURRENCY = { SA:'SAR', AE:'AED', QA:'QAR', BH:'BHD', OM:'OMR', KW:'KWD', EG:'EGP', LY:'LYD', MA:'MAD', US:'USD', GB:'USD', DE:'EUR', FR:'EUR', ES:'EUR', IT:'EUR', NL:'EUR', BE:'EUR', AT:'EUR', IE:'EUR', PT:'EUR', GR:'EUR', FI:'EUR', SE:'EUR', PL:'EUR', RO:'EUR', HU:'EUR', CZ:'EUR' };
+        function autoDetectCurrency() {
+            try {
+                if (localStorage.getItem('nova_locale_done')) return;
+                const ctrl = new AbortController();
+                const timer = setTimeout(() => ctrl.abort(), 8000);
+                fetch('https://ipwho.is/', { signal: ctrl.signal })
+                    .then(r => r.json())
+                    .then(d => {
+                        clearTimeout(timer);
+                        const cur = (d && CC_CURRENCY[d.country_code]) || 'USD';
+                        const sel = document.getElementById('currencySelect');
+                        if (sel && sel.value !== cur) { sel.value = cur; changeCurrency(); }
+                    })
+                    .catch(() => clearTimeout(timer))
+                    .finally(() => { try { localStorage.setItem('nova_locale_done', '1'); } catch(e) {} });
+            } catch(e) {}
+        }
+
+        /* ====== عرض تقييمات العملاء (مثال افتراضي + ما يضيفه الزبائن) ====== */
+        const SAMPLE_REVIEW = { id: 1, name: 'عبد الله احمد', stars: 5, text: 'تسليم سريع وثقة', avatar: null, proof: 'https://i.ibb.co/pv0mTdss/IMG-20260815-202309.jpg', date: '2026' };
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+        function renderReviews() {
+            const box = document.getElementById('reviewsBox');
+            if (!box) return;
+            let stored = [];
+            try { stored = JSON.parse(localStorage.getItem('nova_reviews')) || []; } catch (e) { stored = []; }
+            stored.sort((a, b) => (b.id || 0) - (a.id || 0));
+            const all = [SAMPLE_REVIEW].concat(stored);
+            if (!all.length) { box.innerHTML = '<p style="color:#8b949e;text-align:center">لا توجد تقييمات بعد.</p>'; return; }
+            box.innerHTML = all.map(function (rv) {
+                const starStr = '★'.repeat(Math.min(5, Math.max(1, Number(rv.stars) || 5)));
+                const avatarHtml = rv.avatar ? '<img src="' + rv.avatar + '" alt="">' : '<i class="fas fa-user"></i>';
+                const proofHtml = rv.proof ? '<img class="review-proof" src="' + rv.proof + '" alt="إثبات التسليم" onclick="window.open(this.src, '_blank')">' : '';
+                return '<div class="review-card">' +
+                    '<div class="review-top">' +
+                        '<div class="avatar">' + avatarHtml + '</div>' +
+                        '<div style="flex:1;min-width:0">' +
+                            '<div class="review-name">' + escapeHtml(rv.name || '') + '</div>' +
+                            '<div class="review-stars">' + starStr + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<p class="review-text">' + escapeHtml(rv.text || '') + '</p>' +
+                    proofHtml +
+                '</div>';
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderReviews();
+            autoDetectCurrency();
+            setTimeout(showAnnounce, 600);
+        });
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'nova_reviews') renderReviews();
+        });
+    </script>
+
 </body>
 </html>
