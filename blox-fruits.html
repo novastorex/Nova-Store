@@ -187,6 +187,13 @@
             font-weight: 800; font-size: 11px; padding: 5px 10px; border-radius: 999px;
             box-shadow: 0 8px 16px rgba(255,204,0,.28); z-index: 3;
         }
+        .image-badge.left { right: auto; left: 12px; }
+        .filter-new {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), #ff9500); color: #111;
+            font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 999px;
+            margin-inline-start: 5px; vertical-align: middle;
+        }
         .mini-tag {
             display: inline-flex; align-items: center; gap: 5px;
             font-size: 10px; padding: 5px 8px;
@@ -337,6 +344,7 @@
     <div class="filter-container">
         <div class="filter-opt active" id="btn-perm" onclick="setFilter('perm', this)">فواكه دائمة</div>
         <div class="filter-opt" id="btn-normal" onclick="setFilter('normal', this)">فواكه عادية</div>
+        <div class="filter-opt" id="btn-skin" onclick="setFilter('skin', this)">ألوان الفواكه <span class="filter-new">جديد</span></div>
         <div class="filter-opt" id="btn-pass" onclick="setFilter('pass', this)">قيم باس</div>
         <div class="filter-opt" id="btn-acc" onclick="setFilter('acc', this)">حسابات</div>
         <div class="filter-opt" id="btn-srv" onclick="setFilter('srv', this)">الخدمات</div>
@@ -350,6 +358,7 @@
 
         const products = [
             // --- الفواكه الدائمة (Perm) ---
+            { nameAr: "فاكهة الماجنيت بيرم (دائمة)", nameEn: "Magnet Fruit Perm", price: 24.00, img: "https://i.ibb.co/5g4hSMnL/Magnet-Fruit-1.webp", cat: "perm", badgeAr: "جديدة", badgeEn: "New", badgePos: "left" },
             { nameAr: "فاكهة التنين بيرم (دائمة)", nameEn: "Dragon Perm", price: 30.00, img: "https://i.ibb.co/0yN7KDQg/Dragon-East-Fruit-1.webp", cat: "perm" },
             { nameAr: "فاكهة الكيتسوني بيرم (دائمة)", nameEn: "Kitsune Perm", price: 25.00, img: "https://i.ibb.co/CKVRc3vz/Kitsune-Fruit-1.webp", cat: "perm" },
             { nameAr: "فاكهة الكنترول بيرم (دائمة)", nameEn: "Control Perm", price: 24.50, img: "https://i.ibb.co/H9DWS7y/Control-Fruit.webp", cat: "perm" },
@@ -386,6 +395,7 @@
             { nameAr: "فاكهة الفليم بيرم (دائمة)", nameEn: "Flame Perm", price: 3.50, img: "https://i.ibb.co/WbGTzqF/Flame-Fruit.webp", cat: "perm" },
            
             // --- الفواكه العادية (Physical/Trade) ---
+            { nameAr: "فاكهة الماجنيت (عادية)", nameEn: "Magnet Physical", price: 18.00, img: "https://i.ibb.co/5g4hSMnL/Magnet-Fruit-1.webp", cat: "normal", badgeAr: "جديدة", badgeEn: "New", badgePos: "left" },
             { nameAr: "فاكهة التنين (عادية)", nameEn: "Dragon Physical", price: 19.00, img: "https://i.ibb.co/0yN7KDQg/Dragon-East-Fruit-1.webp", cat: "normal" },
             { nameAr: "فاكهة الكيتسوني (عادية)", nameEn: "Kitsune Physical", price: 7.00, img: "https://i.ibb.co/CKVRc3vz/Kitsune-Fruit-1.webp", cat: "normal" },
             { nameAr: "الكنترول (عادية)", nameEn: "Control Physical", price: 4.00, img: "https://i.ibb.co/H9DWS7y/Control-Fruit.webp", cat: "normal" },
@@ -403,6 +413,29 @@
             { nameAr: "البين (عادية)", nameEn: "Pain Physical", price: 1.30, img: "https://i.ibb.co/gbsYKM74/Pain-Fruit.webp", cat: "normal" },
             { nameAr: "البورتال (عادية)", nameEn: "Portal Physical", price: 1.10, img: "https://i.ibb.co/p6VbyLYS/Portal-Fruit.webp", cat: "normal" },
             { nameAr: "البوذا (عادية)", nameEn: "Buddha Physical", price: 1.10, img: "https://i.ibb.co/6RJgz0MZ/Buddha-Fruit.webp", cat: "normal" },
+
+            // --- ألوان الفواكه (Fruit Skins) — تصنيف جديد ---
+            { nameAr: "سكن الماجنيت", nameEn: "Arcsteel Magnet Skin", price: 34.00, img: "https://i.ibb.co/dwn8xXw3/xrysuoaijrnh1.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "جالاكسي كيتسوني", nameEn: "Galaxy Empyrean Kitsune", price: 47.00, img: "https://i.ibb.co/Q3W86FZX/latest-cb-20251226164613.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "كيتسوني حمراء", nameEn: "Crimson Kitsune", price: 42.00, img: "https://i.ibb.co/Rpw7cHDg/latest-cb-20251225145618.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "سكن التنين", nameEn: "Ember West Dragon", price: 34.00, img: "https://i.ibb.co/VWCc16ZN/latest-cb-20251226164628.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "فاكهة الميمي", nameEn: "Meme Fruit", price: 31.00, img: "https://i.ibb.co/W4n5MSy8/trading-meme-fruit-for-upgrade-v0-kehe4hbx2wsg1.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "برق بنفسجيه", nameEn: "Purple Lightning", price: 24.00, img: "https://i.ibb.co/wFJPj2Xz/no-value-or-ownership-bias-red-or-purple-lightning-v0-2bnceikkh7vf1.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "بين الخارقة", nameEn: "Super Spirit Pain", price: 21.00, img: "https://i.ibb.co/nWd0x3d/trading-super-spirit-pain-v0-5o1wt8zo6dsf1.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "برق حمراء", nameEn: "Red Lightning", price: 18.00, img: "https://i.ibb.co/wrj2wFCd/images-4.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "بورتال صفراء", nameEn: "Divine Portal", price: 11.00, img: "https://i.ibb.co/v6pdBQ8N/1788770974157.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "برق صفراء", nameEn: "Yellow Lightning", price: 9.00, img: "https://i.ibb.co/kg2drRBp/1788770920233.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "فاكهة المستئذب", nameEn: "Werewolf fruit", price: 11.00, img: "https://i.ibb.co/RGFPh9jj/1788770852414.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "يتي حمراء", nameEn: "Fiend Yeti", price: 10.00, img: "https://i.ibb.co/1tkTtS1W/Fiend-Fruit.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "سيلستيال بين", nameEn: "Celestial Pain", price: 9.50, img: "https://i.ibb.co/4Z1X9Tct/1788771125319.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "بين برتقالية", nameEn: "Frustration Pain", price: 9.00, img: "https://i.ibb.co/nMdSGsGz/1788778459645.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "بين زرقاء", nameEn: "Sadness Pain", price: 8.00, img: "https://i.ibb.co/cSktKbRz/1788778581940.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "بومب زرقاء", nameEn: "Azura Bomb", price: 7.00, img: "https://i.ibb.co/ksDdq186/azura-bomb.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "بومب خضراء", nameEn: "Nuclear Bomb", price: 6.75, img: "https://i.ibb.co/5X78t6SK/Nuclear-Bomb-Fruit.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "بومب حرارية", nameEn: "Thermite Bomb", price: 6.50, img: "https://i.ibb.co/HT09CTLW/thermite-bomb.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "برق خضراء", nameEn: "Green Lightning", price: 6.00, img: "https://i.ibb.co/hRN3x0yL/1788780243391.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "دايموند وردية", nameEn: "Rose Quartz Diamond", price: 5.70, img: "https://i.ibb.co/VY4z1x5X/rose-quartz-diamond.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "بين حمراء", nameEn: "Torment Pain", price: 3.50, img: "https://i.ibb.co/SwBVF6HC/images-7.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
 
             // --- قيم باس (Game Passes) ---
             { nameAr: "دبل تخزين الفواكه", nameEn: "Double Fruit Storage", price: 3.30, img: "https://i.ibb.co/pv1bCNdF/Badge-Fruit-Storage.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
@@ -493,7 +526,7 @@
             ar: {
                 heroTitle: 'Nova Store',
                 heroText: 'مرحبًا بك في Nova Store — وجهتك لشراء منتجات Blox Fruits بأسعار تنافسية، وتسليم سريع، وخدمة موثوقة.',
-                filters: ['فواكه دائمة', 'فواكه عادية', 'قيم باس', 'حسابات', 'الخدمات'],
+                filters: ['فواكه دائمة', 'فواكه عادية', 'ألوان الفواكه', 'قيم باس', 'حسابات', 'الخدمات'],
                 search: 'ابحث عن منتج…',
                 add: 'إضافة للسلة', details: 'التفاصيل', added: 'تمت الإضافة إلى السلة', available: 'متاح حالياً',
                 description: 'الوصف', delivery: 'طريقة الدفع والاستلام',
@@ -510,7 +543,7 @@
             en: {
                 heroTitle: 'Nova Store',
                 heroText: 'Welcome to Nova Store — your destination for Blox Fruits products at competitive prices, fast delivery, and reliable service.',
-                filters: ['Perm Fruits', 'Normal Fruits', 'Game Pass', 'Accounts', 'Services'],
+                filters: ['Perm Fruits', 'Normal Fruits', 'Fruit Skins', 'Game Pass', 'Accounts', 'Services'],
                 search: 'Search for a product…',
                 add: 'Add to Cart', details: 'Details', added: 'Added to cart', available: 'Available now',
                 description: 'Description', delivery: 'Payment & Delivery',
@@ -579,9 +612,10 @@
             document.getElementById('heroText').textContent = heroText;
             document.getElementById('btn-perm').textContent = texts[lang].filters[0];
             document.getElementById('btn-normal').textContent = texts[lang].filters[1];
-            document.getElementById('btn-pass').textContent = texts[lang].filters[2];
-            document.getElementById('btn-acc').textContent = texts[lang].filters[3];
-            document.getElementById('btn-srv').textContent = texts[lang].filters[4];
+            document.getElementById('btn-skin').textContent = texts[lang].filters[2];
+            document.getElementById('btn-pass').textContent = texts[lang].filters[3];
+            document.getElementById('btn-acc').textContent = texts[lang].filters[4];
+            document.getElementById('btn-srv').textContent = texts[lang].filters[5];
             document.getElementById('searchInput').placeholder = texts[lang].search;
             applyTranslations(lang);
             renderProducts();
@@ -622,7 +656,7 @@
                     <div class="product-card">
                         <div class="thumb-wrap">
                             <div class="card-info-btn" onclick="openDetails(${originalIndex})"><i class="fas fa-info"></i></div>
-                            ${badge ? `<div class="image-badge">${badge}</div>` : ''}
+                            ${badge ? `<div class="image-badge${p.badgePos === 'left' ? ' left' : ''}">${badge}</div>` : ''}
                             <img src="${p.img}" alt="${lang === 'ar' ? p.nameAr : p.nameEn}">
                         </div>
                         ${tag ? `<div class="mini-tag"><i class="fas fa-bolt"></i>${tag}</div>` : ''}
@@ -640,6 +674,7 @@
             const lang = currentLang();
             if (p.cat === 'perm') return lang === 'ar' ? 'فاكهة دائمة' : 'Permanent Fruit';
             if (p.cat === 'normal') return lang === 'ar' ? 'فاكهة عادية' : 'Normal Fruit';
+            if (p.cat === 'skin') return lang === 'ar' ? 'ألوان الفواكه' : 'Fruit Skins';
             if (p.cat === 'pass') return lang === 'ar' ? 'قيم باس' : 'Game Pass';
             if (p.cat === 'acc') return lang === 'ar' ? 'حساب Roblox' : 'Roblox Account';
             return lang === 'ar' ? 'خدمة' : 'Service';
@@ -648,6 +683,123 @@
             const lang = currentLang();
             const d = lang === 'ar' ? p.descAr : p.descEn;
             return (d && d.trim()) ? d : t().serviceNoDesc;
+        }
+        function descNames(p) {
+            // وصف التنين يبقى حرفياً كما ورد في المثال المطلوب (اسم المنتج مختلف عن الاسم داخل الوصف)
+            if (p.nameAr === 'فاكهة التنين بيرم (دائمة)') {
+                return { nameAr: 'فاكهة التنين بيرم', nameEn: 'Permanent Dragon', bodyAr: 'فاكهة التنين الدائمة', bodyEn: 'Permanent Dragon' };
+            }
+            return { nameAr: p.nameAr, nameEn: p.nameEn, bodyAr: p.nameAr, bodyEn: p.nameEn };
+        }
+        function buildDescription(p, lang) {
+            const names = descNames(p);
+            const price = Number(p.price || 0).toFixed(2);
+            const catLabel = getCategoryLabel(p);
+            let desc;
+            if (lang === 'ar') {
+                desc = `اسم المنتج: ${names.nameAr} (${names.nameEn})
+التصنيف: ${catLabel}
+الحالة: متاح للطلب
+السعر الإجمالي: ${price} دولار أمريكي
+مدة التسليم: من 5 دقائق إلى 24 ساعة من إتمام الدفع
+
+تسليم سريع وآمن
+دعم مستمر
+خيارات دفع مرنة
+ضمان ترتيب واضح للطلب
+
+الوصف
+
+هذا الطلب مخصص لتوفير وتسليم ${names.bodyEn} (${names.bodyAr}) بالمواصفات المحددة في هذا المنتج.
+
+عند إتمام الطلب ودفع كامل الثمن، يلتزم Nova Store بتوفير المنتج وتسليمه للعميل خلال المدة المحددة، على ألا يتجاوز وقت التسليم 24 ساعة من إتمام الدفع.
+
+المنتج محل الطلب هو ${names.bodyEn} تحديدًا، ولا يجوز استبداله بمنتج آخر إلا بموافقة العميل.
+
+طريقة الدفع والاستلام
+
+1. أضف المنتج إلى السلة.
+2. أكمل الطلب وادفع كامل الثمن المحدد: ${price}$.
+3. أرسل اسم مستخدم Roblox المطلوب للتسليم.
+4. يتم توفير المنتج وتسليمه خلال مدة تتراوح من 5 دقائق إلى 24 ساعة من إتمام الدفع.
+5. يتم التسليم داخل Blox Fruits باستخدام طريقة التسليم المتاحة لهذا المنتج داخل اللعبة.
+
+شروط الطلب
+
+- الثمن الإجمالي للمنتج معلوم وثابت عند إتمام الطلب.
+- يتم دفع كامل الثمن عند إتمام الطلب.
+- المنتج محل الطلب محدد بوضوح: ${names.bodyEn}.
+- الأجل الأقصى للتسليم معلوم ومحدد: 24 ساعة من إتمام الدفع.
+- يجوز إتمام التسليم في أي وقت قبل انتهاء الأجل.
+- لا يجوز استبدال المنتج بمنتج آخر إلا بموافقة العميل.
+- لا يتحمل العميل أي زيادة في السعر بسبب تغير تكلفة توفير المنتج بعد إتمام الطلب.
+- في حال تعذر توفير المنتج بالمواصفات المتفق عليها خلال الأجل المحدد، تتم معالجة الطلب بما يحفظ حق العميل وفقًا لشروط المتجر والاتفاق المبرم.
+
+بيانات التسليم
+
+بعد إتمام الدفع، يرسل العميل:
+
+اسم مستخدم Roblox المطلوب للتسليم
+
+وتُستخدم البيانات المقدمة لغرض تنفيذ التسليم المتفق عليه.
+
+ملاحظة: قد تختلف آلية التسليم داخل اللعبة بحسب الوسيلة المتاحة للمنتج وقت التنفيذ، مع بقاء المنتج محل الطلب هو ${names.bodyEn} المحدد في الطلب.`;
+                if (p.cat === 'srv' && p.descAr && p.descAr.trim()) {
+                    desc = p.descAr.trim() + '\n\n' + desc;
+                }
+            } else {
+                desc = `Product name: ${names.nameEn}
+Category: ${catLabel}
+Status: Available for order
+Total price: ${price} USD
+Delivery time: from 5 minutes to 24 hours after payment is completed
+
+Fast & secure delivery
+Ongoing support
+Flexible payment options
+Clear order arrangement guarantee
+
+Description
+
+This order is dedicated to providing and delivering ${names.bodyEn} (${names.bodyAr}) with the specifications defined in this product.
+
+Upon completing the order and paying the full price, Nova Store is committed to providing the product and delivering it to the customer within the specified period, not exceeding 24 hours from the time of payment.
+
+The product subject of this order is ${names.bodyEn} specifically, and it may not be replaced with another product except with the customer's approval.
+
+Payment & Delivery
+
+1. Add the product to the cart.
+2. Complete the order and pay the full specified price: ${price}$.
+3. Send the required Roblox username for delivery.
+4. The product will be provided and delivered within a period ranging from 5 minutes to 24 hours from the time of payment.
+5. Delivery is done inside Blox Fruits using the available delivery method for this product in-game.
+
+Order Terms
+
+- The total price of the product is known and fixed when the order is completed.
+- The full price is paid when the order is completed.
+- The product subject of the order is clearly defined: ${names.bodyEn}.
+- The maximum delivery period is known and defined: 24 hours from the time of payment.
+- Delivery may be completed at any time before the deadline expires.
+- The product may not be replaced with another product except with the customer's approval.
+- The customer bears no price increase due to changes in the cost of providing the product after the order is completed.
+- If the product cannot be provided with the agreed specifications within the specified period, the order will be processed in a way that preserves the customer's rights according to the store's terms and the concluded agreement.
+
+Delivery Data
+
+After payment, the customer sends:
+
+The required Roblox username for delivery
+
+The provided data is used for the purpose of executing the agreed delivery.
+
+Note: The in-game delivery method may vary depending on the available method for the product at the time of execution, while the product subject of the order remains ${names.bodyEn} as specified in the order.`;
+                if (p.cat === 'srv' && p.descEn && p.descEn.trim()) {
+                    desc = p.descEn.trim() + '\n\n' + desc;
+                }
+            }
+            return desc;
         }
         function openDetails(idx) {
             const p = products[idx];
@@ -658,24 +810,7 @@
             const name = lang === 'ar' ? p.nameAr : p.nameEn;
             const specs = lang === 'ar' ? (p.specsAr || []) : (p.specsEn || []);
             const badge = lang === 'ar' ? p.badgeAr : p.badgeEn;
-
-            let descriptionHtml = '';
-            if (p.cat === 'srv') {
-                const d = lang === 'ar' ? p.descAr : p.descEn;
-                if (d && d.trim()) {
-                    descriptionHtml = `<p class="detail-text">${d}</p>`;
-                } else {
-                    descriptionHtml = `<div class="detail-list"><li style="color:var(--text-gray);font-style:italic;">${tx.serviceNoDesc}</li></div>`;
-                }
-            } else {
-                let extraNotes = '';
-                if (p.cat === 'acc') {
-                    extraNotes = `<p class="detail-text">${lang === 'ar' ? 'الحسابات تُسلم ببيانات الدخول كاملة بعد تأكيد الطلب. يُفضَّل تغيير كلمة المرور فور الاستلام.' : 'Accounts are delivered with full credentials after order confirmation. It is recommended to change the password immediately after receiving the account.'}</p>`;
-                } else if (p.cat === 'pass') {
-                    extraNotes = `<p class="detail-text">${lang === 'ar' ? 'يمكن تسليم أغلب عناصر هذه الفئة عبر Gift داخل اللعبة أو حسب نوع الطلب.' : 'Most items in this category can be delivered via in-game Gift depending on the order type.'}</p>`;
-                }
-                descriptionHtml = `<p class="detail-text">${tx.commonDesc}</p>${extraNotes}`;
-            }
+            const description = buildDescription(p, lang);
 
             modalBody.innerHTML = `
                 <div class="modal-card">
@@ -685,22 +820,8 @@
                     <div class="modal-body">
                         ${badge ? `<div class="mini-tag">${badge}</div>` : ''}
                         <h2>${name}</h2>
-                        <div class="meta-line">
-                            <strong>${tx.product}:</strong> ${name}<br>
-                            <strong>${tx.category}:</strong> ${getCategoryLabel(p)}<br>
-                            <strong>${tx.status}:</strong> <span style="color:var(--success)">${tx.available}</span><br>
-                            <strong>${tx.total}:</strong> ${formatPrice(p.price)}
-                        </div>
-                        <div class="feature-grid">
-                            ${tx.features.map(item => `<div class="feature-item"><i class="fas fa-check-circle" style="color:var(--neon-blue);margin-inline-end:6px"></i>${item}</div>`).join('')}
-                        </div>
-                        <div class="section-title">${tx.description}</div>
-                        ${descriptionHtml}
+                        <div class="detail-text" style="white-space:pre-line;line-height:1.9">${description}</div>
                         ${specs.length ? `<div class="section-title">${tx.specs}</div><ul class="detail-list">${specs.map(s => `<li>${s}</li>`).join('')}</ul>` : ''}
-                        <div class="section-title">${tx.delivery}</div>
-                        <p class="detail-text">${tx.commonDelivery}</p>
-                        <div class="section-title">${tx.send}</div>
-                        <ul class="detail-list">${tx.requestItems.map(it => `<li>${it}</li>`).join('')}</ul>
                         <div class="cta-row">
                             <button class="btn btn-primary" onclick="handleModalAddToCart(${idx})">${tx.backAdd}</button>
                             <button class="btn btn-secondary" onclick="closeModal()">${tx.close}</button>
@@ -727,7 +848,7 @@
                 document.querySelectorAll('.filter-opt').forEach(opt => opt.classList.remove('active'));
             } else {
                 // أعد تنشيط الفلتر السابق
-                const map = { perm:'btn-perm', normal:'btn-normal', pass:'btn-pass', acc:'btn-acc', srv:'btn-srv' };
+                const map = { perm:'btn-perm', normal:'btn-normal', skin:'btn-skin', pass:'btn-pass', acc:'btn-acc', srv:'btn-srv' };
                 const active = document.getElementById(map[currentFilter]);
                 if (active) active.classList.add('active');
             }
