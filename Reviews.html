@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nova Store — التقييمات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        (function() {
+            try {
+                const l = localStorage.getItem('selectedLang');
+                const h = document.getElementById('mainHtml');
+                if (l === 'en') { h.dir = 'ltr'; h.lang = 'en'; } else { h.dir = 'rtl'; h.lang = 'ar'; }
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        :root { --main-bg: #0d1117; --card-bg: #161b22; --neon-blue: #00d4ff; --gold: #ffcc00; --border: #30363d; --success: #4ade80; --danger: #ff6b6b; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: linear-gradient(180deg, #0d1117 0%, #0b1220 100%); color: #fff; font-family: 'Tajawal', sans-serif; min-height: 100vh; }
+        .header { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; background: rgba(13,17,23,.96); border-bottom: 2px solid var(--neon-blue); position: sticky; top: 0; z-index: 1000; }
+        .header-left { display: flex; align-items: center; gap: 10px; }
+        .home-btn { display: inline-flex; align-items: center; gap: 8px; background: #21262d; border: 1px solid var(--neon-blue); color: #fff; padding: 7px 12px; border-radius: 12px; font-family: inherit; font-size: 12px; font-weight: 700; text-decoration: none; cursor: pointer; transition: .2s; }
+        .home-btn:hover { background: var(--neon-blue); color: #00131b; }
+        .home-btn i { color: var(--gold); }
+        .nav-controls { display: flex; gap: 6px; align-items: center; }
+        .pill { display: flex; background: #21262d; border: 1px solid var(--border); border-radius: 20px; height: 32px; align-items: center; overflow: hidden; }
+        .pill select { background: transparent; color: #fff; border: none; padding: 0 10px; font-family: 'Tajawal'; font-size: 11px; cursor: pointer; outline: none; height: 100%; }
+        .wrap { max-width: 860px; margin: 0 auto; padding: 22px 15px 90px; }
+        .page-title { text-align: center; color: var(--neon-blue); font-size: 24px; font-weight: 800; text-shadow: 0 0 16px rgba(0,212,255,.4); margin: 0 0 4px; }
+        .page-sub { text-align: center; color: #8b949e; font-size: 12px; margin: 0 0 20px; }
+        .review-card { background: linear-gradient(180deg, #141922, #0e1219); border: 1px solid var(--border); border-radius: 18px; padding: 14px; margin-bottom: 14px; position: relative; }
+        .review-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .avatar { width: 52px; height: 52px; border-radius: 50%; background: #2a3140; border: 2px solid var(--neon-blue); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar i { color: #5b6472; font-size: 24px; }
+        .review-name { color: #fff; font-weight: 800; font-size: 15px; }
+        .review-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; text-shadow: 0 0 8px rgba(255,204,0,.5); }
+        .review-date { color: #6b7482; font-size: 11px; }
+        .review-text { color: #d5dde8; font-size: 13px; line-height: 1.8; margin: 0 0 10px; }
+        .review-proof { width: 100%; max-height: 280px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); cursor: zoom-in; }
+        .del-btn { position: absolute; top: 12px; inset-inline-end: 12px; display: none; background: rgba(255,107,107,.12); border: 1px solid rgba(255,107,107,.45); color: var(--danger); width: 34px; height: 34px; border-radius: 10px; cursor: pointer; font-size: 14px; }
+        body.admin-mode .del-btn { display: flex; align-items: center; justify-content: center; }
+        .empty { text-align: center; color: #8b949e; padding: 40px 0; }
+        .fab-add { position: fixed; bottom: 20px; inset-inline-start: 20px; z-index: 900; background: linear-gradient(90deg, #00d4ff, #7b2ff7); color: #00131b; border: none; border-radius: 999px; padding: 12px 20px; font-family: inherit; font-weight: 800; font-size: 13px; cursor: pointer; box-shadow: 0 12px 30px rgba(0,212,255,.35); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .admin-overlay { display: none; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 9000; background: rgba(3,7,13,.92); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 16px; }
+        .admin-overlay.show { display: flex; }
+        .admin-card { width: 100%; max-width: 380px; background: linear-gradient(180deg, #141922, #0e1219); border: 1px solid rgba(0,212,255,.4); border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 0 42px rgba(0,212,255,.25); }
+        .admin-card h2 { margin: 0 0 6px; color: var(--gold); font-size: 19px; }
+        .admin-card p { color: #8b949e; font-size: 12px; margin: 0 0 16px; line-height: 1.8; }
+        .admin-card input { width: 100%; background: #0d1117; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; color: #fff; font-family: inherit; font-size: 14px; outline: none; text-align: center; margin-bottom: 12px; }
+        .admin-card input:focus { border-color: var(--neon-blue); }
+        .admin-err { color: var(--danger); font-size: 12px; margin-bottom: 10px; display: none; }
+        .btn-row { display: grid; gap: 9px; }
+        .btn { width: 100%; padding: 11px; border: none; border-radius: 12px; font-family: inherit; font-weight: 800; font-size: 13px; cursor: pointer; transition: .2s; }
+        .btn-primary { background: linear-gradient(90deg, #00d4ff, #7b2ff7); color: #00131b; }
+        .btn-ghost { background: rgba(255,255,255,.06); color: #fff; border: 1px solid rgba(255,255,255,.14); }
+        .admin-exit { display: none; margin: 0 auto 18px; }
+        body.admin-mode .admin-exit { display: inline-flex; }
+        #imgModal { display: none; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 9500; background: rgba(3,7,13,.94); align-items: center; justify-content: center; cursor: zoom-out; }
+        #imgModal.show { display: flex; }
+        #imgModal img { max-width: 94vw; max-height: 92vh; border-radius: 14px; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <a href="index.html" class="home-btn"><i class="fas fa-home"></i><span data-ar="العودة للرئيسية" data-en="Back to Home">العودة للرئيسية</span></a>
+            <img src="https://i.ibb.co/JWj3Ty4j/20260907-215058.jpg" class="logo-img" alt="Nova Store" onerror="this.style.display='none'">
+        </div>
+        <div class="nav-controls">
+            <div class="pill">
+                <select id="langSelect" onchange="changeLanguage()">
+                    <option value="ar">العربية (AR)</option>
+                    <option value="en">English (EN)</option>
+                </select>
+            </div>
+            <div class="pill">
+                <select id="currencySelect" onchange="changeCurrency()">
+                    <option value="USD">دولار (USD $)</option>
+                    <option value="EUR">يورو (EUR €)</option>
+                    <option value="SAR">ريال سعودي (SAR)</option>
+                    <option value="AED">درهم إماراتي (AED)</option>
+                    <option value="QAR">ريال قطري (QAR)</option>
+                    <option value="BHD">دينار بحريني (BHD)</option>
+                    <option value="OMR">ريال عماني (OMR)</option>
+                    <option value="KWD">دينار كويتي (KWD)</option>
+                    <option value="EGP">جنيه مصري (EGP)</option>
+                    <option value="LYD">دينار ليبي (LYD)</option>
+                    <option value="MAD">درهم مغربي (MAD)</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <h1 class="page-title" data-ar="تقييمات عملائنا" data-en="Our Customers' Reviews">تقييمات عملائنا</h1>
+        <p class="page-sub" data-ar="آراء حقيقية بعد استلام الطلب — لا نشر دون صورة إثبات التسليم" data-en="Real reviews after order delivery — no publish without delivery proof">آراء حقيقية بعد استلام الطلب — لا نشر دون صورة إثبات التسليم</p>
+
+        <button class="home-btn admin-exit" onclick="exitAdmin()"><i class="fas fa-user-shield"></i><span data-ar="إنهاء وضع الإدارة" data-en="Exit admin mode">إنهاء وضع الإدارة</span></button>
+
+        <div id="reviewsList"></div>
+    </main>
+
+    <a href="add-review.html" class="fab-add"><i class="fas fa-plus"></i><span data-ar="إضافة تقييم" data-en="Add a Review">إضافة تقييم</span></a>
+
+    <div class="admin-overlay" id="adminOverlay">
+        <div class="admin-card">
+            <h2 data-ar="لوحة الإدارة" data-en="Admin Panel">لوحة الإدارة</h2>
+            <p data-ar="هذه الصفحة مخصصة لإدارة التقييمات، لا يمكن التحكم في التقييمات إلا لمن يملك كلمة السر" data-en="This panel is for managing reviews — only the password holder can control them">هذه الصفحة مخصصة لإدارة التقييمات، لا يمكن التحكم في التقييمات إلا لمن يملك كلمة السر</p>
+            <input type="password" id="adminPass" placeholder="كلمة السر / Password" onkeydown="if(event.key==='Enter')tryAdmin()">
+            <div class="admin-err" id="adminErr">كلمة السر غير صحيحة</div>
+            <div class="btn-row">
+                <button class="btn btn-primary" onclick="tryAdmin()" data-ar="دخول" data-en="Enter">دخول</button>
+                <button class="btn btn-ghost" onclick="closeAdmin()" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="imgModal" onclick="this.classList.remove('show')"><img id="imgModalImg" alt=""></div>
+
+    <script>
+        const ADMIN_PASSWORD = 'Nova2026Admin'; // ← غيّر كلمة السر من هنا
+        const rates = { USD: 1, EUR: 0.93, SAR: 3.75, AED: 3.6725, QAR: 3.64, BHD: 0.376, OMR: 0.3845, KWD: 0.31, EGP: 54.8, LYD: 9.3, MAD: 10 };
+
+        const SAMPLE_REVIEW = { id: 1, name: 'عبد الله احمد', stars: 5, text: 'تسليم سريع وثقة', avatar: null, proof: 'https://i.ibb.co/pv0mTdss/IMG-20260815-202309.jpg', date: '2026' };
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-ar]').forEach(el => { el.textContent = el.getAttribute('data-' + lang); });
+        }
+        function changeLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            const h = document.getElementById('mainHtml');
+            h.dir = lang === 'en' ? 'ltr' : 'rtl';
+            h.lang = lang === 'en' ? 'en' : 'ar';
+            applyTranslations(lang);
+            try { localStorage.setItem('selectedLang', lang); } catch(e) {}
+        }
+        function changeCurrency() {
+            const cur = document.getElementById('currencySelect').value;
+            try { localStorage.setItem('selectedCurrency', cur); localStorage.setItem('exchangeRate', rates[cur]); } catch(e) {}
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+        }
+        function getReviews() {
+            let stored = [];
+            try { stored = JSON.parse(localStorage.getItem('nova_reviews')) || []; } catch(e) { stored = []; }
+            stored.sort((a,b) => (b.id||0) - (a.id||0));
+            return [SAMPLE_REVIEW].concat(stored);
+        }
+        function renderReviews() {
+            const list = document.getElementById('reviewsList');
+            const reviews = getReviews();
+            if (!reviews.length) {
+                list.innerHTML = '<div class="empty">لا توجد تقييمات بعد</div>';
+                return;
+            }
+            list.innerHTML = reviews.map((rv, i) => {
+                const stars = '★'.repeat(Math.min(5, Math.max(1, Number(rv.stars)||5)));
+                const avatarHtml = rv.avatar ? '<img src="' + rv.avatar + '" alt="">' : '<i class="fas fa-user"></i>';
+                const proofHtml = rv.proof ? '<img class="review-proof" data-src="' + escapeHtml(rv.proof) + '" src="' + escapeHtml(rv.proof) + '" alt="delivery proof">' : '';
+                const delHtml = rv === SAMPLE_REVIEW ? '' : '<button class="del-btn" data-idx="' + i + '" title="حذف التقييم"><i class="fas fa-trash"></i></button>';
+                return '<div class="review-card">' + delHtml +
+                    '<div class="review-top">' +
+                        '<div class="avatar">' + avatarHtml + '</div>' +
+                        '<div style="flex:1;min-width:0">' +
+                            '<div class="review-name">' + escapeHtml(rv.name||'') + '</div>' +
+                            '<div class="review-stars">' + stars + '</div>' +
+                            (rv.date ? '<div class="review-date">' + escapeHtml(rv.date) + '</div>' : '') +
+                        '</div>' +
+                    '</div>' +
+                    '<p class="review-text">' + escapeHtml(rv.text||'') + '</p>' +
+                    proofHtml +
+                '</div>';
+            }).join('');
+            list.querySelectorAll('.review-proof').forEach(img => {
+                img.addEventListener('click', () => zoomImg(img.getAttribute('data-src')));
+            });
+            list.querySelectorAll('.del-btn').forEach(btn => {
+                btn.addEventListener('click', () => deleteReview(Number(btn.getAttribute('data-idx'))));
+            });
+        }
+        function zoomImg(src) {
+            if (!src) return;
+            document.getElementById('imgModalImg').src = src;
+            document.getElementById('imgModal').classList.add('show');
+        }
+        function deleteReview(displayIndex) {
+            const reviews = getReviews();
+            const rv = reviews[displayIndex];
+            if (!rv || rv === SAMPLE_REVIEW) return;
+            if (!confirm('حذف هذا التقييم نهائياً؟')) return;
+            let stored = [];
+            try { stored = JSON.parse(localStorage.getItem('nova_reviews')) || []; } catch(e) {}
+            stored = stored.filter(x => String(x.id) !== String(rv.id));
+            localStorage.setItem('nova_reviews', JSON.stringify(stored));
+            renderReviews();
+        }
+        function openAdmin() {
+            document.getElementById('adminOverlay').classList.add('show');
+            document.getElementById('adminErr').style.display = 'none';
+            document.getElementById('adminPass').value = '';
+        }
+        function closeAdmin() { document.getElementById('adminOverlay').classList.remove('show'); }
+        function tryAdmin() {
+            const v = document.getElementById('adminPass').value;
+            if (v === ADMIN_PASSWORD) {
+                closeAdmin();
+                document.body.classList.add('admin-mode');
+            } else {
+                document.getElementById('adminErr').style.display = 'block';
+            }
+        }
+        function exitAdmin() { document.body.classList.remove('admin-mode'); }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const l = localStorage.getItem('selectedLang');
+                if (l) document.getElementById('langSelect').value = l;
+                const c = localStorage.getItem('selectedCurrency');
+                if (c) document.getElementById('currencySelect').value = c;
+            } catch(e) {}
+            applyTranslations(document.getElementById('langSelect').value || 'ar');
+            renderReviews();
+        });
+        window.addEventListener('storage', function(e) { if (e.key === 'nova_reviews') renderReviews(); });
+
+        // فتح لوحة الإدارة: ثلاث نقرات متتالية على العنوان الفرعي (مخفية عن الزبائن)
+        let subClicks = 0, subTimer = null;
+        document.querySelector('.page-sub').addEventListener('click', function() {
+            subClicks++;
+            clearTimeout(subTimer);
+            subTimer = setTimeout(() => subClicks = 0, 800);
+            if (subClicks >= 3) { subClicks = 0; openAdmin(); }
+        });
+    </script>
+</body>
+</html>

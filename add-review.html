@@ -41,7 +41,7 @@
         .star-row { display: flex; justify-content: center; gap: 8px; font-size: 32px; }
         .star-row .star { color: #3a4351; cursor: pointer; transition: .15s; }
         .star-row .star.active, .star-row .star:hover { color: var(--gold); text-shadow: 0 0 12px rgba(255,204,0,.6); }
-        .proof-up { margin-top: 14px; background: #0d1117; border: 2px dashed rgba(0,212,255,.4); border-radius: 14px; padding: 22px; text-align: center; color: #8b949e; font-size: 13px; cursor: pointer; transition: .2s; }
+        .proof-up { margin-top: 4px; background: #0d1117; border: 2px dashed rgba(0,212,255,.4); border-radius: 14px; padding: 22px; text-align: center; color: #8b949e; font-size: 13px; cursor: pointer; transition: .2s; }
         .proof-up:hover { border-color: var(--neon-blue); color: #fff; }
         .proof-up i { font-size: 26px; color: var(--neon-blue); display: block; margin-bottom: 8px; }
         .proof-prev { width: 100%; max-height: 260px; object-fit: cover; border-radius: 12px; margin-top: 10px; border: 1px solid var(--neon-blue); }
@@ -115,7 +115,7 @@
             <input type="file" id="proofInput" accept="image/*" hidden>
             <img id="proofPreview" class="proof-prev" alt="إثبات التسليم" style="display:none">
 
-            <div class="note-box">وضع صورة اثبات التسليم ضروري من  اجل نشر التعليق منعا للتعليقات الزائفة، وهي ان تضع اي صورة تدل على انك استلمت المنتج بنجاح، يسعدنا ان تضع تعليقا ايجابيا إذا اعجتك خدماتنا!</div>
+            <div class="note-box">وضع صورة اثبات التسليم ضروري من تطل نشر التعليق منعا للتعليقات الزائفة، وهي ان تضع اي صورة تدل على انك استلمت المنتج بنجاح، يسعدنا ان تضع تعليقا ايجابيا إذا اعجتك خدماتنا!</div>
 
             <div id="formAlert" class="form-alert"></div>
             <button class="submit-btn" onclick="submitReview()" data-ar="نشر التقييم" data-en="Publish Review">نشر التقييم</button>
@@ -147,7 +147,6 @@
             try { localStorage.setItem('selectedCurrency', cur); localStorage.setItem('exchangeRate', rates[cur]); } catch(e) {}
         }
 
-        // اختيار النجوم
         const starRow = document.getElementById('starRow');
         starRow.querySelectorAll('.star').forEach(s => {
             s.addEventListener('click', () => { rating = Number(s.dataset.v); paintStars(); });
@@ -156,7 +155,6 @@
             starRow.querySelectorAll('.star').forEach(s => s.classList.toggle('active', Number(s.dataset.v) <= rating));
         }
 
-        // معاينة الصور قبل الرفع
         function previewFile(input, targetId) {
             const f = input.files[0];
             if (!f) return;
@@ -175,7 +173,6 @@
         document.getElementById('avatarInput').addEventListener('change', function() { previewFile(this, 'avatarPreview'); });
         document.getElementById('proofInput').addEventListener('change', function() { previewFile(this, 'proofPreview'); });
 
-        // ضغط الصور قبل الحفظ في التخزين المحلي
         function readResized(file, maxDim) {
             return new Promise(resolve => {
                 const r = new FileReader();
