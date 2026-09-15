@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Store – لوحة إدارة التقييمات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{
+            --bg:#0a0e15;--panel:#12161f;--panel-2:#181d27;--border:rgba(255,255,255,.08);
+            --neon-blue:#00d4ff;--neon-purple:#7b2ff7;--gold:#ffd24a;
+            --danger:#ff4d6d;--danger-2:#ff7a90;--ok:#34d399;
+            --text:#e6ecf3;--muted:#97a2b0;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Tajawal',sans-serif;background:radial-gradient(ellipse at top,#101521 0%,var(--bg) 70%);color:var(--text);min-height:100vh;padding:24px}
+        .wrap{max-width:760px;margin:0 auto}
+        .top{display:flex;align-items:center;justify-content:space-between;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin-bottom:18px}
+        .top h1{font-size:18px;display:flex;align-items:center;gap:9px;color:var(--neon-blue)}
+        .top h1 .pill{font-size:10px;background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.4);padding:3px 8px;border-radius:99px;color:var(--neon-blue);letter-spacing:1px}
+        .top a{color:var(--muted);text-decoration:none;font-size:13px;border:1px solid var(--border);padding:8px 14px;border-radius:10px}
+        .top a:hover{color:var(--neon-blue);border-color:var(--neon-blue)}
+
+        .gate{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--border);border-radius:18px;padding:32px 24px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+        .gate h2{font-size:18px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+        .gate p{color:var(--muted);font-size:13px;margin-bottom:18px}
+        .gate-row{display:flex;gap:10px;align-items:stretch}
+        .gate-row input{flex:1;background:#070a10;border:1px solid var(--border);border-radius:12px;padding:13px 14px;color:#fff;font-size:15px;font-family:inherit;outline:none;letter-spacing:.5em;text-align:center}
+        .gate-row input:focus{border-color:var(--neon-blue);box-shadow:0 0 0 3px rgba(0,212,255,.15)}
+        .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(90deg,var(--neon-blue),var(--neon-purple));border:none;color:#00131b;font-weight:800;padding:0 22px;border-radius:12px;font-family:inherit;font-size:14px;cursor:pointer;text-decoration:none}
+        .btn:hover{filter:brightness(1.1)}
+        .err{color:var(--danger);font-size:13px;margin-top:12px;display:none;align-items:center;gap:6px}
+        .err.show{display:flex;animation:shake .35s}
+        @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+        .stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+        .stat .n{font-size:22px;font-weight:800;color:var(--gold)}
+        .stat .l{font-size:11px;color:var(--muted);letter-spacing:1px;margin-top:4px}
+
+        .toolbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+        .toolbar .mini{background:var(--panel);border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:10px;font-size:12px;cursor:pointer;font-family:inherit}
+        .toolbar .mini:hover{border-color:var(--danger);color:var(--danger)}
+        .toolbar .mini.ok:hover{border-color:var(--ok);color:var(--ok)}
+
+        .list{display:grid;gap:12px}
+        .rev{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:flex-start}
+        .rev .avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,rgba(0,212,255,.2),rgba(123,47,247,.18));border:1px solid rgba(0,212,255,.35);display:flex;align-items:center;justify-content:center;color:var(--neon-blue);overflow:hidden;flex-shrink:0}
+        .rev .avatar img{width:100%;height:100%;object-fit:cover}
+        .rev .body{flex:1;min-width:0}
+        .rev .nm{font-size:14px;font-weight:700;margin-bottom:2px}
+        .rev .stars{color:var(--gold);font-size:14px;margin-bottom:6px}
+        .rev .txt{font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word}
+        .rev .meta{font-size:11px;color:var(--muted);margin-top:8px;display:flex;gap:10px;flex-wrap:wrap}
+        .rev .meta .id{cursor:copy}
+        .rev .meta a{color:var(--neon-blue);text-decoration:none}
+        .rev .actions{display:flex;flex-direction:column;gap:6px}
+        .del{background:transparent;border:1px solid var(--danger);color:var(--danger);padding:6px 10px;border-radius:9px;font-size:11px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px}
+        .del:hover{background:var(--danger);color:#fff}
+        .empty{text-align:center;padding:30px;color:var(--muted);background:var(--panel);border:1px dashed var(--border);border-radius:14px}
+
+        @media (max-width:600px){
+            .gate-row{flex-direction:column}
+            .gate-row .btn{justify-content:center;height:44px}
+            .stats{grid-template-columns:1fr 1fr 1fr}
+            .rev{flex-direction:column}
+            .rev .actions{flex-direction:row}
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+    <div class="top">
+        <h1><i class="fas fa-shield-halved"></i> لوحة إدارة التقييمات <span class="pill">ADMIN</span></h1>
+        <a href="index.html"><i class="fas fa-arrow-right" style="margin-inline-end:6px"></i> العودة للمتجر</a>
+    </div>
+
+    <!-- بوابة كلمة السر -->
+    <div id="gate" class="gate">
+        <h2><i class="fas fa-lock"></i> أدخل كلمة سر الإدارة</h2>
+        <p>هذه اللوحة مخصصة لإدارة تقييمات العملاء فقط.</p>
+        <div class="gate-row">
+            <input id="pwd" type="password" placeholder="••••••" autocomplete="off" autofocus>
+            <button class="btn" id="pwdBtn" type="button"><i class="fas fa-right-to-bracket"></i> دخول</button>
+        </div>
+        <div class="err" id="err"><i class="fas fa-circle-exclamation"></i> كلمة السر غير صحيحة، حاول مرة أخرى.</div>
+    </div>
+
+    <!-- لوحة الإدارة -->
+    <div id="panel" style="display:none">
+        <div class="stats">
+            <div class="stat"><div class="n" id="cntAll">0</div><div class="l">إجمالي التقييمات</div></div>
+            <div class="stat"><div class="n" id="cntProof">0</div><div class="l">مع صورة إثبات</div></div>
+            <div class="stat"><div class="n" id="cntAvg">0.0</div><div class="l">متوسط النجوم</div></div>
+        </div>
+
+        <div class="toolbar">
+            <button class="mini ok" id="reloadBtn" type="button"><i class="fas fa-rotate"></i> تحديث</button>
+            <button class="mini" id="exportBtn" type="button"><i class="fas fa-download"></i> تصدير JSON</button>
+            <button class="mini" id="clearBtn" type="button"><i class="fas fa-trash-can"></i> حذف الكل</button>
+        </div>
+
+        <div id="list" class="list"></div>
+    </div>
+</div>
+
+<script>
+    // SECURITY NOTE: كلمة السر هنا مكشوفة في الكود، هذا مجرد حجاب بسيط وليس حماية حقيقية.
+    const ADMIN_PASSWORD = 'moataz';
+    const STORAGE_KEY = 'nova_reviews';
+    const SAMPLE_REVIEW = { id: 1, name: 'عبد الله احمد', stars: 5, text: 'تسليم سريع وثقة', avatar: null, proof: 'https://i.ibb.co/pv0mTdss/IMG-20260815-202309.jpg', date: '2026' };
+
+    function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+    function readAllRaw(){
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e){ return []; }
+    }
+    function writeAllRaw(arr){
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); return true; } catch(e){ return false; }
+    }
+    function getAll(){
+        return [SAMPLE_REVIEW].concat(readAllRaw());
+    }
+
+    function passGate(){
+        const v = document.getElementById('pwd').value || '';
+        if (v === ADMIN_PASSWORD){
+            document.getElementById('gate').style.display = 'none';
+            document.getElementById('panel').style.display = '';
+            render();
+        } else {
+            const err = document.getElementById('err');
+            err.classList.remove('show');
+            void err.offsetWidth;
+            err.classList.add('show');
+            document.getElementById('pwd').value = '';
+            document.getElementById('pwd').focus();
+        }
+    }
+
+    function render(){
+        const all = getAll();
+        const raw = readAllRaw();
+        document.getElementById('cntAll').textContent = all.length;
+        document.getElementById('cntProof').textContent = all.filter(r=>r && r.proof).length;
+        const avg = all.length ? (all.reduce((s,r)=>s+(Number(r.stars)||0),0) / all.length) : 0;
+        document.getElementById('cntAvg').textContent = avg.toFixed(1);
+
+        const list = document.getElementById('list');
+        if (!all.length){
+            list.innerHTML = '<div class="empty"><i class="fas fa-inbox" style="font-size:36px;margin-bottom:10px;display:block;color:var(--muted)"></i>لا توجد تقييمات في الوقت الحالي.</div>';
+            return;
+        }
+        list.innerHTML = all.map(function(rv, idx){
+            const isSample = idx === 0 && rv && rv.id === 1 && rv.name === SAMPLE_REVIEW.name;
+            const starStr = '★'.repeat(Math.min(5, Math.max(1, Number(rv.stars)||5))) + '☆'.repeat(5 - Math.min(5, Math.max(1, Number(rv.stars)||5)));
+            const av = rv.avatar ? '<img src="'+escapeHtml(rv.avatar)+'" alt="">' : '<i class="fas fa-user"></i>';
+            const isStored = idx > 0;
+            return ''
+            + '<div class="rev" data-idx="'+idx+'">'
+            +   '<div class="avatar">'+av+'</div>'
+            +   '<div class="body">'
+            +     '<div class="nm">'+escapeHtml(rv.name||'بدون اسم')+'</div>'
+            +     '<div class="stars">'+starStr+'</div>'
+            +     '<div class="txt">'+escapeHtml(rv.text||'')+'</div>'
+            +     (rv.proof ? '<div class="meta"><a href="'+escapeHtml(rv.proof)+'" target="_blank" rel="noopener"><i class="fas fa-image"></i> صورة إثبات التسليم</a></div>' : '<div class="meta"><span style="color:var(--danger)"><i class="fas fa-circle-exclamation"></i> بدون صورة إثبات</span></div>')
+            +     '<div class="meta">'
+            +       '<span class="id" title="انقر للنسخ"><i class="fas fa-hashtag"></i> id: '+escapeHtml(String(rv.id||'—'))+'</span>'
+            +       '<span><i class="fas fa-calendar"></i> ' + escapeHtml(rv.date||'—') + '</span>'
+            +     '</div>'
+            +   '</div>'
+            +   '<div class="actions">'
+            +     (isStored
+                    ? '<button class="del" data-action="del" data-idx="'+idx+'" title="حذف هذا التقييم"><i class="fas fa-trash"></i> حذف</button>'
+                    : '<button class="del" disabled style="opacity:.4;cursor:not-allowed" title="التقييم الافتراضي لا يُحذف"><i class="fas fa-lock"></i> محمي</button>')
+            +   '</div>'
+            + '</div>';
+        }).join('');
+
+        list.querySelectorAll('button.del[data-action="del"]').forEach(function(btn){
+            btn.addEventListener('click', function(){
+                const i = parseInt(btn.getAttribute('data-idx'), 10) - 1; // -1 because sample at 0
+                if (isNaN(i) || i < 0) return;
+                const cur = readAllRaw();
+                if (i >= cur.length) return;
+                const item = cur[i];
+                if (!confirm('حذف تقييم "' + (item.name || 'بدون اسم') + '"؟\nلا يمكن التراجع عن هذه العملية.')) return;
+                cur.splice(i, 1);
+                writeAllRaw(cur);
+                // إشعار باقي النوافذ
+                try { window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY })); } catch(e){}
+                render();
+            });
+        });
+        list.querySelectorAll('.rev .meta .id').forEach(function(el){
+            el.addEventListener('click', function(){
+                const t = el.textContent.replace(/.*id:\s*/, '').trim();
+                if (navigator.clipboard) navigator.clipboard.writeText(t).catch(()=>{});
+            });
+        });
+    }
+
+    // ربط الأحداث
+    document.getElementById('pwdBtn').addEventListener('click', passGate);
+    document.getElementById('pwd').addEventListener('keydown', function(e){
+        if (e.key === 'Enter') passGate();
+    });
+    document.getElementById('reloadBtn').addEventListener('click', render);
+    document.getElementById('exportBtn').addEventListener('click', function(){
+        const data = readAllRaw();
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'nova_reviews_export_' + Date.now() + '.json'; a.click();
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    });
+    document.getElementById('clearBtn').addEventListener('click', function(){
+        if (!confirm('سيتم حذف جميع تقييمات العملاء (باستثناء التقييم الافتراضي النموذجي). متابعة؟')) return;
+        writeAllRaw([]);
+        try { window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY })); } catch(e){}
+        render();
+    });
+
+    // تحديث تلقائي عند تغيّر التخزين من نافذة أخرى
+    window.addEventListener('storage', function(e){
+        if (e.key === STORAGE_KEY) render();
+    });
+</script>
+</body>
+</html>
