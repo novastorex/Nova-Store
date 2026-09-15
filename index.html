@@ -75,29 +75,12 @@
 
         .copyright { color: #8b949e; font-size: 11px; margin-top: 15px; }
     
-        /* ====== إعلان التحديث 1.2V — ظهور بسيط ====== */
-        #announceOverlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 9000; display: none; align-items: center; justify-content: center; background: rgba(3,7,13,.84); backdrop-filter: blur(6px); padding: 16px; }
-        #announceOverlay.show { display: flex !important; }
-        .announce-card { width: 100%; max-width: 470px; max-height: 92vh; overflow-y: auto; background: linear-gradient(180deg, #12161f, #0a0e15); border: 1px solid rgba(0,212,255,.5); border-radius: 22px; padding: 20px; box-shadow: 0 0 42px rgba(0,212,255,.28), 0 34px 80px rgba(0,0,0,.65); opacity: 0; transform: scale(.82) translateY(16px); transition: opacity .35s ease, transform .35s cubic-bezier(.2,1.2,.3,1); }
-        #announceOverlay.show .announce-card { opacity: 1; transform: scale(1) translateY(0); }
-        .announce-eyebrow { color: var(--neon-blue); font-size: 11px; letter-spacing: 3px; text-align: center; opacity: .9; }
-        .announce-title { color: #fff; font-size: 21px; font-weight: 800; text-align: center; margin: 8px 0 2px; text-shadow: 0 0 20px rgba(0,212,255,.55); display: flex; align-items: center; justify-content: center; gap: 9px; }
-        .announce-date { color: #97a2b0; text-align: center; font-size: 12px; margin-bottom: 12px; }
-        .announce-img { width: 100%; border-radius: 14px; margin: 4px 0 14px; border: 1px solid rgba(0,212,255,.25); }
-        .announce-list { list-style: none; padding: 0; margin: 0 0 14px; display: grid; gap: 9px; }
-        .announce-list li { display: flex; align-items: center; color: #d5dde8; font-size: 13px; line-height: 1.7; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 12px; padding: 8px 11px; }
-        .neon-emoji { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(0,212,255,.25), rgba(123,47,247,.18)); border: 1px solid rgba(0,212,255,.55); margin-inline-end: 10px; font-size: 16px; flex-shrink: 0; animation: neonPulse 2.2s ease-in-out infinite alternate; }
-        .announce-title .neon-emoji { width: 40px; height: 40px; font-size: 19px; }
-        @keyframes neonPulse { from { box-shadow: 0 0 6px rgba(0,212,255,.4), inset 0 0 6px rgba(0,212,255,.25); } to { box-shadow: 0 0 16px rgba(0,212,255,.75), 0 0 26px rgba(123,47,247,.4), inset 0 0 10px rgba(0,212,255,.45); } }
-        .announce-thanks { color: var(--gold); text-align: center; font-size: 13px; margin-bottom: 14px; }
-        .announce-btns { display: grid; gap: 9px; }
+
         .rbtn { display: block; width: 100%; box-sizing: border-box; text-align: center; background: rgba(255,255,255,.06); color: #fff; border: 1px solid rgba(255,255,255,.14); padding: 11px 14px; border-radius: 12px; font-weight: 700; font-size: 13px; font-family: inherit; cursor: pointer; text-decoration: none; transition: .2s; }
         .rbtn:hover { border-color: var(--neon-blue); background: rgba(0,212,255,.07); }
         .rbtn.primary { background: linear-gradient(90deg, #00d4ff, #7b2ff7); color: #00131b; border: none; }
         .rbtn.primary:hover { filter: brightness(1.12); }
-        #enjoyToast { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(160%); z-index: 9500; width: min(92vw, 380px); background: linear-gradient(180deg, #12161f, #0a0e15); border: 1px solid rgba(0,212,255,.45); border-radius: 18px; padding: 18px 20px; text-align: center; box-shadow: 0 0 36px rgba(0,212,255,.32); transition: transform .55s cubic-bezier(.2,1.2,.3,1); }
-        #enjoyToast.show { transform: translateX(-50%) translateY(0); }
-        #enjoyToast .msg { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+
         /* ====== قسم التقييمات ====== */
         .reviews-section { padding: 22px 4% 8px; }
         .reviews-title { text-align: center; margin: 0 0 4px; color: var(--neon-blue); font-size: 20px; font-weight: 800; text-shadow: 0 0 16px rgba(0,212,255,.4); }
@@ -121,32 +104,7 @@
     </style>
 </head>
 <body id="bodyTag">
-    <!-- إعلان التحديث 1.2V — ظهور بسيط -->
-    <div id="announceOverlay" aria-hidden="true">
-        <div class="announce-card">
-            <div class="announce-eyebrow">NOVA STORE</div>
-            <div class="announce-title"><span class="neon-emoji">🚀</span><span data-ar="تحديث Nova Store 1.2V" data-en="Nova Store Update 1.2V">تحديث Nova Store 1.2V</span></div>
-            <div class="announce-date"><span data-ar="14 سبتمبر 2026" data-en="September 14, 2026">14 سبتمبر 2026</span></div>
-            <img class="announce-img" src="https://i.ibb.co/JWj3Ty4j/20260907-215058.jpg" alt="Nova Store Update" onerror="this.style.display='none'">
-            <ul class="announce-list">
-                <li><span class="neon-emoji">🧲</span><span data-ar="إضافة منتجات تحديث الماجنيت في Blox Fruits." data-en="Added Magnet update products in Blox Fruits.">إضافة منتجات تحديث الماجنيت في Blox Fruits.</span></li>
-                <li><span class="neon-emoji">⚔️</span><span data-ar="تعديل شامل لحسابات بلوكس فروت" data-en="Complete rework of Blox Fruits accounts">تعديل شامل لحسابات بلوكس فروت</span></li>
-                <li><span class="neon-emoji">🎨</span><span data-ar="إضافة ألوان الفواكه الليمتد بأسعار تنافسية." data-en="Added limited fruit colors at competitive prices.">إضافة ألوان الفواكه الليمتد بأسعار تنافسية.</span></li>
-                <li><span class="neon-emoji">🔧</span><span data-ar="صيانة شاملة للمتجر وإجراء مجموعة من التحسينات والتعديلات." data-en="Full store maintenance with a set of improvements and fixes.">صيانة شاملة للمتجر وإجراء مجموعة من التحسينات والتعديلات.</span></li>
-                <li><span class="neon-emoji">🍎</span><span data-ar="فاكهة الماجنيت متوفرة الآن بنسختيها العادية والدائمة." data-en="Magnet fruit now available in both normal and permanent versions.">فاكهة الماجنيت متوفرة الآن بنسختيها العادية والدائمة.</span></li>
-                <li><span class="neon-emoji">🌍</span><span data-ar="ميزة تحديد العملة تلقائيًا حسب البلد لتسهيل تجربة التسوق." data-en="Automatic currency selection by country for easier shopping.">ميزة تحديد العملة تلقائيًا حسب البلد لتسهيل تجربة التسوق.</span></li>
-            </ul>
-            <div class="announce-thanks"><span data-ar="شكرًا لثقتكم بـ Nova Store ❤️" data-en="Thank you for trusting Nova Store ❤️">شكرًا لثقتكم بـ Nova Store ❤️</span></div>
-            <div class="announce-btns">
-                <button class="rbtn primary" onclick="doneAnnounce()"><span data-ar="قرأت التحديثات الجديدة" data-en="I've read the new updates">قرأت التحديثات الجديدة</span></button>
-                <button class="rbtn" onclick="closeAnnounce()"><span data-ar="إغلاق الصفحة" data-en="Close">إغلاق الصفحة</span></button>
-            </div>
-        </div>
-    </div>
-    <div id="enjoyToast" aria-hidden="true">
-        <div class="msg"><span data-ar="استمتع بمنتجاتنا الجديدة ❤️" data-en="Enjoy our new products ❤️">استمتع بمنتجاتنا الجديدة ❤️</span></div>
-        <button class="rbtn primary" onclick="hideEnjoy()"><span data-ar="إغلاق الصفحة" data-en="Close">إغلاق الصفحة</span></button>
-    </div>
+
 
     <div class="header">
         <div class="menu-btn" onclick="openNav()">☰</div>
@@ -376,33 +334,7 @@
         window.addEventListener('storage', updateCartCount);
     </script>
     <script>
-        /* ====== إعلان التحديث 1.2V — ظهور بسيط ====== */
-        function showAnnounce() {
-            try {
-                const ov = document.getElementById('announceOverlay');
-                if (!ov) return;
-                window.__novaAnnounceShown = true;
-                ov.classList.add('show');
-                ov.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            } catch(e) {}
-        }
-        function doneAnnounce() {
-            const ov = document.getElementById('announceOverlay');
-            if (ov) ov.classList.remove('show');
-            document.body.style.overflow = 'auto';
-            const toast = document.getElementById('enjoyToast');
-            if (toast) { toast.classList.add('show'); setTimeout(hideEnjoy, 6000); }
-        }
-        function closeAnnounce() {
-            const ov = document.getElementById('announceOverlay');
-            if (ov) ov.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-        function hideEnjoy() {
-            const toast = document.getElementById('enjoyToast');
-            if (toast) toast.classList.remove('show');
-        }
+
 
         /* ====== تحديد العملة تلقائيًا حسب البلد (أول زيارة فقط) ====== */
         const CC_CURRENCY = { SA:'SAR', AE:'AED', QA:'QAR', BH:'BHD', OM:'OMR', KW:'KWD', EG:'EGP', LY:'LYD', MA:'MAD', US:'USD', GB:'USD', DE:'EUR', FR:'EUR', ES:'EUR', IT:'EUR', NL:'EUR', BE:'EUR', AT:'EUR', IE:'EUR', PT:'EUR', GR:'EUR', FI:'EUR', SE:'EUR', PL:'EUR', RO:'EUR', HU:'EUR', CZ:'EUR' };
@@ -463,43 +395,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             renderReviews();
             autoDetectCurrency();
-            setTimeout(showAnnounce, 600);
         });
         window.addEventListener('storage', function(e) {
             if (e.key === 'nova_reviews') renderReviews();
         });
     </script>
 
-    <script>
-        /* مشغّل مستقل لرسالة الترحيب — لا يتأثر بأي خطأ في بقية سكربتات الصفحة */
-        (function() {
-            var booted = false;
-            function boot() {
-                if (booted || window.__novaAnnounceShown) return;
-                try {
-                    var ov = document.getElementById('announceOverlay');
-                    if (!ov) { booted = true; return; }
-                    if (ov.classList.contains('show')) { booted = true; return; }
-                    booted = true;
-                    if (typeof showAnnounce === 'function') { showAnnounce(); return; }
-                    ov.classList.add('show');
-                    ov.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                    window.__novaAnnounceShown = true;
-                } catch (e) {
-                    try {
-                        var ov2 = document.getElementById('announceOverlay');
-                        ov2.classList.add('show');
-                        ov2.style.display = 'flex';
-                        document.body.style.overflow = 'hidden';
-                        window.__novaAnnounceShown = true;
-                    } catch (e2) {}
-                }
-            }
-            if (document.readyState !== 'loading') setTimeout(boot, 300);
-            else document.addEventListener('DOMContentLoaded', function() { setTimeout(boot, 300); });
-            window.addEventListener('load', boot);
-        })();
-    </script>
+
 </body>
 </html>
