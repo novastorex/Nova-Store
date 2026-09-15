@@ -353,7 +353,7 @@
     <div class="products-grid" id="productGrid"></div>
 
     <script>
-        const rates = { USD: 1, EUR: 0.93, SAR: 3.75, AED: 3.6725, QAR: 3.64, BHD: 0.376, OMR: 0.3845, KWD: 0.31, EGP: 54.80, LYD: 9.30, MAD: 10 };
+        const rates = { USD: 1, EUR: 0.93, SAR: 3.75, AED: 3.6725, QAR: 3.64, BHD: 0.376, OMR: 0.3845, KWD: 0.31, EGP: 54.80, LYD: 9.3, MAD: 10 };
         const symbols = { USD: "$", EUR: "€", SAR: "ر.س", AED: "د.إ", QAR: "ر.ق", BHD: "د.ب", OMR: "ر.ع", KWD: "د.ك", EGP: "ج.م", LYD: "د.ل", MAD: "د.م" };
 
         const products = [
@@ -423,18 +423,20 @@
             { nameAr: "برق بنفسجيه", nameEn: "Purple Lightning", price: 24.00, img: "https://i.ibb.co/wFJPj2Xz/no-value-or-ownership-bias-red-or-purple-lightning-v0-2bnceikkh7vf1.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "بين الخارقة", nameEn: "Super Spirit Pain", price: 21.00, img: "https://i.ibb.co/nWd0x3d/trading-super-spirit-pain-v0-5o1wt8zo6dsf1.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "برق حمراء", nameEn: "Red Lightning", price: 18.00, img: "https://i.ibb.co/wrj2wFCd/images-4.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "يتي بنفسجية", nameEn: "Runic Fiend", price: 19.00, img: "https://i.ibb.co/d44P1HTV/8a2f74a3-b66c-4c15-b1bb-836e4837bebc.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "بورتال صفراء", nameEn: "Divine Portal", price: 11.00, img: "https://i.ibb.co/v6pdBQ8N/1788770974157.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
-            { nameAr: "برق صفراء", nameEn: "Yellow Lightning", price: 9.00, img: "https://i.ibb.co/kg2drRBp/1788770920233.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "فاكهة المستئذب", nameEn: "Werewolf fruit", price: 11.00, img: "https://i.ibb.co/RGFPh9jj/1788770852414.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "يتي حمراء", nameEn: "Fiend Yeti", price: 10.00, img: "https://i.ibb.co/1tkTtS1W/Fiend-Fruit.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "سيلستيال بين", nameEn: "Celestial Pain", price: 9.50, img: "https://i.ibb.co/4Z1X9Tct/1788771125319.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "بين برتقالية", nameEn: "Frustration Pain", price: 9.00, img: "https://i.ibb.co/nMdSGsGz/1788778459645.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "جرافيتي صفراء", nameEn: "Starlight Gravity", price: 8.00, img: "https://i.ibb.co/7J7BdQZw/634qp52h0coh1.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "بين زرقاء", nameEn: "Sadness Pain", price: 8.00, img: "https://i.ibb.co/cSktKbRz/1788778581940.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "بومب زرقاء", nameEn: "Azura Bomb", price: 7.00, img: "https://i.ibb.co/ksDdq186/azura-bomb.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "بومب خضراء", nameEn: "Nuclear Bomb", price: 6.75, img: "https://i.ibb.co/5X78t6SK/Nuclear-Bomb-Fruit.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "بومب حرارية", nameEn: "Thermite Bomb", price: 6.50, img: "https://i.ibb.co/HT09CTLW/thermite-bomb.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "برق خضراء", nameEn: "Green Lightning", price: 6.00, img: "https://i.ibb.co/hRN3x0yL/1788780243391.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "دايموند وردية", nameEn: "Rose Quartz Diamond", price: 5.70, img: "https://i.ibb.co/VY4z1x5X/rose-quartz-diamond.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
+            { nameAr: "برق صفراء", nameEn: "Yellow Lightning", price: 4.50, img: "https://i.ibb.co/kg2drRBp/1788770920233.png", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "بين حمراء", nameEn: "Torment Pain", price: 3.50, img: "https://i.ibb.co/SwBVF6HC/images-7.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
 
             // --- قيم باس (Game Passes) ---
@@ -448,35 +450,46 @@
            { nameAr: "5 لفائف أسطورية", nameEn: "5x Legendary Scrolls", price: 6.48, img: "https://i.ibb.co/N6H7knkr/Badge-Legendary-Scrollx5.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
             { nameAr: "3 لفائف ميثيك", nameEn: "3x Mythical Scrolls", price: 9.40, img: "https://i.ibb.co/zVnyS5Yt/Badge-Mythical-Scrollx3.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
             
-            // --- الحسابات (Accounts) ---
-            { nameAr: "حساب أساسي لفل 2800", nameEn: "Basic Account Lv. 2800", price: 4.0, img: "https://i.ibb.co/XfG95Rz2/20260418-175539.jpg", cat: "acc",
-              specsAr: ["المستوى الأقصى 2800","جميع Fighting Styles ما عدا Blood","السلاح: Guitar Brok weapon","فاكهة ميثيك عشوائية","إكسسوارات جاهزة للاستخدام"],
-              specsEn: ["Max level 2800","All fighting styles except Blood","Weapon: Guitar Brok weapon","Random mythical fruit","Useful accessories included"] },
-            { nameAr: "حساب Ghoul V4 مع سيوف Oden", nameEn: "Ghoul V4 with Oden swords", price: 8.0, img: "https://i.ibb.co/4ZT34CYH/20260418-181512.jpg", cat: "acc",
-              specsAr: ["المستوى الأقصى 2800","العرق: Ghoul V4","Fighting styles كاملة","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
-              specsEn: ["Max level 2800","Race: Ghoul V4","Full fighting styles","Swords: Oden swords","Random mythical fruit + accessories"] },
-            { nameAr: "حساب Shark V4 مع سيوف Oden", nameEn: "Shark V4 with Oden swords", price: 9.0, img: "https://i.ibb.co/d0qYPkYZ/20260418-183724.jpg", cat: "acc",
-              specsAr: ["المستوى الأقصى 2800","العرق: Shark V4","Fighting styles كاملة","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
-              specsEn: ["Max level 2800","Race: Shark V4","Full fighting styles","Swords: Oden swords","Random mythical fruit + accessories"] },
-            { nameAr: "حساب Rabbit V4 مع سيوف Oden", nameEn: "Rabbit V4 (no Blood) with Oden swords", price: 11.5, img: "https://i.ibb.co/YTwWfPMm/20260418-184416.jpg", cat: "acc",
-              specsAr: ["المستوى الأقصى 2800","العرق: Rabbit V4","جميع Fighting Styles ما عدا Blood","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
-              specsEn: ["Max level 2800","Race: Rabbit V4","All fighting styles except Blood","Swords: Oden swords","Random mythical fruit + accessories"] },
-            { nameAr: "حساب Human V4 مع سيوف Oden", nameEn: "Human V4 with Oden swords", price: 8.75, img: "https://i.ibb.co/hRBTGdLz/20260418-190524.jpg", cat: "acc",
-              specsAr: ["المستوى الأقصى 2800","العرق: Human V4","Fighting styles كاملة","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
-              specsEn: ["Max level 2800","Race: Human V4","Full fighting styles","Swords: Oden swords","Random mythical fruit + accessories"] },
-            { nameAr: "حساب Cyborg V4 مع سيوف Oden", nameEn: "Cyborg V4 (no Blood) with Oden swords", price: 8.0, img: "https://i.ibb.co/9HRvmjxW/20260418-191203.jpg", cat: "acc",
-              specsAr: ["المستوى الأقصى 2800","العرق: Cyborg V4","جميع Fighting Styles ما عدا Blood","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
-              specsEn: ["Max level 2800","Race: Cyborg V4","All fighting styles except Blood","Swords: Oden swords","Random mythical fruit + accessories"] },
-            { nameAr: "حساب Angel V4 مع سيوف Oden", nameEn: "Angel V4 (no Blood) with Oden swords", price: 8.9, img: "https://i.ibb.co/67DwXK24/20260418-194705.jpg", cat: "acc",
-              specsAr: ["المستوى الأقصى 2800","العرق: Angel V4","جميع Fighting Styles ما عدا Blood","السيوف: Oden swords","فاكهة ميثيك عشوائية + إكسسوارات"],
-              specsEn: ["Max level 2800","Race: Angel V4","All fighting styles except Blood","Swords: Oden swords","Random mythical fruit + accessories"] },
-            { nameAr: "حساب Draco V4 مع Oden + Dragon Sword", nameEn: "Draco V4 with Oden + Dragon sword", price: 11.0, img: "https://i.ibb.co/Qv24yt5n/20260418-201605.jpg", cat: "acc",
-              specsAr: ["المستوى الأقصى 2800","العرق: Draco V4","Fighting styles كاملة","الأسلحة: Oden swords + Dragon sword","فاكهة ميثيك عشوائية + إكسسوارات"],
-              specsEn: ["Max level 2800","Race: Draco V4","Full fighting styles","Weapons: Oden swords + Dragon sword","Random mythical fruit + accessories"] },
-            { nameAr: "حساب كل الأعراق V4", nameEn: "All races V4 with Oden swords", price: 20.0, img: "https://i.ibb.co/vv1NDJLZ/20260418-204408.jpg", cat: "acc", badgeAr: "أقوى حساب", badgeEn: "Strongest Account",
-              specsAr: ["المستوى الأقصى 2800","جميع الأعراق V4","السيوف: Oden swords","الأسلحة: Draco spear وغيرها","فاكهة ميثيك عشوائية + إكسسوارات قوية"],
-              specsEn: ["Max level 2800","All races V4","Swords: Oden swords","Weapons: Draco spear and more","Random mythical fruit + powerful accessories"] },
-
+            // --- الحسابات (Accounts) — القائمة الجديدة كاملة ---
+            { nameAr: "حساب لفل 700+", nameEn: "Level 700+ Account", price: 1.5, img: "https://i.ibb.co/TqwqXbnM/20260914-075827.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 700 او اكثر ✅", "عالم ثاني مفتوح✅", "اساليب عشوائية✅", "اغراض/سيوف عشوائية من العالم الأول✅", "فلوس عشوائية من ألف إلي 5 مليون✅", "فواكه عشوائية✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 700 or more ✅", "Second sea unlocked✅", "Random fighting styles✅", "Random items/swords from the First Sea✅", "Random money from 1K to 5M✅", "Random fruits✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "حساب لفل +1000", nameEn: "Level 1000+ Account", price: 2, img: "https://i.ibb.co/KjBdvdmG/20260914-080046.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 1000 او اكثر✅", "اساليب عشوائية✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 10 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 1000 or more✅", "Random fighting styles✅", "Random legendary/rare items and swords✅", "Random money from 100K to 10M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "حساب لفل +1500", nameEn: "Level 1500+ Account", price: 3, img: "https://i.ibb.co/PvWQnwW9/20260914-080624.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 1500 او اكثر✅", "العالم الثالث مفتوح✅", "اساليب عشوائية✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 10 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 1500 or more✅", "Third sea unlocked✅", "Random fighting styles✅", "Random legendary/rare items and swords✅", "Random money from 100K to 10M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "حساب لفل 2800 + اسلوب الهيومن", nameEn: "Level 2800 + Godhuman Style", price: 7, img: "https://i.ibb.co/Q3jnmvKB/20260914-081243.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 2800✅", "اسلوب الهيومن v2 (جميع اساليب اللعبة مفتوحة عدا  اسلوب الدم✅)", "ريس عشوائي من v1 الي v3 ✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 50 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 2800✅", "Godhuman style v2 (all fighting styles unlocked except Blood✅)", "Random race from V1 to V3 ✅", "Random legendary/rare items and swords✅", "Random money from 100K to 50M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "لفل 2800+الهيومن+سيوف اودن أو زورو", nameEn: "Level 2800 + Godhuman + Oden or Zoro Swords", price: 9, img: "https://i.ibb.co/QF7ZNXGC/20260914-081522.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 2800✅", "سيوف اودن( ياما و توشيتا و دمجهم) أو سيوف زورو( سيوفه الثلاثة مع دمجهم) موجودة✅", "اسلوب الهيومن v2 (جميع اساليب اللعبة مفتوحة عدا اسلوب الدم✅)", "ريس عشوائي من v1 الي v3 ✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 50 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 2800✅", "Oden swords (Yama, Tushita and their fusion) or Zoro swords (his three swords fused) included✅", "Godhuman style v2 (all fighting styles unlocked except Blood✅)", "Random race from V1 to V3 ✅", "Random legendary/rare items and swords✅", "Random money from 100K to 50M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "لفل 2800 + اسلوب الدم", nameEn: "Level 2800 + Blood Style", price: 9, img: "https://i.ibb.co/kgxmPGpQ/20260914-081757.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 2800✅", "اسلوب الدمv2", "ريس عشوائي من v1 الي v3 ✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 50 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 2800✅", "Blood style v2", "Random race from V1 to V3 ✅", "Random legendary/rare items and swords✅", "Random money from 100K to 50M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "لفل 2800+ريس الأرنب v4+الهيومن+اودن", nameEn: "Level 2800 + Rabbit V4 + Godhuman + Oden", price: 14, img: "https://i.ibb.co/gL7rXw51/20260418-184416.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 2800✅", "اسلوب الهيومن v2 (جميع اساليب اللعبة مفتوحة عدا  اسلوب الدم✅)", "سيوف اودن", "ريس الارنب v4 فل غير✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 50 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 2800✅", "Godhuman style v2 (all fighting styles unlocked except Blood✅)", "Oden swords", "Rabbit race V4 full✅", "Random legendary/rare items and swords✅", "Random money from 100K to 50M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "لفل 2800+ريس الهيومن v4+الهيومن+اودن", nameEn: "Level 2800 + Human V4 + Godhuman + Oden", price: 14, img: "https://i.ibb.co/DfK71DFY/20260914-082111.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 2800✅", "اسلوب الهيومن v2 (جميع اساليب اللعبة مفتوحة عدا اسلوب الدم✅)", "سيوف اودن✅", "ريس الهيومن v4 فل غير✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 50 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 2800✅", "Godhuman style v2 (all fighting styles unlocked except Blood✅)", "Oden swords✅", "Human race V4 full✅", "Random legendary/rare items and swords✅", "Random money from 100K to 50M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "لفل 2800+ريس القرش v4+الهيومن+اودن", nameEn: "Level 2800 + Shark V4 + Godhuman + Oden", price: 15, img: "https://i.ibb.co/fG8vLTZy/20260914-082211.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 2800✅", "اسلوب الهيومن v2 (جميع اساليب اللعبة مفتوحة عدا اسلوب الدم✅)", "سيوف اودن✅", "ريس القرش v4 فل غير✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 50 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 2800✅", "Godhuman style v2 (all fighting styles unlocked except Blood✅)", "Oden swords✅", "Shark race V4 full✅", "Random legendary/rare items and swords✅", "Random money from 100K to 50M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "لفل 2800+ريس الأنجل v4+الهيومن+اودن", nameEn: "Level 2800 + Angel V4 + Godhuman + Oden", price: 15, img: "https://i.ibb.co/tpZtLXFz/20260418-194705.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 2800✅", "اسلوب الهيومن v2 (جميع اساليب اللعبة مفتوحة عدا اسلوب الدم✅)", "سيوف اودن✅", "ريس الانجل v4 فل غير✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 50 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 2800✅", "Godhuman style v2 (all fighting styles unlocked except Blood✅)", "Oden swords✅", "Angel race V4 full✅", "Random legendary/rare items and swords✅", "Random money from 100K to 50M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "لفل 2800+ريس الغول v4+الهيومن+اودن", nameEn: "Level 2800 + Ghoul V4 + Godhuman + Oden", price: 16, img: "https://i.ibb.co/jvs8Bxbh/20260418-181512.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 2800✅", "اسلوب الهيومن v2 (جميع اساليب اللعبة مفتوحة عدا اسلوب الدم✅)", "سيوف اودن✅", "ريس الهيومن v4 فل غير✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 50 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 2800✅", "Godhuman style v2 (all fighting styles unlocked except Blood✅)", "Oden swords✅", "Human race V4 full✅", "Random legendary/rare items and swords✅", "Random money from 100K to 50M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "لفل 2800+ريس السايبورغ v4+الهيومن+اودن", nameEn: "Level 2800 + Cyborg V4 + Godhuman + Oden", price: 16, img: "https://i.ibb.co/G1BWnmg/20260418-191203.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 2800✅", "اسلوب الهيومن v2 (جميع اساليب اللعبة مفتوحة عدا اسلوب الدم✅)", "سيوف اودن✅", "ريس السايبورغ v4 فل غير✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 50 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 2800✅", "Godhuman style v2 (all fighting styles unlocked except Blood✅)", "Oden swords✅", "Cyborg race V4 full✅", "Random legendary/rare items and swords✅", "Random money from 100K to 50M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
+            { nameAr: "لفل 2800+ريس الدراكو v4+الهيومن+اودن", nameEn: "Level 2800 + Draco V4 + Godhuman + Oden", price: 20, img: "https://i.ibb.co/LDNJV96d/20260418-201605.jpg", cat: "acc",
+              specsAr: ["لفل الحساب 2800✅", "اسلوب الهيومن v2 (جميع اساليب اللعبة مفتوحة عدا اسلوب الدم✅)", "سيوف اودن✅", "ريس الدراكو v4 فل غير✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 50 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
+              specsEn: ["Account level 2800✅", "Godhuman style v2 (all fighting styles unlocked except Blood✅)", "Oden swords✅", "Draco race V4 full✅", "Random legendary/rare items and swords✅", "Random money from 100K to 50M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
             // --- الخدمات (Services) — معاد بناءها بنفس شكل البطاقات العادية ---
             { nameAr: "تلفيل 2800 لفل (ماكس) + غود هيومن", nameEn: "Leveling 2800(max) + god human",
               price: 9.00, img: "https://i.ibb.co/mr2vNDXz/20260803-123243.jpg", cat: "srv", badgeAr: "أقوى عرض", badgeEn: "Best Deal",
@@ -691,6 +704,14 @@
             }
             return { nameAr: p.nameAr, nameEn: p.nameEn, bodyAr: p.nameAr, bodyEn: p.nameEn };
         }
+        function accSpecsAr(p) {
+            if (p.cat !== 'acc' || !p.specsAr || !p.specsAr.length) return '';
+            return '\n\nمواصفات الحساب :\n\n' + p.specsAr.join('\n') + '\n';
+        }
+        function accSpecsEn(p) {
+            if (p.cat !== 'acc' || !p.specsEn || !p.specsEn.length) return '';
+            return '\n\nAccount specifications :\n\n' + p.specsEn.join('\n') + '\n';
+        }
         function buildDescription(p, lang) {
             const names = descNames(p);
             const price = Number(p.price || 0).toFixed(2);
@@ -706,7 +727,7 @@
 تسليم سريع وآمن
 دعم مستمر
 خيارات دفع مرنة
-ضمان ترتيب واضح للطلب
+ضمان ترتيب واضح للطلب${accSpecsAr(p)}
 
 الوصف
 
@@ -757,7 +778,7 @@ Delivery time: from 5 minutes to 24 hours after payment is completed
 Fast & secure delivery
 Ongoing support
 Flexible payment options
-Clear order arrangement guarantee
+Clear order arrangement guarantee${accSpecsEn(p)}
 
 Description
 
@@ -821,7 +842,7 @@ Note: The in-game delivery method may vary depending on the available method for
                         ${badge ? `<div class="mini-tag">${badge}</div>` : ''}
                         <h2>${name}</h2>
                         <div class="detail-text" style="white-space:pre-line;line-height:1.9">${description}</div>
-                        ${specs.length ? `<div class="section-title">${tx.specs}</div><ul class="detail-list">${specs.map(s => `<li>${s}</li>`).join('')}</ul>` : ''}
+                        ${(specs.length && p.cat !== 'acc') ? `<div class="section-title">${tx.specs}</div><ul class="detail-list">${specs.map(s => `<li>${s}</li>`).join('')}</ul>` : ''}
                         <div class="cta-row">
                             <button class="btn btn-primary" onclick="handleModalAddToCart(${idx})">${tx.backAdd}</button>
                             <button class="btn btn-secondary" onclick="closeModal()">${tx.close}</button>
