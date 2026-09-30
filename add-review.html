@@ -118,7 +118,7 @@
             <div class="note-box">وضع صورة اثبات التسليم ضروري من تطل نشر التعليق منعا للتعليقات الزائفة، وهي ان تضع اي صورة تدل على انك استلمت المنتج بنجاح، يسعدنا ان تضع تعليقا ايجابيا إذا اعجتك خدماتنا!</div>
 
             <div id="formAlert" class="form-alert"></div>
-            <button class="submit-btn" onclick="submitReview()" data-ar="نشر التقييم" data-en="Publish Review">نشر التقييم</button>
+            <button class="submit-btn" onclick="return submitReview(event)" data-ar="نشر التقييم" data-en="Publish Review">نشر التقييم</button>
         </div>
     </main>
 
@@ -193,30 +193,13 @@
             });
         }
 
-        function submitReview() {
+        function submitReview(e) {
+            if (e && typeof e.preventDefault === 'function') e.preventDefault();
             const alertEl = document.getElementById('formAlert');
             const show = (msg, ok) => { alertEl.textContent = msg; alertEl.className = 'form-alert ' + (ok ? 'ok' : 'err'); };
-            const name = document.getElementById('nameInput').value.trim();
-            const text = document.getElementById('textInput').value.trim();
-            const proofFile = document.getElementById('proofInput').files[0];
-            const avatarFile = document.getElementById('avatarInput').files[0];
-
-            if (!proofFile) { show('لا يمكن نشر تعليقك لأنك لم تعرض صورة تثبت استلامك المنتج', false); return; }
-            if (!name) { show('يرجى كتابة اسمك أولاً', false); return; }
-            if (!text) { show('يرجى كتابة تعليقك أولاً', false); return; }
-            if (!rating) { show('يرجى تحديد عدد النجوم أولاً', false); return; }
-
-            Promise.all([
-                avatarFile ? readResized(avatarFile, 160) : Promise.resolve(null),
-                readResized(proofFile, 420)
-            ]).then(([avatar, proof]) => {
-                let reviews = [];
-                try { reviews = JSON.parse(localStorage.getItem('nova_reviews')) || []; } catch(e) { reviews = []; }
-                reviews.push({ id: Date.now(), name: name, stars: rating, text: text, avatar: avatar, proof: proof, date: new Date().toLocaleDateString() });
-                localStorage.setItem('nova_reviews', JSON.stringify(reviews));
-                show('تم نشر تقييمك بنجاح! شكرًا لثقتكم بـ Nova Store ❤️', true);
-                setTimeout(() => window.location.href = 'index.html', 1800);
-            });
+            // السياسة الجديدة: لا يمكن لأي زائر إضافة تقييم دون شراء منتج
+            show('⚠️ لا يمكنك إضافة تقييم قبل شراء منتج من المتجر. تواصل معنا عبر ديسكورد أو واتساب لإتمام عملية الشراء أولاً، ثم عد إلى هنا واترك تقييمك عن تجربتك بعد الاستلام.', false);
+            return false;
         }
 
         document.addEventListener('DOMContentLoaded', function() {

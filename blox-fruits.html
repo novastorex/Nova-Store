@@ -147,9 +147,8 @@
         [dir="ltr"] .search-box i { left: 13px; }
         .filter-container {
             background: #161b22; padding: 10px 6px 12px; display: flex;
-            overflow-x: auto; gap: 8px; border-bottom: 1px solid var(--border); scrollbar-width: none;
+            flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--border);
         }
-        .filter-container::-webkit-scrollbar { display: none; }
         .filter-opt {
             background: #21262d; border: 1px solid var(--neon-blue); color: white;
             padding: 7px 16px; border-radius: 18px; cursor: pointer; white-space: nowrap;
@@ -162,6 +161,9 @@
         .products-grid {
             display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 12px; padding: 15px;
+        }
+        @media (min-width: 768px) {
+            .products-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; padding: 18px; }
         }
         .product-card {
             background: linear-gradient(180deg, rgba(22,27,34,1) 0%, rgba(19,24,31,1) 100%);
@@ -413,6 +415,21 @@
             { nameAr: "البين (عادية)", nameEn: "Pain Physical", price: 1.30, img: "https://i.ibb.co/gbsYKM74/Pain-Fruit.webp", cat: "normal" },
             { nameAr: "البورتال (عادية)", nameEn: "Portal Physical", price: 1.10, img: "https://i.ibb.co/p6VbyLYS/Portal-Fruit.webp", cat: "normal" },
             { nameAr: "البوذا (عادية)", nameEn: "Buddha Physical", price: 1.10, img: "https://i.ibb.co/6RJgz0MZ/Buddha-Fruit.webp", cat: "normal" },
+
+            // --- فواكه عادية جديدة بأسعار منخفضة جداً (الصور مأخوذة من منتجات الـ Perm المقابلة) ---
+            { nameAr: "فاكهة الشادو (عادية)", nameEn: "Shadow Physical (low)", price: 0.60, img: "https://i.ibb.co/hRR5wh6s/Shadow-Fruit.webp",     cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة البليزرد (عادية)", nameEn: "Blizzard Physical (low)", price: 0.50, img: "https://i.ibb.co/tMd0RwDq/Blizzard-Fruit.webp", cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة العنقاء (عادية)", nameEn: "Phoenix Physical (low)", price: 0.40, img: "https://i.ibb.co/PGjvjBmT/Phoenix-Fruit.webp",   cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الصنع (عادية)", nameEn: "Creation Physical (low)", price: 0.35, img: "https://i.ibb.co/b5r2P1Nv/Creation-Fruit.webp",  cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الساوند (عادية)", nameEn: "Sound Physical (low)", price: 0.35, img: "https://i.ibb.co/zTKVcrgW/Sound-Fruit.webp",       cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة السبايدر (عادية)", nameEn: "Spider Physical (low)", price: 0.25, img: "https://i.ibb.co/Lhg3pPB6/Spider-Fruit.webp",    cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الحب (عادية)", nameEn: "Love Physical (low)", price: 0.23, img: "https://i.ibb.co/dwJLc9Wt/Love-Fruit.webp",           cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الزلزال (عادية)", nameEn: "Quake Physical (low)", price: 0.20, img: "https://i.ibb.co/pvn6wNyw/Quake-Fruit.webp",         cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الماغما (عادية)", nameEn: "Magma Physical (low)", price: 0.20, img: "https://i.ibb.co/cXYRM8sP/Magma-Fruit.webp",         cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الضوء (عادية)", nameEn: "Light Physical (low)", price: 0.20, img: "https://i.ibb.co/Mx88pMt7/Light-Fruit.webp",         cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الثلج (عادية)", nameEn: "Ice Physical (low)", price: 0.10, img: "https://i.ibb.co/84G6yF0z/Ice-Fruit.webp",               cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+
+            { nameAr: "ملاحظة", nameEn: "Note", price: 0, isNote: true, noteAr: "جميع الفواكه الاخرى متوفرة لدينا، تواصل معنا للاستفسار", noteEn: "All other fruits are available — contact us for inquiry.", cat: "normal" },
 
             // --- ألوان الفواكه (Fruit Skins) — تصنيف جديد ---
             { nameAr: "سكن الماجنيت", nameEn: "Arcsteel Magnet Skin", price: 34.00, img: "https://i.ibb.co/dwn8xXw3/xrysuoaijrnh1.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },

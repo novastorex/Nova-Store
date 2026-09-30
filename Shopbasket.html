@@ -22,6 +22,11 @@
         .item-details { flex-grow: 1; margin-right: 15px; }
         .item-name { font-weight: bold; font-size: 15px; margin-bottom: 5px; }
         .item-price { color: var(--gold); font-weight: bold; font-size: 14px; }
+        .qty-controls { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; }
+        .qty-btn { background: #21262d; border: 1px solid var(--neon-blue); color: white; width: 28px; height: 28px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 800; line-height: 1; transition: .2s; }
+        .qty-btn:hover { background: var(--neon-blue); color: #000; }
+        .qty-btn:disabled { opacity: .4; cursor: not-allowed; border-color: #555; }
+        .qty-value { min-width: 28px; text-align: center; font-weight: 800; color: #fff; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 4px 0; }
         .remove-btn { background: none; border: none; color: var(--red); cursor: pointer; font-size: 18px; padding: 10px; transition: 0.3s; }
         .remove-btn:hover { color: #ff0000; transform: scale(1.1); }
 
@@ -108,16 +113,13 @@
             <h2 class="cart-title" id="checkoutTitle">إتمام الطلب</h2>
             <div class="instruction-box" id="checkoutNote" style="background: rgba(255, 204, 0, 0.1); border-color: var(--gold);"></div>
             <div class="contact-methods">
-                <a href="https://www.tiktok.com/@novastoreox" class="method-card" target="_blank">
-                    <i class="fab fa-tiktok"></i> <span id="tkText"></span>
-                </a>
                 <a href="https://wa.me/qr/RHBWYWDXBM2UI1" class="method-card" target="_blank">
                     <i class="fab fa-whatsapp" style="color:#25d366;"></i> <span id="waText"></span>
                 </a>
                 <a href="https://t.me/Novastoreofficialx" class="method-card" target="_blank">
                     <i class="fab fa-telegram" style="color:#229ED9;"></i> <span id="tgText"></span>
                 </a>
-                <a href="https://discord.gg/zaVYm4zD8X" class="method-card" target="_blank">
+                <a href="https://discord.gg/qCk3NuAjE9" class="method-card" target="_blank">
                     <i class="fab fa-discord" style="color:#5865F2;"></i> <span id="dsText"></span>
                 </a>
             </div>
@@ -132,7 +134,7 @@
     </div>
 
     <script>
-        const rates = { 'USD': 1, 'EUR': 0.93, 'SAR': 3.75, 'AED': 3.6725, 'QAR': 3.64, 'BHD': 0.376, 'OMR': 0.3845, 'KWD': 0.31, 'EGP': 54.80, 'LYD': 9, 'MAD': 10 };
+        const rates = { 'USD': 1, 'EUR': 0.93, 'SAR': 3.75, 'AED': 3.6725, 'QAR': 3.64, 'BHD': 0.376, 'OMR': 0.3845, 'KWD': 0.31, 'EGP': 52.63, 'LYD': 8, 'MAD': 10 };
 
         function changeLanguage() {
             localStorage.setItem('selectedLang', document.getElementById('lang').value);
@@ -193,19 +195,41 @@
             let total = 0;
 
             cart.forEach((item, index) => {
+                const qty = Math.max(1, Number(item.qty) || 1);
+                const linePrice = (item.price * rate * qty);
+                total += linePrice;
                 const p = (item.price * rate).toFixed(2);
-                total += (item.price * rate);
                 listDiv.innerHTML += `
                     <div class="cart-item">
                         <img src="${item.img || 'https://i.ibb.co/5xXyd4jN/1774783408791.png'}" class="item-img">
                         <div class="item-details">
                             <div class="item-name">${item.name}</div>
                             <span class="item-price">${p} ${curr}</span>
+                            <div class="qty-controls">
+                                <button class="qty-btn" onclick="changeQty(${index}, -1)" aria-label="إنقاص الكمية">−</button>
+                                <span class="qty-value">${qty}</span>
+                                <button class="qty-btn" onclick="changeQty(${index}, +1)" aria-label="زيادة الكمية">+</button>
+                            </div>
                         </div>
                         <button class="remove-btn" onclick="removeItem(${index})"><i class="fas fa-trash-alt"></i></button>
                     </div>`;
             });
             document.getElementById('totalPrice').innerText = `${total.toFixed(2)} ${curr}`;
+        }
+
+        function changeQty(i, delta) {
+            let cart = JSON.parse(localStorage.getItem('nova_cart')) || [];
+            if (!cart[i]) return;
+            const cur = Math.max(1, Number(cart[i].qty) || 1);
+            const next = cur + delta;
+            if ((cur === 1 && delta < 0) || next < 1) {
+                // عند 1 وضغط -: إزالة العنصر
+                cart.splice(i, 1);
+            } else {
+                cart[i].qty = next;
+            }
+            localStorage.setItem('nova_cart', JSON.stringify(cart));
+            renderCart();
         }
 
         function removeItem(i) {
