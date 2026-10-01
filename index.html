@@ -68,10 +68,14 @@
         .footer-links a i { color: var(--gold); }
         .footer-links a:hover { color: var(--neon-blue); }
 
-        .payment-methods { margin: 30px auto; display: block; }
-        /* تم تكبير الصورة لتكون واضحة وجذابة */
-        .payment-methods img { height: 100px; width: auto; filter: grayscale(10%); transition: 0.3s; vertical-align: middle; }
+        .payment-methods { margin: 30px auto; display: flex; justify-content: center; align-items: center; }
+        /* عرض الصورة بكاملها بدون قص */
+        .payment-methods img { width: 100%; max-width: 760px; height: auto; object-fit: contain; filter: grayscale(10%); transition: 0.3s; }
         .payment-methods img:hover { filter: grayscale(0%); }
+        .review-bought { background: rgba(0,212,255,.07); border: 1px solid rgba(0,212,255,.25); border-radius: 8px; padding: 7px 10px; margin: 0 0 8px; color: #cfe6f1; font-size: 12px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .review-bought i { color: var(--neon-blue); }
+        .review-bought span.tag { color: var(--neon-blue); font-weight: 700; }
+        .review-bought span.item { color: #fff; font-weight: 700; }
 
         .copyright { color: #8b949e; font-size: 11px; margin-top: 15px; }
     
@@ -246,7 +250,7 @@
         </div>
 
         <div class="payment-methods">
-            <img src="https://i.ibb.co/4ZtBWPKd/1777212162381.png" alt="Payment Methods">
+            <img src="https://i.ibb.co/qFxM34XG/1790527486459.png" alt="Payment Methods">
         </div>
 
         <div class="copyright">
@@ -357,9 +361,38 @@
         }
 
         /* ====== عرض تقييمات العملاء (مثال افتراضي + ما يضيفه الزبائن) ====== */
-        const SAMPLE_REVIEW = { id: 1, name: 'عبد الله احمد', stars: 5, text: 'تسليم سريع وثقة', avatar: null, proof: 'https://i.ibb.co/pv0mTdss/IMG-20260815-202309.jpg', date: '2026' };
+        /* ====== تقييم عبد الله (الأعلى دائماً) + باقة تقييمات العملاء ====== */
+        const SAMPLE_REVIEW = { id: 'sample', name: 'عبد الله احمد', stars: 5, text: 'تسليم سريع وثقة', avatar: null, proof: 'https://i.ibb.co/pv0mTdss/IMG-20260815-202309.jpg', date: '2026' };
+        const SEED_REVIEWS = [
+            { name: 'بني ادم',  stars: 5, bought: 'تايغر عادية-بلوكس فروت',                                 proof: 'https://i.ibb.co/ymBWtnmP/1.jpg',               text: 'والله اول مره اتعامل معهم و والله حبيت المعامله ان شاء الله متكونش اخر مره 🌹' },
+            { name: '',        stars: 5, bought: 'حساب بلوكس فروت لفل ماكس + غود هيومن',                   proof: 'https://i.ibb.co/R46Mq7sd/IMG-20260908-WA0021.jpg', text: 'متجر ثقة مشكورين' },
+            { name: '',        stars: 5, bought: 'دبل مساحة-بلوكس فروت',                                  proof: 'https://i.ibb.co/kg6PLRtS/IMG-20260927-181028.jpg', text: 'شكرا جدا مكان موثوق راح اكلم اصحابي عشان يشترو' },
+            { name: 'منصور',   stars: 5, bought: 'حستب ريس القرس v4 جميع الاساليب ',                       proof: '',                                          text: 'والله من افضل المتاجر اذا مهو ب افضلها والتعامل والله جميل الله يوفقكم ويرزقكم يارب' },
+            { name: 'محمد',    stars: 5, bought: 'فاكخة الكيتسوني عادية-بلوكس فروت',                       proof: 'https://i.ibb.co/h1wpw0Nt/IMG-20260906-WA0003.jpg', text: 'مليون نجمه مش خمسه بس' },
+            { name: 'محمد',    stars: 5, bought: 'دبل مساحة- بلوكس فروت',                                  proof: 'https://i.ibb.co/pj28M9SJ/IMG-20260915-WA0009.jpg', text: 'شكرا جدآ' },
+            { name: 'عبد الله',stars: 5, bought: 'بيرم تنين + بيرم بورتال',                                 proof: '',                                          text: 'الله يبارك فيك والله فرحتني مرا يا رب يرزقك فرحه زي الي أنا فيها🌹🤩🤩🤩' }
+        ];
         function escapeHtml(str) {
             return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+        function paintReviewCard(rv) {
+            const starsNum = Math.min(5, Math.max(1, Number(rv.stars) || 5));
+            const starStr = '★'.repeat(starsNum);
+            const avatarHtml = rv.avatar ? '<img src="' + escapeHtml(rv.avatar) + '" alt="">' : '<i class="fas fa-user"></i>';
+            const proofHtml = rv.proof ? '<img class="review-proof" data-src="' + escapeHtml(rv.proof) + '" src="' + escapeHtml(rv.proof) + '" alt="delivery proof">' : '';
+            const boughtHtml = rv.bought ? '<div class="review-bought"><i class="fas fa-bag-shopping"></i> <span class="tag">تم شراء:</span> <span class="item">' + escapeHtml(rv.bought) + '</span></div>' : '';
+            return '<div class="review-card">' +
+                '<div class="review-top">' +
+                    '<div class="avatar">' + avatarHtml + '</div>' +
+                    '<div style="flex:1;min-width:0">' +
+                        '<div class="review-name">' + escapeHtml(rv.name || '') + '</div>' +
+                        '<div class="review-stars">' + starStr + '</div>' +
+                    '</div>' +
+                '</div>' +
+                boughtHtml +
+                '<p class="review-text">' + escapeHtml(rv.text || '') + '</p>' +
+                proofHtml +
+            '</div>';
         }
         function renderReviews() {
             const box = document.getElementById('reviewsBox');
@@ -367,23 +400,16 @@
             let stored = [];
             try { stored = JSON.parse(localStorage.getItem('nova_reviews')) || []; } catch (e) { stored = []; }
             stored.sort((a, b) => (b.id || 0) - (a.id || 0));
-            const all = [SAMPLE_REVIEW].concat(stored);
-            box.innerHTML = all.map(function (rv) {
-                const starStr = '★'.repeat(Math.min(5, Math.max(1, Number(rv.stars) || 5)));
-                const avatarHtml = rv.avatar ? '<img src="' + rv.avatar + '" alt="">' : '<i class="fas fa-user"></i>';
-                const proofHtml = rv.proof ? '<img class="review-proof" data-src="' + rv.proof + '" src="' + rv.proof + '" alt="delivery proof">' : '';
-                return '<div class="review-card">' +
-                    '<div class="review-top">' +
-                        '<div class="avatar">' + avatarHtml + '</div>' +
-                        '<div style="flex:1;min-width:0">' +
-                            '<div class="review-name">' + escapeHtml(rv.name || '') + '</div>' +
-                            '<div class="review-stars">' + starStr + '</div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<p class="review-text">' + escapeHtml(rv.text || '') + '</p>' +
-                    proofHtml +
-                '</div>';
-            }).join('');
+            // ملء الأسماء الفارغة → زائر 1، زائر 2…
+            let guest = 1;
+            const seeded = SEED_REVIEWS.map(function (rv) {
+                const copy = Object.assign({}, rv);
+                if (!copy.name || !copy.name.toString().trim()) copy.name = 'زائر ' + (guest++);
+                if (!copy.stars) copy.stars = 5;
+                return copy;
+            });
+            const all = [SAMPLE_REVIEW].concat(seeded).concat(stored);
+            box.innerHTML = all.map(paintReviewCard).join('');
             box.querySelectorAll('.review-proof').forEach(function (img) {
                 img.addEventListener('click', function () {
                     const src = img.getAttribute('data-src');
