@@ -350,7 +350,7 @@
     </div>
 
     <div class="notice-wrap">
-        <div class="notice-box" id="noticeBox"><i class="fas fa-circle-check"></i> الروبوكس المعروض سيصلك بالكامل مع تغطية كاملة لضريبة ال30%، ستحصل على نفس كمية الروبوكس بالضبط التي تشتريها!</div>
+        <div class="notice-box" id="noticeBox" style="display:none"><i class="fas fa-circle-check"></i>&nbsp;</div>
     </div>
 
     <div class="products-grid" id="productGrid"></div>
@@ -374,11 +374,11 @@
         const CART_PAGE_LOCAL = 'Shopbasket.html';
 
         const products = [
-            { nameAr: '250 روبوكس', nameEn: '250 Robux', price: 3.20, img: 'https://i.ibb.co/Q3LtFsjv/20260607-195223.jpg', cat: 'pass', robux: 250 },
-            { nameAr: '500 روبوكس', nameEn: '500 Robux', price: 6.50, img: 'https://i.ibb.co/fVjFsC8L/20260607-195242.jpg', cat: 'pass', robux: 500 },
-            { nameAr: '1000 روبوكس', nameEn: '1000 Robux', price: 11.50, img: 'https://i.ibb.co/0y11qZ79/20260607-195259.jpg', cat: 'pass', robux: 1000 },
-            { nameAr: '2500 روبوكس', nameEn: '2500 Robux', price: 26.00, img: 'https://i.ibb.co/twzQ1zGv/20260607-195318.jpg', cat: 'pass', robux: 2500 },
-            { nameAr: '5000 روبوكس', nameEn: '5000 Robux', price: 47.00, img: 'https://i.ibb.co/zHCN2CMr/20260607-195331.jpg', cat: 'pass', robux: 5000 }
+            { nameAr: '250 روبوكس', nameEn: '250 Robux', price: 2.17, img: 'https://i.ibb.co/Q3LtFsjv/20260607-195223.jpg', cat: 'pass', robux: 250 },
+            { nameAr: '500 روبوكس', nameEn: '500 Robux', price: 4.23, img: 'https://i.ibb.co/fVjFsC8L/20260607-195242.jpg', cat: 'pass', robux: 500 },
+            { nameAr: '1000 روبوكس', nameEn: '1000 Robux', price: 7.00, img: 'https://i.ibb.co/0y11qZ79/20260607-195259.jpg', cat: 'pass', robux: 1000 },
+            { nameAr: '2500 روبوكس', nameEn: '2500 Robux', price: 17.50, img: 'https://i.ibb.co/twzQ1zGv/20260607-195318.jpg', cat: 'pass', robux: 2500 },
+            { nameAr: '5000 روبوكس', nameEn: '5000 Robux', price: 31.00, img: 'https://i.ibb.co/zHCN2CMr/20260607-195331.jpg', cat: 'pass', robux: 5000 }
         ];
 
         const texts = {
@@ -409,8 +409,8 @@
                 close: 'إغلاق',
                 gamePassTag: 'قيم باس',
                 noResults: 'لا توجد نتائج مطابقة حالياً.',
-                noteBanner: 'الروبوكس المعروض سيصلك بالكامل مع تغطية كاملة لضريبة ال30%، ستحصل على نفس كمية الروبوكس بالضبط التي تشتريها!',
-                robuxTaxNote: 'هذا القيم باس يغطي ضريبة 30% وسيصلك الروبوكس كاملاً دون نقص.',
+                noteBanner: '',
+                robuxTaxNote: '',
                 deliveryText: 'أضف المنتج إلى السلة وأكمل الطلب ثم تواصل معنا عبر أحد الوسائل المتاحة وأرسل لنا رابط القيم باس.',
                 descTemplate: amount => `احصل على روبوكس بقيمة ${amount} مع تسليم سريع وترتيب واضح للطلب.`
             },
@@ -441,8 +441,8 @@
                 close: 'Close',
                 gamePassTag: 'Game Pass',
                 noResults: 'No matching results right now.',
-                noteBanner: "The displayed Robux will be delivered in full with complete coverage of the 30% tax — you'll receive exactly the amount you purchase!",
-                robuxTaxNote: 'This game pass covers the 30% tax and you will receive the full Robux amount with no deductions.',
+                noteBanner: '',
+                robuxTaxNote: '',
                 deliveryText: 'Add the product to the cart, complete the order, then contact us through one of the available methods and send us the game pass link.',
                 descTemplate: amount => `Get ${amount} Robux with fast delivery and a clear order arrangement.`
             }
