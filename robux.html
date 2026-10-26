@@ -19,38 +19,40 @@
     </script>
     <style>
         :root {
-            --main-bg: #0d1117;
-            --card-bg: #161b22;
-            --soft-card: #1c2128;
-            --neon-blue: #00d4ff;
-            --gold: #ffcc00;
-            --text-gray: #97a2b0;
-            --border: #30363d;
-            --success: #4ade80;
-            --danger: #ff6b6b;
+            --main-bg: #f4f7fb;
+            --card-bg: #ffffff;
+            --soft-card: #f0f5fa;
+            --neon-blue: #0090c8;
+            --gold: #d99e00;
+            --text-gray: #5b6b7c;
+            --border: #e3eaf2;
+            --success: #16a34a;
+            --danger: #dc2626;
         }
         * { box-sizing: border-box; }
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(180deg, #0d1117 0%, #0b1220 100%);
-            color: #fff;
+            background: linear-gradient(180deg, #f4f7fb 0%, #eef3f9 100%);
+            color: #17222e;
             font-family: 'Tajawal', sans-serif;
             overflow-x: hidden;
         }
         .header {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
             align-items: center;
             gap: 10px;
-            padding: 10px 14px;
-            background: rgba(13,17,23,.96);
+            padding: 10px 3%;
+            background: rgba(255,255,255,.97);
             border-bottom: 2px solid var(--neon-blue);
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
         }
+        .header-right { display: flex; align-items: center; gap: 8px; justify-self: start; min-width: 0; }
+        .header-end { justify-self: end; }
+        .logo-center { justify-self: center; min-width: 0; }
         .header-left {
             display: flex;
             align-items: center;
@@ -60,9 +62,9 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #21262d;
+            background: #eef4fa;
             border: 1px solid var(--neon-blue);
-            color: white;
+            color: #17222e;
             padding: 7px 12px;
             border-radius: 12px;
             font-family: 'Tajawal', sans-serif;
@@ -85,7 +87,7 @@
         }
         .pill {
             display: flex;
-            background: #21262d;
+            background: #eef4fa;
             border: 1px solid var(--border);
             border-radius: 20px;
             height: 32px;
@@ -96,7 +98,7 @@
         .pill:hover { border-color: var(--neon-blue); }
         .pill select {
             background: transparent;
-            color: white;
+            color: #17222e;
             border: none;
             padding: 0 10px;
             font-family: 'Tajawal';
@@ -108,31 +110,32 @@
         .cart-box {
             color: var(--gold);
             font-size: 13px;
-            background: rgba(255, 204, 0, 0.08);
+            background: rgba(217,158,0,.08);
             padding: 7px 10px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 204, 0, 0.25);
+            border: 1px solid rgba(217,158,0,.3);
             cursor: pointer;
             transition: .2s ease;
+            text-decoration: none;
         }
         .cart-box:hover { transform: translateY(-1px); box-shadow: 0 10px 18px rgba(255,204,0,.14); }
 
         .hero {
             padding: 18px 15px 8px;
-            background: radial-gradient(circle at top right, rgba(0,212,255,.18), transparent 35%), #111827;
+            background: radial-gradient(circle at top right, rgba(0,144,200,.10), transparent 35%), #ffffff;
         }
         .hero h1 { margin: 0 0 8px; color: var(--neon-blue); font-size: 24px; }
-        .hero p { margin: 0; color: #d1d7df; font-size: 13px; line-height: 1.8; }
+        .hero p { margin: 0; color: #5b6b7c; font-size: 13px; line-height: 1.8; }
 
-        .search-container { padding: 15px; background: #161b22; }
+        .search-container { padding: 15px; background: #ffffff; }
         .search-box { width: 100%; position: relative; }
         .search-box input {
             width: 100%;
-            background: #0d1117;
+            background: #f4f7fb;
             border: 1.5px solid var(--neon-blue);
             border-radius: 20px;
             padding: 11px 15px;
-            color: white;
+            color: #17222e;
             outline: none;
             font-family: 'Tajawal', sans-serif;
             font-size: 13px;
@@ -146,25 +149,24 @@
         [dir="ltr"] .search-box i { left: 13px; }
 
         .filter-container {
-            background: #161b22; padding: 10px 6px 12px; display: flex;
-            overflow-x: auto; gap: 8px; border-bottom: 1px solid var(--border); scrollbar-width: none;
+            background: #ffffff; padding: 10px 6px 12px; display: flex;
+            flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--border);
         }
-        .filter-container::-webkit-scrollbar { display: none; }
         .filter-opt {
-            background: #21262d; border: 1px solid var(--neon-blue); color: white;
+            background: #eef4fa; border: 1px solid var(--neon-blue); color: #17222e;
             padding: 7px 16px; border-radius: 18px; cursor: pointer; white-space: nowrap;
             font-size: 12px; flex-shrink: 0; transition: .2s ease;
         }
         .filter-opt.active {
-            background: var(--neon-blue); color: #000; font-weight: 800;
-            box-shadow: 0 0 18px rgba(0,212,255,.28);
+            background: var(--neon-blue); color: #fff; font-weight: 800;
+            box-shadow: 0 0 18px rgba(0,144,200,.28);
         }
 
         .notice-wrap { padding: 12px 15px 0; }
         .notice-box {
             background: linear-gradient(180deg, rgba(74,222,128,.14), rgba(34,197,94,.08));
             border: 1px solid rgba(74,222,128,.32);
-            color: #cdfbe1;
+            color: #14532d;
             border-radius: 16px;
             padding: 12px 14px;
             font-size: 13px;
@@ -178,10 +180,18 @@
             gap: 12px; padding: 15px;
         }
         .product-card {
-            background: linear-gradient(180deg, rgba(22,27,34,1) 0%, rgba(19,24,31,1) 100%);
+            background: #ffffff;
             border-radius: 18px; padding: 10px; border: 1px solid var(--border);
-            position: relative; overflow: hidden; box-shadow: 0 10px 26px rgba(0,0,0,.2);
+            position: relative; overflow: hidden; box-shadow: 0 6px 22px rgba(23,34,46,.07);
         }
+        .product-card.out img { filter: grayscale(1); opacity: .55; }
+        .stock-badge {
+            position: absolute; top: 10px; left: 10px;
+            background: linear-gradient(135deg, #ff4d6d, #c81e3e); color: #fff;
+            font-weight: 800; font-size: 10px; padding: 5px 10px; border-radius: 999px;
+            box-shadow: 0 8px 16px rgba(200,30,62,.3); z-index: 4;
+        }
+        .details-btn { margin-bottom: 8px; }
         .product-card .thumb-wrap {
             position: relative; border-radius: 14px; overflow: hidden; background: #000;
         }
@@ -208,7 +218,7 @@
         }
         .price-line { color: var(--gold); font-weight: 800; margin-bottom: 10px; font-size: 15px; }
         .small-desc {
-            color: #cad3dd; font-size: 11px; line-height: 1.7;
+            color: #5b6b7c; font-size: 11px; line-height: 1.7;
             min-height: 52px; margin-bottom: 10px;
         }
         .btn {
@@ -216,11 +226,11 @@
             border-radius: 11px; font-weight: 800; cursor: pointer;
             transition: .2s ease; font-family: inherit;
         }
-        .btn-primary { background: var(--neon-blue); color: #00131b; }
+        .btn-primary { background: var(--neon-blue); color: #fff; }
         .btn-primary:hover { filter: brightness(1.06); }
         .btn-secondary {
-            background: rgba(255,255,255,.06); color: #fff;
-            border: 1px solid rgba(255,255,255,.08);
+            background: #eef4fa; color: #17222e;
+            border: 1px solid var(--border);
         }
         .empty-state {
             grid-column: 1 / -1;
@@ -229,8 +239,8 @@
             text-align: center; color: var(--text-gray);
         }
         .modal {
-            display: none; position: fixed; inset: 0; z-index: 9999;
-            background: rgba(3, 7, 13, .92); backdrop-filter: blur(8px);
+            display: none; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999;
+            background: rgba(15, 30, 45, .5); backdrop-filter: blur(8px);
             overflow-y: auto;
         }
         .modal-content { max-width: 820px; margin: 0 auto; min-height: 100%; padding: 18px; }
@@ -242,9 +252,9 @@
             top: 12px; margin-bottom: 10px; font-size: 24px;
         }
         .modal-card {
-            background: linear-gradient(180deg, #131922 0%, #0f141b 100%);
+            background: #ffffff;
             border: 1px solid var(--border); border-radius: 24px;
-            overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,.4);
+            overflow: hidden; box-shadow: 0 24px 60px rgba(23,34,46,.25);
         }
         .modal-top { padding: 18px; border-bottom: 1px solid rgba(255,255,255,.06); }
         .modal-cover {
@@ -253,19 +263,19 @@
         }
         .modal-body { padding: 18px; }
         .modal-body h2 { margin: 12px 0 6px; color: var(--gold); font-size: 24px; }
-        .meta-line { color: #dce4ee; font-size: 14px; line-height: 1.9; }
+        .meta-line { color: #17222e; font-size: 14px; line-height: 1.9; }
         .feature-grid {
             margin: 18px 0; display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
         }
         .feature-item {
-            background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
+            background: #f4f7fb; border: 1px solid var(--border);
             border-radius: 14px; padding: 12px;
-            color: #dbe4ef; font-size: 13px;
+            color: #17222e; font-size: 13px;
         }
         .feature-item i { color: var(--neon-blue); margin-inline-end: 6px; }
         .section-title { color: var(--gold); margin: 22px 0 8px; font-size: 17px; }
-        .detail-text { color: #d5dde8; font-size: 14px; line-height: 2; }
+        .detail-text { color: #2c3e50; font-size: 14px; line-height: 2; }
         .detail-text.success-note {
             background: rgba(74,222,128,.10);
             border: 1px solid rgba(74,222,128,.28);
@@ -279,9 +289,9 @@
             margin: 0; padding: 0; list-style: none; display: grid; gap: 10px;
         }
         .detail-list li {
-            background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.05);
+            background: #f4f7fb; border: 1px solid var(--border);
             border-radius: 12px; padding: 11px 13px;
-            color: #dbe4ef; font-size: 13px;
+            color: #17222e; font-size: 13px;
         }
         .cta-row {
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;
@@ -289,6 +299,80 @@
         @media (max-width: 720px) {
             .feature-grid, .cta-row { grid-template-columns: 1fr; }
         }
+
+        /* ===== الفوتر الأزرق ===== */
+        .footer { background: linear-gradient(180deg, #0d3a54, #0a2c40); border-top: 3px solid var(--neon-blue); padding: 26px 5% 18px; text-align: center; margin-top: 40px; }
+        .footer-links { display: flex; justify-content: center; gap: 14px; margin-bottom: 16px; flex-wrap: wrap; }
+        .footer-links a { color: #fff; text-decoration: none; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); padding: 9px 15px; border-radius: 12px; transition: .3s; }
+        .footer-links a i { color: #ffd24a; }
+        .footer-links a:hover { color: #ffd24a; border-color: #ffd24a; transform: translateY(-3px); }
+        .copyright { color: #9db8ca; font-size: 11px; margin-top: 10px; }
+        /* ===== إشعارات Toast ===== */
+        .nova-toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-16px); z-index: 12000; background: #ffffff; border: 1px solid var(--border); border-inline-start: 5px solid var(--success); border-radius: 12px; padding: 12px 16px; box-shadow: 0 12px 30px rgba(23,34,46,.22); font-size: 13px; font-weight: 700; color: #17222e; display: flex; gap: 9px; align-items: center; opacity: 0; transition: opacity .3s, transform .3s; max-width: min(92vw, 460px); }
+        .nova-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .nova-toast i { color: var(--success); }
+        .nova-toast.err { border-inline-start-color: var(--danger); }
+        .nova-toast.err i { color: var(--danger); }
+        /* ===== دائرة الدردشة ===== */
+        .chat-fab { position: fixed; bottom: 22px; right: 22px; z-index: 3000; width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer; background: linear-gradient(135deg, var(--neon-blue), #006e96); color: #fff; font-size: 22px; box-shadow: 0 8px 22px rgba(0,144,200,.4); display: flex; align-items: center; justify-content: center; transition: transform .25s; }
+        .chat-fab:hover { transform: scale(1.12) rotate(6deg); }
+        .chat-fab .dot { position: absolute; top: 4px; left: 4px; width: 12px; height: 12px; background: #4ade80; border-radius: 50%; border: 2px solid #fff; animation: pulseDot 2s infinite; }
+        @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+        .chat-overlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 3100; background: rgba(10,25,40,.45); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s; padding: 16px; }
+        .chat-overlay.show { opacity: 1; pointer-events: auto; }
+        .chat-modal { width: min(420px, 94vw); height: min(640px, 84vh); background: #fff; border-radius: 18px; overflow: hidden; position: relative; box-shadow: 0 30px 70px rgba(10,25,40,.4); transform: translateY(26px) scale(.94); opacity: 0; transition: transform .35s cubic-bezier(.2,1.2,.3,1), opacity .3s; }
+        .chat-overlay.show .chat-modal { transform: translateY(0) scale(1); opacity: 1; }
+        .chat-modal iframe { width: 100%; height: 100%; border: none; }
+        .chat-close { position: absolute; top: 8px; left: 8px; z-index: 2; width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer; background: rgba(10,25,40,.75); color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; transition: .2s; }
+        .chat-close:hover { background: #ff4d6d; transform: rotate(90deg); }
+    /* ====== NOVA LIGHT THEME ====== */
+        :root { --main-bg:#f4f7fb !important; --card-bg:#ffffff !important; --neon-blue:#0090c8 !important; --gold:#d99e00 !important; --border:#e3eaf2 !important; }
+        body { background:#f4f7fb !important; color:#17222e !important; }
+        .header { background:rgba(255,255,255,.97) !important; border-bottom:2px solid #0090c8 !important; box-shadow:0 2px 14px rgba(23,34,46,.06) !important; }
+        .hero, .search-container, .search-box { background:#ffffff !important; }
+        .hero h1 { color:#0090c8 !important; } #heroText { color:#41586e !important; }
+        .search-box input { background:#f4f7fb !important; color:#17222e !important; border-color:#0090c8 !important; }
+        .pill { background:#eef4fa !important; border-color:#e3eaf2 !important; } .pill select { color:#17222e !important; }
+        .filter-container { background:#ffffff !important; }
+        .filter-opt { background:#eef4fa !important; color:#17222e !important; border-color:#d7e3ee !important; }
+        .filter-opt.active { background:#0090c8 !important; color:#fff !important; }
+        .product-card { background:#ffffff !important; border-color:#e3eaf2 !important; box-shadow:0 6px 22px rgba(23,34,46,.07) !important; }
+        .card-title { color:#17222e !important; }
+        .price-line { color:#d99e00 !important; }
+        .small-desc, .specs-preview li, .detail-text { color:#3d4d5e !important; }
+        .mini-tag { background:rgba(0,144,200,.1) !important; color:#0090c8 !important; }
+        .btn-primary { background:#0090c8 !important; color:#fff !important; }
+        .btn-ghost { background:#ffffff !important; color:#0090c8 !important; border:1.5px solid #0090c8 !important; font-weight:800; }
+        .btn-ghost:hover { background:#eef6fb !important; }
+        .modal .modal-content, .modal-card, .modal-body { background:#ffffff !important; color:#17222e !important; }
+        .section-title { color:#0090c8 !important; }
+        .feature-item { background:#eef4fa !important; color:#17222e !important; }
+        .empty-state { color:#5b6b7c !important; }
+        .cart-box { color:#d99e00 !important; background:rgba(217,158,0,.08) !important; border-color:rgba(217,158,0,.3) !important; }
+        .home-btn { background:#eef4fa !important; color:#17222e !important; }
+        .oos-badge { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:3; background:#ff4d6d; color:#fff; font-size:11px; font-weight:800; padding:5px 12px; border-radius:99px; box-shadow:0 4px 14px rgba(255,77,109,.4); white-space:nowrap; }
+        .success-note { color:#15803d !important; background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.35); border-radius:10px; padding:9px 12px; }
+        .warn-note { color:#b45309 !important; background:rgba(217,158,0,.1); border:1px solid rgba(217,158,0,.35); border-radius:10px; padding:9px 12px; }
+        .logo-mid { text-align:center; min-width:0; }
+        .logo-mid img { height:44px; max-width:30vw; object-fit:contain; }
+        .footer { background:linear-gradient(180deg,#0d3a54,#0a2c40) !important; border-top:3px solid #0090c8 !important; padding:30px 5% 20px !important; text-align:center !important; margin-top:40px !important; color:#e8f1f8 !important; }
+        .footer-intro { max-width:900px; margin:0 auto 18px; font-size:13px; line-height:2; color:#d5e6f2; }
+        .verified-row { display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:14px 0 20px; font-size:13px; }
+        .verified-row .v-tag { display:inline-flex; align-items:center; gap:7px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); padding:7px 14px; border-radius:99px; color:#e8f1f8; }
+        .verified-row .v-tag i { color:#4ade80; }
+        .verified-row a { color:#ffd24a; text-decoration:none; font-weight:800; }
+        .footer-links { display:flex; justify-content:center; gap:18px; margin-bottom:18px; flex-wrap:wrap; }
+        .footer-links a { color:#fff !important; text-decoration:none; font-size:13px; font-weight:bold; transition:.3s; display:flex; align-items:center; gap:7px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16); padding:9px 15px; border-radius:12px; }
+        .footer-links a i { color:#ffd24a !important; }
+        .footer-links a:hover { color:#ffd24a !important; border-color:#ffd24a; transform:translateY(-3px); }
+        .payment-methods { margin:22px auto 8px; display:flex; justify-content:center; align-items:center; }
+        .payment-methods img { width:100%; max-width:440px; height:auto; object-fit:contain; border-radius:10px; }
+        .copyright { color:#9db8ca; font-size:11px; margin-top:14px; }
+        .nova-toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(180%); z-index:6000; width:min(92vw,430px); background:#ffffff; border:1.5px solid #0090c8; border-radius:14px; padding:13px 16px; box-shadow:0 14px 40px rgba(10,25,40,.25); display:flex; gap:10px; align-items:flex-start; transition:transform .45s cubic-bezier(.2,1.2,.3,1); font-size:13px; color:#17222e; line-height:1.7; }
+        .nova-toast.show { transform:translateX(-50%) translateY(0); }
+        .nova-toast i { margin-top:2px; }
+        .nova-toast.ok { border-color:#22c55e; } .nova-toast.ok i { color:#22c55e; }
+        .nova-toast.err { border-color:#ff4d6d; } .nova-toast.err i { color:#ff4d6d; }
     </style>
 </head>
 <body>
@@ -299,37 +383,37 @@
         </div>
     </div>
 
-    <div class="header">
-        <div class="header-left">
+        <div class="header">
+        <div class="header-right">
             <a href="index.html" class="home-btn" title="العودة للرئيسية / Back to Home">
                 <i class="fas fa-home"></i>
                 <span data-ar="العودة للرئيسية" data-en="Back to Home">العودة للرئيسية</span>
             </a>
-            <img src="https://i.ibb.co/5xXyd4jN/1774783408791.png" class="logo-img" alt="Nova Store">
+            <div class="pill">
+                <select id="currencySelect" onchange="handlePillChange()">
+                    <optgroup label="العملة / Currency">
+                        <option value="USD">دولار (USD $)</option>
+                        <option value="EUR">يورو (EUR €)</option>
+                        <option value="SAR">ريال سعودي (SAR)</option>
+                        <option value="AED">درهم إماراتي (AED)</option>
+                        <option value="QAR">ريال قطري (QAR)</option>
+                        <option value="BHD">دينار بحريني (BHD)</option>
+                        <option value="OMR">ريال عماني (OMR)</option>
+                        <option value="KWD">دينار كويتي (KWD)</option>
+                        <option value="EGP">جنيه مصري (EGP)</option>
+                        <option value="LYD">دينار ليبي (LYD)</option>
+                        <option value="MAD">درهم مغربي (MAD)</option>
+                    </optgroup>
+                    <optgroup label="اللغة / Language">
+                        <option value="ar">العربية (AR)</option>
+                        <option value="en">English (EN)</option>
+                    </optgroup>
+                </select>
+            </div>
         </div>
-        <div class="nav-controls">
-            <div class="pill">
-                <select id="langSelect" onchange="changeLanguage()">
-                    <option value="ar">العربية (AR)</option>
-                    <option value="en">English (EN)</option>
-                </select>
-            </div>
-            <div class="pill">
-                <select id="currencySelect" onchange="changeCurrency()">
-                    <option value="USD">دولار (USD $)</option>
-                    <option value="EUR">يورو (EUR €)</option>
-                    <option value="SAR">ريال سعودي (SAR)</option>
-                    <option value="AED">درهم إماراتي (AED)</option>
-                    <option value="QAR">ريال قطري (QAR)</option>
-                    <option value="BHD">دينار بحريني (BHD)</option>
-                    <option value="OMR">ريال عماني (OMR)</option>
-                    <option value="KWD">دينار كويتي (KWD)</option>
-                    <option value="EGP">جنيه مصري (EGP)</option>
-                    <option value="LYD">دينار ليبي (LYD)</option>
-                    <option value="MAD">درهم مغربي (MAD)</option>
-                </select>
-            </div>
-            <div class="cart-box" onclick="openCartPage()" title="Cart / السلة"><i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span></div>
+        <div class="logo-center"><img src="https://i.ibb.co/xq9Nk3DH/1792949977544.png" class="logo-img" alt="Nova Store"></div>
+        <div class="header-end">
+            <a href="Shopbasket.html" class="cart-box" onclick="openCartPage()" title="Cart / السلة"><i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span></a>
         </div>
     </div>
 
@@ -346,7 +430,8 @@
     </div>
 
     <div class="filter-container">
-        <div class="filter-opt active" id="btn-pass" onclick="setFilter('pass', this)">قيم باس</div>
+        <div class="filter-opt active" id="btn-pass" onclick="setFilter('pass', this)">روبوكس قيم باس</div>
+        <div class="filter-opt" id="btn-net" onclick="setFilter('net', this)">روبوكس صافي</div>
     </div>
 
     <div class="notice-wrap">
@@ -354,6 +439,8 @@
     </div>
 
     <div class="products-grid" id="productGrid"></div>
+    </div>
+
 
     <script>
         // معدلات الصرف الموحدّة عبر الموقع بالكامل (نفس الجدول في index.html و blox-fruits.html)
@@ -381,14 +468,50 @@
             { nameAr: '5000 روبوكس', nameEn: '5000 Robux', price: 31.00, img: 'https://i.ibb.co/zHCN2CMr/20260607-195331.jpg', cat: 'pass', robux: 5000 }
         ];
 
+        /* ====== التحكم بالتوفر (لكل منتج على حدة) ======
+           لإعلان نفاد منتج من المخزون: أضف  stock: false  داخل بيانات المنتج.
+           مثال: { nameAr: '1000 روبوكس', nameEn: '1000 Robux', price: 7.00, img: '...', cat: 'pass', robux: 1000, stock: false },
+           المنتجات بدون هذا الحقل تُعتبر متوفرة تلقائياً. */
+
+        /* روبوكس صافي = نفس منتجات القيم باس بسعر أعلى بـ30% (يغطي ضريبة روبلوكس كاملة) */
+        const NET_PRICE_FACTOR = 1.3;
+        products.push.apply(products, products.slice().map(function (p) {
+            return Object.assign({}, p, { cat: 'net', price: Math.round(p.price * NET_PRICE_FACTOR * 100) / 100 });
+        }));
+
+        /* ⚙️ تصنيف "روبوكس صافي": يُولَّد تلقائياً بنفس منتجات القيم باس بزيادة 30% على السعر */
+        (function () {
+            const src = products.filter(function (p) { return p.cat === 'pass'; });
+            src.forEach(function (p) {
+                products.push({
+                    nameAr: p.nameAr + ' (صافي)',
+                    nameEn: p.nameEn + ' (Net)',
+                    price: Math.round(p.price * 1.3 * 100) / 100,
+                    img: p.img,
+                    cat: 'net',
+                    robux: p.robux
+                });
+            });
+        })();
+
+        /* ============================================================
+           ⚙️ إعدادات المخزون — عدّلها بنفسك بسهولة
+           اكتب اسم المنتج (بالعربية كما هو بالضبط) داخل OUT_OF_STOCK
+           ليصبح "نفذت من المخزون". أي منتج غير مذكور = متاح للشراء.
+           ============================================================ */
+        const OUT_OF_STOCK = [
+            // ضع أسماء المنتجات غير المتوفرة هنا
+        ];
+        products.forEach(function (p) { p.inStock = !OUT_OF_STOCK.includes(p.nameAr); });
+
         const texts = {
             ar: {
                 heroTitle: 'Nova Store',
                 heroText: 'مرحبًا بك في Nova Store — وجهتك لشحن الروبوكس بسهولة، بأسعار تنافسية، وتسليم سريع، وخدمة موثوقة.',
-                filters: ['قيم باس'],
+                filters: ['روبوكس قيم باس', 'روبوكس صافي'],
                 search: 'ابحث عن قيمة روبوكس...',
                 add: 'إضافة للسلة',
-                details: 'التفاصيل',
+                details: 'عرض التفاصيل',
                 added: 'تمت الإضافة إلى السلة',
                 available: 'متاح حالياً',
                 description: 'الوصف',
@@ -407,20 +530,21 @@
                 requestItems: ['اسم المنتج أو الخدمة', 'رابط القيم باس'],
                 backAdd: 'إضافة للسلة والعودة',
                 close: 'إغلاق',
-                gamePassTag: 'قيم باس',
+                gamePassTag: 'روبوكس قيم باس',
                 noResults: 'لا توجد نتائج مطابقة حالياً.',
                 noteBanner: '',
-                robuxTaxNote: '',
+                robuxPassNote: 'هذا المنتج لا يغطي ضريبة 30% الخاصة بشركة روبلوكس، وسيصلك 70% فقط من الروبوكس الذي ستطلبه.',
+                robuxNetNote: 'هذا المنتج يغطي ضريبة 30% وسيصل الروبوكس إلى حسابك دون أي نقص تماماً كما هو معروض في الموقع.',
                 deliveryText: 'أضف المنتج إلى السلة وأكمل الطلب ثم تواصل معنا عبر أحد الوسائل المتاحة وأرسل لنا رابط القيم باس.',
                 descTemplate: amount => `احصل على روبوكس بقيمة ${amount} مع تسليم سريع وترتيب واضح للطلب.`
             },
             en: {
                 heroTitle: 'Nova Store',
                 heroText: 'Welcome to Nova Store — your destination for easy Robux top-ups, at competitive prices, fast delivery, and reliable service.',
-                filters: ['Game Pass'],
+                filters: ['Robux Gamepass', 'Net Robux'],
                 search: 'Search for a Robux amount...',
                 add: 'Add to Cart',
-                details: 'Details',
+                details: 'View Details',
                 added: 'Added to cart',
                 available: 'Available now',
                 description: 'Description',
@@ -439,28 +563,32 @@
                 requestItems: ['Product or service name', 'Game pass link'],
                 backAdd: 'Add to Cart & Return',
                 close: 'Close',
-                gamePassTag: 'Game Pass',
+                gamePassTag: 'Robux Gamepass',
                 noResults: 'No matching results right now.',
                 noteBanner: '',
-                robuxTaxNote: '',
+                robuxPassNote: 'This product does NOT cover the 30% Roblox tax — you will receive 70% of the Robux you order.',
+                robuxNetNote: 'This product covers the 30% tax — the full Robux amount will arrive in your account exactly as shown, with no deductions.',
                 deliveryText: 'Add the product to the cart, complete the order, then contact us through one of the available methods and send us the game pass link.',
                 descTemplate: amount => `Get ${amount} Robux with fast delivery and a clear order arrangement.`
             }
         };
 
         function currentLang() {
-            return document.getElementById('langSelect').value || 'ar';
+            return document.getElementById('mainHtml').getAttribute('lang') || 'ar';
         }
         function currentCurr() {
-            return document.getElementById('currencySelect').value || 'USD';
+            const v = document.getElementById('currencySelect').value;
+            return (v === 'ar' || v === 'en') ? 'USD' : (v || 'USD');
         }
         function t() { return texts[currentLang()]; }
         function formatPrice(price) {
             const curr = currentCurr();
             return `${(price * rates[curr]).toFixed(2)} ${symbols[curr]}`;
         }
-        function getCategoryLabel() {
-            return currentLang() === 'ar' ? 'قيم باس' : 'Game Pass';
+        function getCategoryLabel(p) {
+            const lang = currentLang();
+            if (p && p.cat === 'net') return lang === 'ar' ? 'روبوكس صافي' : 'Net Robux';
+            return lang === 'ar' ? 'روبوكس قيم باس' : 'Robux Gamepass';
         }
         function getCommonDescription(product) {
             return t().descTemplate(product.robux);
@@ -484,7 +612,7 @@
                     nameAr: matched ? matched.nameAr : null,
                     nameEn: matched ? matched.nameEn : null,
                     price: matched ? Number(matched.price || 0) : 0,
-                    img: matched ? matched.img : 'https://i.ibb.co/5xXyd4jN/1774783408791.png',
+                    img: matched ? matched.img : 'https://i.ibb.co/xq9Nk3DH/1792949977544.png',
                     cat: matched ? matched.cat : 'pass'
                 };
             }
@@ -503,17 +631,23 @@
             });
         }
 
-        function changeLanguage() {
-            const lang = document.getElementById('langSelect').value;
+        function changeLanguage(forcedLang) {
+            const lang = forcedLang || currentLang();
+            if (lang !== 'ar' && lang !== 'en') return;
             const html = document.getElementById('mainHtml');
-            if (lang === 'en') { html.dir = "ltr"; html.lang = "en"; }
-            else { html.dir = "rtl"; html.lang = "ar"; }
+            html.dir = lang === 'en' ? "ltr" : "rtl";
+            html.lang = lang;
             applyTranslations(lang);
             try {
                 localStorage.setItem('selectedLang', lang);
                 localStorage.setItem('nova_lang', lang);
             } catch(e) {}
             applySettings();
+        }
+        function handlePillChange() {
+            const v = document.getElementById('currencySelect').value;
+            if (v === 'ar' || v === 'en') changeLanguage(v);
+            else changeCurrency();
         }
 
         function changeCurrency() {
@@ -531,8 +665,12 @@
             document.getElementById('heroTitle').textContent = texts[lang].heroTitle;
             document.getElementById('heroText').textContent = texts[lang].heroText;
             document.getElementById('btn-pass').textContent = texts[lang].filters[0];
+            document.getElementById('btn-net').textContent = texts[lang].filters[1];
+            const btnNet = document.getElementById('btn-net');
+            if (btnNet) btnNet.textContent = texts[lang].filters[1];
             document.getElementById('searchInput').placeholder = texts[lang].search;
-            document.getElementById('noticeBox').innerHTML = `<i class="fas fa-circle-check"></i>${texts[lang].noteBanner}`;
+            const nb = document.getElementById('noticeBox');
+            if (nb) { if (texts[lang].noteBanner) { nb.style.display = ''; nb.innerHTML = `<i class="fas fa-circle-check"></i>${texts[lang].noteBanner}`; } else { nb.style.display = 'none'; } }
             applyTranslations(lang);
             renderProducts();
         }
@@ -553,21 +691,31 @@
             }
             filtered.forEach((p, idx) => {
                 const originalIndex = products.findIndex(item => item.nameAr === p.nameAr && item.cat === p.cat);
+                const out = p.stock === false || p.inStock === false;
                 grid.innerHTML += `
-                    <div class="product-card">
+                    <div class="product-card${out ? ' out' : ''}">
                         <div class="thumb-wrap">
-                            <div class="card-info-btn" onclick="openDetails(${originalIndex})"><i class="fas fa-info"></i></div>
+                            ${out ? `<div class="stock-badge">${lang === 'ar' ? 'نفذت من المخزون' : 'Out of stock'}</div>` : ''}
                             <img src="${p.img}" alt="${lang === 'ar' ? p.nameAr : p.nameEn}">
                         </div>
-                        <div class="mini-tag"><i class="fas fa-bolt"></i>${tx.gamePassTag}</div>
+                        <div class="mini-tag"><i class="fas fa-bolt"></i>${getCategoryLabel(p)}</div>
                         <div class="card-title">${lang === 'ar' ? p.nameAr : p.nameEn}</div>
                         <div class="price-line">${formatPrice(p.price)}</div>
-                        <div class="small-desc">${getCommonDescription(p)}</div>
+                        <button class="btn btn-secondary details-btn" onclick="openDetails(${originalIndex})">${tx.details}</button>
                         <button class="btn btn-primary" onclick="addProductToCart(${originalIndex})">${tx.add}</button>
                     </div>`;
             });
         }
 
+        function getTaxNote(p) {
+            const lang = currentLang();
+            if (p && p.cat === 'net') return lang === 'ar'
+                ? 'هذا المنتج يغطي ضريبة 30% وسيصل الروبوكس الى حسابك دون اي نقص تمام كما هو معروض في الموقع'
+                : 'This product covers the 30% tax — Robux will arrive in your account in full, exactly as shown on the site.';
+            return lang === 'ar'
+                ? 'هذا المنتج لا يغطي ضريبة 30% الخاصة بشركة روبلوكس وسيصلك 70% من الروبوكس الذي ستطلبه.'
+                : 'This product does not cover the 30% Roblox tax — you will receive 70% of the requested Robux.';
+        }
         function openDetails(idx) {
             const p = products[idx];
             if (!p) return;
@@ -581,11 +729,11 @@
                         <img class="modal-cover" src="${p.img}" alt="${name}">
                     </div>
                     <div class="modal-body">
-                        <div class="mini-tag"><i class="fas fa-bolt"></i>${tx.gamePassTag}</div>
+                        <div class="mini-tag"><i class="fas fa-bolt"></i>${p.cat === 'net' ? (lang === 'ar' ? 'روبوكس صافي' : 'Net Robux') : (lang === 'ar' ? 'روبوكس قيم باس' : 'Gamepass Robux')}</div>
                         <h2>${name}</h2>
                         <div class="meta-line">
                             <strong>${tx.product}:</strong> ${name}<br>
-                            <strong>${tx.category}:</strong> ${getCategoryLabel()}<br>
+                            <strong>${tx.category}:</strong> ${getCategoryLabel(p)}<br>
                             <strong>${tx.status}:</strong> <span style="color:var(--success)">${tx.available}</span><br>
                             <strong>${tx.total}:</strong> ${formatPrice(p.price)}
                         </div>
@@ -596,7 +744,7 @@
 
                         <div class="section-title">${tx.description}</div>
                         <p class="detail-text">${getCommonDescription(p)}</p>
-                        <p class="detail-text success-note"><i class="fas fa-circle-check"></i>${currentLang() === 'ar' ? 'ملاحظة: ' : 'Note: '}${tx.robuxTaxNote}</p>
+                        <p class="detail-text success-note" style="background:${p.cat === 'net' ? 'rgba(22,163,74,.10)' : 'rgba(220,38,38,.08)'};border-color:${p.cat === 'net' ? 'rgba(22,163,74,.35)' : 'rgba(220,38,38,.3)'};color:${p.cat === 'net' ? '#14532d' : '#7f1d1d'}"><i class="fas ${p.cat === 'net' ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i>${currentLang() === 'ar' ? 'ملاحظة: ' : 'Note: '}${getTaxNote(p)}</p>
 
                         <div class="section-title">${tx.delivery}</div>
                         <p class="detail-text">${tx.deliveryText}</p>
@@ -643,22 +791,33 @@
             updateCartCount();
         }
         function addToCart(item) {
+            if (item && item.inStock === false) {
+                showToast('عذرا نفذت الكمية لا يمكنك اضافة هذا المنتج الي السلة حاليا، اذا رغبت بمعرفة موعد قدوم المخزون الجديد يمكنك التواصل معنا', false);
+                return;
+            }
             const normalized = normalizeCartItem(item);
             if (!normalized) return;
             cart.push(normalized);
             persistCart();
-            alert(t().added);
+            showToast('تمت إضافة المنتج الي السلة بنجاح، بإمكانك التحقق من سلتك من القائمة العلوية');
         }
         function addProductToCart(index) {
             const p = products[index];
             if (!p) return;
+            if (p.stock === false) {
+                showToast(currentLang() === 'ar'
+                    ? 'عذراً، نفذت الكمية! لا يمكنك إضافة هذا المنتج إلى السلة حالياً، وإذا رغبت بمعرفة موعد قدوم المخزون الجديد يمكنك التواصل معنا.'
+                    : 'Sorry, this item is out of stock! You cannot add it to the cart right now. Contact us to know when new stock arrives.', false);
+                return;
+            }
             addToCart({
                 name: currentLang() === 'ar' ? p.nameAr : p.nameEn,
                 nameAr: p.nameAr,
                 nameEn: p.nameEn,
                 price: Number(p.price || 0),
-                img: p.img || 'https://i.ibb.co/5xXyd4jN/1774783408791.png',
-                cat: p.cat
+                img: p.img || 'https://i.ibb.co/xq9Nk3DH/1792949977544.png',
+                cat: p.cat,
+                inStock: p.inStock !== false
             });
         }
         function handleModalAddToCart(index) {
@@ -671,25 +830,30 @@
                 localStorage.setItem('selectedCurrency', currentCurr());
                 localStorage.setItem('exchangeRate', rates[currentCurr()]);
             } catch(e) {}
-            window.location.href = CART_PAGE_LOCAL;
         }
 
         // === مزامنة التعليقات الحية بين الصفحات ===
         window.addEventListener('storage', function(e) {
             if (e.key === 'selectedLang' && e.newValue) {
-                document.getElementById('langSelect').value = e.newValue;
+                const htmlEl = document.getElementById('mainHtml');
+                htmlEl.dir = e.newValue === 'en' ? 'ltr' : 'rtl';
+                htmlEl.lang = e.newValue;
+                applyTranslations(e.newValue);
                 applySettings();
             }
             if (e.key === 'selectedCurrency' && e.newValue) {
-                document.getElementById('currencySelect').value = e.newValue;
+                const sel = document.getElementById('currencySelect');
+                if (sel.value !== e.newValue) sel.value = e.newValue;
                 applySettings();
             }
         });
         window.addEventListener('pageshow', function() {
             try {
                 const savedLang = localStorage.getItem('selectedLang');
-                if (savedLang && document.getElementById('langSelect').value !== savedLang) {
-                    document.getElementById('langSelect').value = savedLang;
+                if (savedLang) {
+                    const htmlEl = document.getElementById('mainHtml');
+                    htmlEl.dir = savedLang === 'en' ? 'ltr' : 'rtl';
+                    htmlEl.lang = savedLang;
                 }
                 const savedCurr = localStorage.getItem('selectedCurrency');
                 if (savedCurr && document.getElementById('currencySelect').value !== savedCurr) {
@@ -702,9 +866,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             try {
                 const savedLang = localStorage.getItem('selectedLang');
-                if (savedLang) document.getElementById('langSelect').value = savedLang;
+                if (savedLang) {
+                    const htmlEl = document.getElementById('mainHtml');
+                    htmlEl.dir = savedLang === 'en' ? 'ltr' : 'rtl';
+                    htmlEl.lang = savedLang;
+                }
                 const savedCurr = localStorage.getItem('selectedCurrency');
-                if (savedCurr) document.getElementById('currencySelect').value = savedCurr;
+                if (savedCurr && savedCurr !== 'ar' && savedCurr !== 'en') document.getElementById('currencySelect').value = savedCurr;
             } catch(e) {}
             updateCartCount();
             applySettings();
@@ -714,5 +882,24 @@
             if (e.target === document.getElementById('detailsModal')) closeModal();
         };
     </script>
+
+    <div class="footer">
+        <div class="footer-links">
+            <a href="policy.html"><i class="fas fa-file-contract"></i><span data-ar="الشروط والأحكام" data-en="Terms & Conditions">الشروط والأحكام</span></a>
+            <a href="contact.html"><i class="fas fa-headset"></i><span data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</span></a>
+            <a href="FAQ.html"><i class="fas fa-circle-question"></i><span data-ar="الأسئلة الشائعة" data-en="FAQ">الأسئلة الشائعة</span></a>
+            <a href="deliverymethod.html"><i class="fas fa-truck-fast"></i><span data-ar="طريقة التسليم" data-en="Delivery Method">طريقة التسليم</span></a>
+            <a href="refund.html"><i class="fas fa-rotate-left"></i><span data-ar="سياسة الإستبدال و الإسترجاع" data-en="Refund & Exchange Policy">سياسة الإستبدال و الإسترجاع</span></a>
+        </div>
+        <div class="copyright">&copy; 2026 Nova Store. All rights reserved.</div>
+    </div>
+
+    <button class="chat-fab" onclick="openChat()" aria-label="الدردشة معنا"><i class="fas fa-comment-dots"></i><span class="dot"></span></button>
+    <div class="chat-overlay" id="chatOverlay" onclick="if(event.target===this) closeChat()">
+        <div class="chat-modal">
+            <button class="chat-close" onclick="closeChat()" aria-label="إغلاق">&times;</button>
+            <iframe id="chatFrame" src="about:blank" title="Nova Store Chat"></iframe>
+        </div>
+    </div>
 </body>
 </html>
