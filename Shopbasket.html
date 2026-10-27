@@ -7,34 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --main-bg: #f4f7fb; --neon-blue: #0090c8; --gold: #d99e00; --card-bg: #ffffff; --red: #dc2626; --border: #e3eaf2; --text-main: #17222e; }
-        body { margin: 0; padding: 0; background-color: var(--main-bg); font-family: 'Tajawal', sans-serif; color: var(--text-main); min-height: 100vh; transition: 0.3s; }
+        :root { --main-bg: #0d1117; --neon-blue: #00d4ff; --gold: #ffcc00; --card-bg: #161b22; --red: #ff4b4b; }
+        body { margin: 0; padding: 0; background-color: var(--main-bg); font-family: 'Tajawal', sans-serif; color: white; min-height: 100vh; transition: 0.3s; }
         
-        .header { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 10px; padding: 10px 3%; background: rgba(255,255,255,.97); border-bottom: 2px solid var(--neon-blue); position: sticky; top: 0; z-index: 1000; }
-        .header-right { display: flex; align-items: center; gap: 8px; justify-self: start; min-width: 0; }
-        .logo-center { justify-self: center; min-width: 0; }
-        .header-end { justify-self: end; }
-        .pill { display: flex; background: #eef4fa; border: 1px solid var(--border); border-radius: 20px; height: 32px; align-items: center; overflow: hidden; }
-        .pill select { background: transparent; color: var(--text-main); border: none; padding: 0 10px; font-family: 'Tajawal'; font-size: 11px; cursor: pointer; outline: none; height: 100%; min-width: 0; max-width: 46vw; }
-        .home-btn { display: inline-flex; align-items: center; gap: 8px; background: #eef4fa; border: 1px solid var(--neon-blue); color: var(--text-main); padding: 7px 12px; border-radius: 12px; font-size: 12px; font-weight: 700; text-decoration: none; transition: .2s; }
-        .home-btn:hover { background: var(--neon-blue); color: #fff; }
-        .home-btn i { color: var(--gold); }
-        .terms-row { display: flex; align-items: flex-start; gap: 9px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 12px; font-size: 13px; }
-        .terms-row input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; flex-shrink: 0; }
-        .terms-link { color: var(--gold); font-weight: 800; text-decoration: none; }
-        .terms-link:hover { text-decoration: underline; }
-        .shot-overlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 5000; background: rgba(15,30,45,.55); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 16px; }
-        .shot-overlay.show { display: flex; }
-        .shot-box { width: min(430px, 94vw); background: #fff; border-radius: 18px; padding: 24px; text-align: center; box-shadow: 0 30px 70px rgba(10,25,40,.4); }
-        .shot-box i { font-size: 42px; color: var(--neon-blue); margin-bottom: 10px; }
-        .shot-box h3 { margin: 0 0 18px; color: var(--text-main); font-size: 16px; line-height: 1.8; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 4%; background: #0d1117; border-bottom: 2px solid var(--neon-blue); position: sticky; top: 0; z-index: 1000; }
         .nav-controls { display: flex; gap: 10px; align-items: center; }
         .pill-select { background: #21262d; border: 1px solid #30363d; border-radius: 15px; padding: 5px 10px; color: white; cursor: pointer; font-size: 11px; outline: none; }
 
         .container { padding: 20px 4%; max-width: 800px; margin: auto; }
         .cart-title { color: var(--gold); border-right: 4px solid var(--neon-blue); padding-right: 15px; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
 
-        .cart-item { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; padding: 15px; margin-bottom: 15px; animation: fadeIn 0.3s ease; }
+        .cart-item { background: var(--card-bg); border-radius: 12px; border: 1px solid #30363d; display: flex; align-items: center; padding: 15px; margin-bottom: 15px; animation: fadeIn 0.3s ease; }
         .item-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; border: 1px solid var(--neon-blue); background: #000; }
         .item-details { flex-grow: 1; margin-right: 15px; }
         .item-name { font-weight: bold; font-size: 15px; margin-bottom: 5px; }
@@ -49,20 +32,20 @@
 
         .summary-box { background: #161b22; border: 2px solid var(--neon-blue); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
         .total-text { font-size: 20px; font-weight: bold; color: var(--gold); margin-top: 10px; }
-        .instruction-box { background: rgba(0,144,200,.05); border: 1px dashed var(--neon-blue); border-radius: 10px; padding: 15px; font-size: 13px; line-height: 1.9; color: #2c3e50; margin-bottom: 20px; text-align: start; }
+        .instruction-box { background: rgba(0, 212, 255, 0.05); border: 1px dashed var(--neon-blue); border-radius: 10px; padding: 15px; font-size: 13px; line-height: 1.6; color: #c9d1d9; margin-bottom: 20px; }
 
         #checkoutSection { display: none; margin-top: 30px; animation: slideUp 0.4s ease; }
-        .method-card { display: flex; align-items: center; background: #fff; border: 1.5px solid var(--border); padding: 15px; border-radius: 12px; text-decoration: none; color: var(--text-main); margin-bottom: 12px; transition: 0.2s; box-shadow: 0 4px 14px rgba(23,34,46,.06); }
-        .method-card:hover { border-color: var(--neon-blue); background: #f0f7fc; }
+        .method-card { display: flex; align-items: center; background: #21262d; border: 1.5px solid #30363d; padding: 15px; border-radius: 12px; text-decoration: none; color: white; margin-bottom: 12px; transition: 0.2s; }
+        .method-card:hover { border-color: var(--neon-blue); background: #262c36; }
         .method-card i { font-size: 22px; margin-left: 15px; width: 25px; text-align: center; }
         
         .btn-main { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; border: none; width: 100%; font-size: 16px; font-family: 'Tajawal'; transition: 0.3s; margin-bottom: 10px; }
         .btn-checkout { background: var(--gold); color: black; }
-        .btn-back { background: transparent; color: var(--text-main); border: 1px solid var(--border); }
+        .btn-back { background: transparent; color: white; border: 1px solid #30363d; }
         .btn-main:hover { opacity: 0.9; transform: translateY(-2px); }
 
         /* صورة الدفع في السلة */
-        .payment-img-cart { height: 64px; width: auto; margin-top: 30px; filter: grayscale(10%); }
+        .payment-img-cart { height: 100px; width: auto; margin-top: 30px; filter: grayscale(10%); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -70,113 +53,34 @@
         [dir="ltr"] .item-details { margin-right: 0; margin-left: 15px; }
         [dir="ltr"] .cart-title { border-right: none; border-left: 4px solid var(--neon-blue); padding-right: 0; padding-left: 15px; }
         [dir="ltr"] .method-card i { margin-left: 0; margin-right: 15px; }
-    /* ====== NOVA LIGHT THEME ====== */
-        :root { --main-bg:#f4f7fb !important; --card-bg:#ffffff !important; --neon-blue:#0090c8 !important; --gold:#d99e00 !important; --border:#e3eaf2 !important; }
-        body { background:#f4f7fb !important; color:#17222e !important; }
-        .header { background:rgba(255,255,255,.97) !important; border-bottom:2px solid #0090c8 !important; box-shadow:0 2px 14px rgba(23,34,46,.06) !important; }
-        .hero, .search-container, .search-box { background:#ffffff !important; }
-        .hero h1 { color:#0090c8 !important; } #heroText { color:#41586e !important; }
-        .search-box input { background:#f4f7fb !important; color:#17222e !important; border-color:#0090c8 !important; }
-        .pill { background:#eef4fa !important; border-color:#e3eaf2 !important; } .pill select { color:#17222e !important; }
-        .filter-container { background:#ffffff !important; }
-        .filter-opt { background:#eef4fa !important; color:#17222e !important; border-color:#d7e3ee !important; }
-        .filter-opt.active { background:#0090c8 !important; color:#fff !important; }
-        .product-card { background:#ffffff !important; border-color:#e3eaf2 !important; box-shadow:0 6px 22px rgba(23,34,46,.07) !important; }
-        .card-title { color:#17222e !important; }
-        .price-line { color:#d99e00 !important; }
-        .small-desc, .specs-preview li, .detail-text { color:#3d4d5e !important; }
-        .mini-tag { background:rgba(0,144,200,.1) !important; color:#0090c8 !important; }
-        .btn-primary { background:#0090c8 !important; color:#fff !important; }
-        .btn-ghost { background:#ffffff !important; color:#0090c8 !important; border:1.5px solid #0090c8 !important; font-weight:800; }
-        .btn-ghost:hover { background:#eef6fb !important; }
-        .modal .modal-content, .modal-card, .modal-body { background:#ffffff !important; color:#17222e !important; }
-        .section-title { color:#0090c8 !important; }
-        .feature-item { background:#eef4fa !important; color:#17222e !important; }
-        .empty-state { color:#5b6b7c !important; }
-        .cart-box { color:#d99e00 !important; background:rgba(217,158,0,.08) !important; border-color:rgba(217,158,0,.3) !important; }
-        .home-btn { background:#eef4fa !important; color:#17222e !important; }
-        .oos-badge { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:3; background:#ff4d6d; color:#fff; font-size:11px; font-weight:800; padding:5px 12px; border-radius:99px; box-shadow:0 4px 14px rgba(255,77,109,.4); white-space:nowrap; }
-        .success-note { color:#15803d !important; background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.35); border-radius:10px; padding:9px 12px; }
-        .warn-note { color:#b45309 !important; background:rgba(217,158,0,.1); border:1px solid rgba(217,158,0,.35); border-radius:10px; padding:9px 12px; }
-        .logo-mid { text-align:center; min-width:0; }
-        .logo-mid img { height:44px; max-width:30vw; object-fit:contain; }
-        .footer { background:linear-gradient(180deg,#0d3a54,#0a2c40) !important; border-top:3px solid #0090c8 !important; padding:30px 5% 20px !important; text-align:center !important; margin-top:40px !important; color:#e8f1f8 !important; }
-        .footer-intro { max-width:900px; margin:0 auto 18px; font-size:13px; line-height:2; color:#d5e6f2; }
-        .verified-row { display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; margin:14px 0 20px; font-size:13px; }
-        .verified-row .v-tag { display:inline-flex; align-items:center; gap:7px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); padding:7px 14px; border-radius:99px; color:#e8f1f8; }
-        .verified-row .v-tag i { color:#4ade80; }
-        .verified-row a { color:#ffd24a; text-decoration:none; font-weight:800; }
-        .footer-links { display:flex; justify-content:center; gap:18px; margin-bottom:18px; flex-wrap:wrap; }
-        .footer-links a { color:#fff !important; text-decoration:none; font-size:13px; font-weight:bold; transition:.3s; display:flex; align-items:center; gap:7px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16); padding:9px 15px; border-radius:12px; }
-        .footer-links a i { color:#ffd24a !important; }
-        .footer-links a:hover { color:#ffd24a !important; border-color:#ffd24a; transform:translateY(-3px); }
-        .payment-methods { margin:22px auto 8px; display:flex; justify-content:center; align-items:center; }
-        .payment-methods img { width:100%; max-width:440px; height:auto; object-fit:contain; border-radius:10px; }
-        .copyright { color:#9db8ca; font-size:11px; margin-top:14px; }
-        .nova-toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(180%); z-index:6000; width:min(92vw,430px); background:#ffffff; border:1.5px solid #0090c8; border-radius:14px; padding:13px 16px; box-shadow:0 14px 40px rgba(10,25,40,.25); display:flex; gap:10px; align-items:flex-start; transition:transform .45s cubic-bezier(.2,1.2,.3,1); font-size:13px; color:#17222e; line-height:1.7; }
-        .nova-toast.show { transform:translateX(-50%) translateY(0); }
-        .nova-toast i { margin-top:2px; }
-        .nova-toast.ok { border-color:#22c55e; } .nova-toast.ok i { color:#22c55e; }
-        .nova-toast.err { border-color:#ff4d6d; } .nova-toast.err i { color:#ff4d6d; }
-        .pill-select { background:#eef4fa !important; border-color:#e3eaf2 !important; color:#17222e !important; }
-        .terms-row { display:flex; align-items:flex-start; gap:9px; margin:14px 0; padding:11px 13px; background:#eef4fa; border:1.5px dashed #0090c8; border-radius:12px; font-size:12.5px; color:#17222e; text-align:start; cursor:pointer; line-height:1.7; }
-        .terms-row input { width:19px; height:19px; accent-color:#0090c8; margin-top:1px; flex-shrink:0; }
-        .terms-link { color:#d99e00; font-weight:800; text-decoration:none; }
-        .terms-link:hover { text-decoration:underline; }
-
-        /* ===== الفوتر الأزرق ===== */
-        .footer { background: linear-gradient(180deg, #0d3a54, #0a2c40); border-top: 3px solid var(--neon-blue); padding: 26px 5% 18px; text-align: center; margin-top: 40px; }
-        .footer-links { display: flex; justify-content: center; gap: 14px; margin-bottom: 16px; flex-wrap: wrap; }
-        .footer-links a { color: #fff; text-decoration: none; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); padding: 9px 15px; border-radius: 12px; transition: .3s; }
-        .footer-links a i { color: #ffd24a; }
-        .footer-links a:hover { color: #ffd24a; border-color: #ffd24a; transform: translateY(-3px); }
-        .copyright { color: #9db8ca; font-size: 11px; margin-top: 10px; }
-
-        /* ===== دائرة الدردشة ===== */
-        .chat-fab { position: fixed; bottom: 22px; right: 22px; z-index: 3000; width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer; background: linear-gradient(135deg, var(--neon-blue), #006e96); color: #fff; font-size: 22px; box-shadow: 0 8px 22px rgba(0,144,200,.4); display: flex; align-items: center; justify-content: center; transition: transform .25s; }
-        .chat-fab:hover { transform: scale(1.12) rotate(6deg); }
-        .chat-fab .dot { position: absolute; top: 4px; left: 4px; width: 12px; height: 12px; background: #4ade80; border-radius: 50%; border: 2px solid #fff; animation: pulseDot 2s infinite; }
-        @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
-        .chat-overlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 3100; background: rgba(10,25,40,.45); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s; padding: 16px; }
-        .chat-overlay.show { opacity: 1; pointer-events: auto; }
-        .chat-modal { width: min(420px, 94vw); height: min(640px, 84vh); background: #fff; border-radius: 18px; overflow: hidden; position: relative; box-shadow: 0 30px 70px rgba(10,25,40,.4); transform: translateY(26px) scale(.94); opacity: 0; transition: transform .35s cubic-bezier(.2,1.2,.3,1), opacity .3s; }
-        .chat-overlay.show .chat-modal { transform: translateY(0) scale(1); opacity: 1; }
-        .chat-modal iframe { width: 100%; height: 100%; border: none; }
-        .chat-close { position: absolute; top: 8px; left: 8px; z-index: 2; width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer; background: rgba(10,25,40,.75); color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; transition: .2s; }
-        .chat-close:hover { background: #ff4d6d; transform: rotate(90deg); }
     </style>
 </head>
 <body>
 
-        <div class="header">
-        <div class="header-right">
-            <div onclick="goBack()" style="font-size: 20px; cursor: pointer; color: var(--neon-blue);"><i class="fas fa-chevron-right" id="backIcon"></i></div>
-            <div class="pill"><div class="pill">
-                <select id="currencySelect" onchange="handlePillChange()">
-                    <optgroup label="العملة / Currency">
-                        <option value="USD">دولار (USD $)</option>
-                        <option value="EUR">يورو (EUR €)</option>
-                        <option value="SAR">ريال سعودي (SAR)</option>
-                        <option value="AED">درهم إماراتي (AED)</option>
-                        <option value="QAR">ريال قطري (QAR)</option>
-                        <option value="BHD">دينار بحريني (BHD)</option>
-                        <option value="OMR">ريال عماني (OMR)</option>
-                        <option value="KWD">دينار كويتي (KWD)</option>
-                        <option value="EGP">جنيه مصري (EGP)</option>
-                        <option value="LYD">دينار ليبي (LYD)</option>
-                        <option value="MAD">درهم مغربي (MAD)</option>
-                    </optgroup>
-                    <optgroup label="اللغة / Language">
-                        <option value="ar">العربية (AR)</option>
-                        <option value="en">English (EN)</option>
-                    </optgroup>
-                </select>
-            </div></div>
+    <div class="header">
+        <div onclick="goBack()" style="font-size: 20px; cursor: pointer; color: var(--neon-blue);">
+            <i class="fas fa-chevron-right" id="backIcon"></i>
         </div>
-        <div class="logo-center"><img src="https://i.ibb.co/xq9Nk3DH/1792949977544.png" height="38" alt="Nova Store"></div>
-        <div class="header-end">
-            <a href="index.html" class="home-btn" title="العودة للرئيسية"><i class="fas fa-home"></i></a>
+        <div class="nav-controls">
+            <select class="pill-select" id="lang" onchange="changeLanguage()">
+                <option value="ar">العربية (AR)</option>
+                <option value="en">English (EN)</option>
+            </select>
+            <select class="pill-select" id="currency" onchange="changeCurrency()">
+                <option value="USD">دولار (USD $)</option>
+                <option value="EUR">يورو (EUR €)</option>
+                <option value="SAR">ريال سعودي (SAR)</option>
+                <option value="AED">درهم إماراتي (AED)</option>
+                <option value="QAR">ريال قطري (QAR)</option>
+                <option value="BHD">دينار بحريني (BHD)</option>
+                <option value="OMR">ريال عماني (OMR)</option>
+                <option value="KWD">دينار كويتي (KWD)</option>
+                <option value="EGP">جنيه مصري (EGP)</option>
+                <option value="LYD">دينار ليبي (LYD)</option>
+                <option value="MAD">درهم مغربي (MAD)</option>
+            </select>
         </div>
+        <img src="https://i.ibb.co/5xXyd4jN/1774783408791.png" height="35">
     </div>
 
     <div class="container">
@@ -196,11 +100,7 @@
                     <div class="total-text" id="totalPrice">0.00</div>
                 </div>
                 <div class="instruction-box" id="instructionBox"></div>
-                <label class="terms-row" id="termsRow">
-                    <input type="checkbox" id="termsCheck" onchange="onTermsChange()">
-                    <span>بشراءك من متجرنا فإنك توافق على <a href="policy.html" target="_blank" class="terms-link">الشروط والأحكام</a></span>
-                </label>
-                <button class="btn-main btn-checkout" id="btnCheckout" disabled onclick="showCheckoutOptions()">
+                <button class="btn-main btn-checkout" onclick="showCheckoutOptions()">
                     <span id="btnCheckoutText">إتمام الشراء</span> <i class="fas fa-check-circle"></i>
                 </button>
                 <button class="btn-main btn-back" onclick="goBack()">
@@ -233,43 +133,16 @@
         </div>
     </div>
 
-    <div id="ssModal" style="display:none; position:fixed; top:0; right:0; bottom:0; left:0; z-index:5000; background:rgba(10,25,40,.55); align-items:center; justify-content:center; padding:16px;">
-        <div style="width:min(430px,94vw); background:#fff; border-radius:18px; padding:22px; text-align:center; box-shadow:0 30px 70px rgba(10,25,40,.4); border:2px solid #0090c8;">
-            <div style="font-size:40px; margin-bottom:8px;">📸</div>
-            <h3 style="margin:0 0 6px; color:#0090c8; font-size:17px;">قم بعمل سكرين شوت (لقطة شاشة) لسلتك أولاً</h3>
-            <p style="margin:0 0 18px; color:#5b6b7c; font-size:12.5px; line-height:1.8;">Take a screenshot of your cart first — you'll send it to us with your order.</p>
-            <div style="display:flex; gap:10px;">
-                <button onclick="ssDone()" style="flex:1; background:linear-gradient(90deg,#0090c8,#006e96); color:#fff; border:none; padding:12px; border-radius:12px; font-family:inherit; font-weight:800; cursor:pointer;">✅ قمت بذلك</button>
-                <button onclick="ssLater()" style="flex:1; background:#eef4fa; color:#17222e; border:1.5px solid #e3eaf2; padding:12px; border-radius:12px; font-family:inherit; font-weight:800; cursor:pointer;">🕒 سأقوم بهذا الآن</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        const rates = { 'USD': 1, 'EUR': 0.93, 'SAR': 3.75, 'AED': 3.6725, 'QAR': 3.64, 'BHD': 0.376, 'OMR': 0.3845, 'KWD': 0.31, 'EGP': 54.80, 'LYD': 9.3, 'MAD': 10 };
+        const rates = { 'USD': 1, 'EUR': 0.93, 'SAR': 3.75, 'AED': 3.6725, 'QAR': 3.64, 'BHD': 0.376, 'OMR': 0.3845, 'KWD': 0.31, 'EGP': 54.80, 'LYD': 10, 'MAD': 10 };
 
-        let termsAgreed = false;
-        function onTermsChange() {
-            termsAgreed = document.getElementById('termsCheck').checked;
-            document.getElementById('btnCheckout').disabled = !termsAgreed;
-        }
-        function changeLanguage(forcedLang) {
-            const lang = forcedLang || (document.getElementById('htmlTag').getAttribute('lang') || 'ar');
-            if (lang !== 'ar' && lang !== 'en') return;
-            const html = document.getElementById('htmlTag');
-            html.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            html.lang = lang;
-            localStorage.setItem('selectedLang', lang);
+        function changeLanguage() {
+            localStorage.setItem('selectedLang', document.getElementById('lang').value);
             renderCart();
-        }
-        function handlePillChange() {
-            const v = document.getElementById('currencySelect').value;
-            if (v === 'ar' || v === 'en') changeLanguage(v);
-            else changeCurrency();
         }
 
         function changeCurrency() {
-            const curr = document.getElementById('currencySelect').value;
+            const curr = document.getElementById('currency').value;
             localStorage.setItem('selectedCurrency', curr);
             localStorage.setItem('exchangeRate', rates[curr]);
             renderCart();
@@ -280,8 +153,8 @@
             const curr = localStorage.getItem('selectedCurrency') || 'USD';
             const rate = rates[curr];
             
-            const pill = document.getElementById('currencySelect');
-            if (pill && curr !== 'ar' && curr !== 'en') pill.value = curr;
+            document.getElementById('lang').value = lang;
+            document.getElementById('currency').value = curr;
             
             const html = document.getElementById('htmlTag');
             const cart = JSON.parse(localStorage.getItem('nova_cart')) || [];
@@ -301,17 +174,10 @@
             document.getElementById('dsText').innerText = lang === 'ar' ? "إتمام الطلب عبر ديسكورد" : "Order via Discord";
             document.getElementById('finalNote').innerText = lang === 'ar' ? "اختار اي وسيلة و خبرنا وش ناوي تشتري من عندنا!" : "Choose a method and let us know what you want!";
             document.getElementById('btnReturnText').innerText = lang === 'ar' ? "العودة لتعديل السلة" : "Return to Edit Cart";
-            document.getElementById('shotTitle').innerText = lang === 'ar' ? "قم بعمل سكرين شوت أو التقاط شاشة لسلتك" : "Take a screenshot of your cart";
-            document.getElementById('shotYes').innerText = lang === 'ar' ? "لقد قمت بذلك" : "I already did";
-            document.getElementById('shotNo').innerText = lang === 'ar' ? "سأقوم بذلك الآن" : "I'll do it now";
-            const __tr = document.getElementById('termsRow');
-            if (__tr) __tr.innerHTML = (lang === 'ar'
-                ? '<input type="checkbox" id="termsCheck"' + (__termsAck ? ' checked' : '') + '><span>بشراءك من متجرنا فإنك توافق على <a href="policy.html" target="_blank" class="terms-link">الشروط والأحكام</a></span>'
-                : '<input type="checkbox" id="termsCheck"' + (__termsAck ? ' checked' : '') + '><span>By purchasing from our store you agree to our <a href="policy.html" target="_blank" class="terms-link">Terms & Conditions</a></span>');
             
             document.getElementById('instructionBox').innerHTML = lang === 'ar' ? 
-                `<strong>كيف أطلب من متجركم؟ 🛒 طريقة الطلب من Nova Store</strong><br>طريقة الطلب سهلة وبسيطة، كل ما عليك فعله هو اتباع الخطوات التالية:<br>① 🛍️ أضف المنتجات التي ترغب بشرائها إلى سلة المشتريات من خلال موقعنا.<br>② 📸 التقط لقطة شاشة لسلة مشترياتك، ثم أرسلها إلينا عبر إحدى وسائل التواصل المتاحة، مثل واتساب أو ديسكورد وغيرها.<br>③ 💳 أخبرنا بطريقة الدفع المناسبة لك من بين الطرق التالية: فيزا / ماستركارد، آبل باي / غوغل باي، العملات الرقمية (خصم 10% على جميع المنتجات)، فودافون كاش (مصر)، تحويل مصرفي (ليبيا)، رصيد مدار / ليبيانا (ليبيا).<br>④ ⚡ سنتواصل معك لتزويدك برابط الدفع، وبعد إتمام عملية الدفع سنسلّمك المنتجات التي طلبتها.` :
-                `<strong>How to order from our store? 🛒 Ordering from Nova Store</strong><br>Ordering is easy and simple — just follow these steps:<br>① 🛍️ Add the products you want to purchase to your shopping cart through our website.<br>② 📸 Take a screenshot of your cart, then send it to us via one of the available contact methods, such as WhatsApp or Discord.<br>③ 💳 Tell us your preferred payment method: Visa/Mastercard, Apple Pay/Google Pay, Cryptocurrencies (10% discount), Vodafone Cash (Egypt), Bank transfer (Libya), Madar/Libyana credit (Libya).<br>④ ⚡ We will contact you with the payment link, and after payment we will deliver your products.`;
+                `<strong>ملاحظة مهمة:</strong> 1. قم بعمل لقطة شاشة لهذه الصفحة. <br> 2. انقر على إتمام الشراء وارسلها لنا عبر وسيلة التواصل.` :
+                `<strong>Note:</strong> 1. Take a screenshot. <br> 2. Click checkout and send it to us.`;
 
             document.getElementById('checkoutNote').innerText = lang === 'ar' ? "تعاملاتنا يدوية لضمان الأمان، اختر وسيلة تواصل وسنرسل لك رابط الدفع." : "Manual payments for safety. Choose a contact method.";
 
@@ -372,50 +238,10 @@
             renderCart();
         }
 
-        let __termsAck = false;
-        document.addEventListener('change', function(e){ if (e.target && e.target.id === 'termsCheck') __termsAck = e.target.checked; });
         function showCheckoutOptions() {
-            if (!__termsAck) {
-                const tc = document.getElementById('termsCheck');
-                if (tc && tc.checked) __termsAck = true;
-            }
-            if (!__termsAck) {
-                const __isAr = (localStorage.getItem('selectedLang') || 'ar') === 'ar';
-                showToast(__isAr ? 'يرجى وضع علامة ✔ في مربع الموافقة على الشروط والأحكام أولاً' : 'Please tick the Terms & Conditions checkbox first', false);
-                return;
-            }
-            openScreenshotModal();
-        }
-        function openScreenshotModal() { document.getElementById('ssModal').style.display = 'flex'; }
-        function ssDone() {
-            document.getElementById('ssModal').style.display = 'none';
             document.getElementById('mainCartUI').style.display = 'none';
             document.getElementById('checkoutSection').style.display = 'block';
             window.scrollTo(0,0);
-        }
-        function ssLater() { document.getElementById('ssModal').style.display = 'none'; }
-        function handleBasketNav(sel) {
-            const v = sel.value || '';
-            if (v.indexOf('lang:') === 0) {
-                document.getElementById('lang').value = v.split(':')[1];
-                let cur = 'USD';
-                try { cur = localStorage.getItem('selectedCurrency') || 'USD'; } catch(e) {}
-                sel.value = cur;
-                changeLanguage();
-            } else {
-                changeCurrency();
-            }
-        }
-        let __basketToastTimer = null;
-        function showToast(msg, ok) {
-            let el = document.getElementById('novaToast');
-            if (!el) { el = document.createElement('div'); el.id = 'novaToast'; el.className = 'nova-toast'; document.body.appendChild(el); }
-            el.className = 'nova-toast ' + (ok === false ? 'err' : 'ok');
-            el.innerHTML = '<i class="fas ' + (ok === false ? 'fa-circle-exclamation' : 'fa-circle-check') + '"></i><span>' + msg + '</span>';
-            void el.offsetWidth;
-            el.classList.add('show');
-            clearTimeout(__basketToastTimer);
-            __basketToastTimer = setTimeout(function(){ el.classList.remove('show'); }, 3500);
         }
 
         function hideCheckoutOptions() {
@@ -432,45 +258,12 @@
         }
 
         window.onload = function() {
-            const savedLang = localStorage.getItem('selectedLang') || 'ar';
+            const savedLang = localStorage.getItem('selectedLang');
             const savedCurrency = localStorage.getItem('selectedCurrency');
-            const html = document.getElementById('htmlTag');
-            html.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
-            html.lang = savedLang;
-            const pill = document.getElementById('currencySelect');
-            if (savedCurrency && savedCurrency !== 'ar' && savedCurrency !== 'en') pill.value = savedCurrency;
+            if(savedLang) document.getElementById('lang').value = savedLang;
+            if(savedCurrency) document.getElementById('currency').value = savedCurrency;
             renderCart();
         };
     </script>
-
-    <div class="shot-overlay" id="shotModal">
-        <div class="shot-box">
-            <i class="fas fa-camera"></i>
-            <h3 id="shotTitle">قم بعمل سكرين شوت أو التقاط شاشة لسلتك</h3>
-            <div style="display:grid;gap:10px">
-                <button class="btn-main btn-checkout" onclick="shotDone()"><span id="shotYes">لقد قمت بذلك</span></button>
-                <button class="btn-main btn-back" onclick="shotLater()"><span id="shotNo">سأقوم بذلك الآن</span></button>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <div class="footer-links">
-            <a href="policy.html"><i class="fas fa-file-contract"></i><span data-ar="الشروط والأحكام" data-en="Terms & Conditions">الشروط والأحكام</span></a>
-            <a href="contact.html"><i class="fas fa-headset"></i><span data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</span></a>
-            <a href="FAQ.html"><i class="fas fa-circle-question"></i><span data-ar="الأسئلة الشائعة" data-en="FAQ">الأسئلة الشائعة</span></a>
-            <a href="deliverymethod.html"><i class="fas fa-truck-fast"></i><span data-ar="طريقة التسليم" data-en="Delivery Method">طريقة التسليم</span></a>
-            <a href="refund.html"><i class="fas fa-rotate-left"></i><span data-ar="سياسة الإستبدال و الإسترجاع" data-en="Refund & Exchange Policy">سياسة الإستبدال و الإسترجاع</span></a>
-        </div>
-        <div class="copyright">&copy; 2026 Nova Store. All rights reserved.</div>
-    </div>
-
-    <button class="chat-fab" onclick="openChat()" aria-label="الدردشة معنا"><i class="fas fa-comment-dots"></i><span class="dot"></span></button>
-    <div class="chat-overlay" id="chatOverlay" onclick="if(event.target===this) closeChat()">
-        <div class="chat-modal">
-            <button class="chat-close" onclick="closeChat()" aria-label="إغلاق">&times;</button>
-            <iframe id="chatFrame" src="about:blank" title="Nova Store Chat"></iframe>
-        </div>
-    </div>
 </body>
 </html>
