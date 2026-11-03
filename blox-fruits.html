@@ -373,6 +373,58 @@
         .chat-modal iframe { width: 100%; height: 100%; border: none; }
         .chat-close { position: absolute; top: 8px; left: 8px; z-index: 2; width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer; background: rgba(10,25,40,.75); color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; transition: .2s; }
         .chat-close:hover { background: #ff4d6d; transform: rotate(90deg); }
+        /* ====== بانر التخفيضات ====== */
+        .promo-banner { max-width: 1200px; margin: 14px auto 0; padding: 14px 18px; border-radius: 16px; text-align: center;
+                        background: linear-gradient(135deg, rgba(255,77,109,.12), rgba(255,210,74,.14)); border: 1.5px dashed #ff4d6d; }
+        .promo-banner .promo-line { color: #17222e; font-size: 13.5px; font-weight: 800; line-height: 2; }
+        .promo-banner .promo-line:first-child { color: #e0244a; font-size: 16px; }
+        .promo-banner .promo-img { display: block; margin: 0 auto 10px; width: 100%; max-width: 560px; height: auto;
+                                    border-radius: 14px; box-shadow: 0 8px 24px rgba(224,36,74,.18); }
+        /* ====== المنتجات المثبتة (اقوى العروض) — ثيم أزرق ====== */
+        .pinned-section { max-width: 1200px; margin: 14px auto 0; padding: 0 18px; }
+        .pinned-title { color: #0090c8; font-weight: 800; font-size: 17px; margin-bottom: 10px; text-align: center;
+                        display: flex; align-items: center; justify-content: center; gap: 8px;
+                        text-shadow: 0 0 14px rgba(0,144,200,.35); }
+        .pinned-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .pinned-card { border: 2px solid #0090c8 !important; position: relative;
+                       background: linear-gradient(180deg, rgba(0,144,200,.10), #ffffff 60%) !important;
+                       box-shadow: 0 10px 30px rgba(0,144,200,.22) !important; }
+        .pinned-pin { position: absolute; top: 10px; right: 10px; z-index: 3; background: linear-gradient(135deg, #0090c8, #006e96);
+                      color: #fff; font-size: 10px; font-weight: 800; padding: 5px 10px; border-radius: 999px;
+                      box-shadow: 0 4px 12px rgba(0,144,200,.4); }
+        @media (max-width: 768px) { .pinned-title { font-size: 15px; } .pinned-grid { gap: 10px; } }
+        .old-price { text-decoration: line-through; opacity: .55; font-size: 12px; margin-inline-end: 7px; font-weight: 600; }
+        .sale-badge { background: #ff4d6d; color: #fff; font-size: 10px; padding: 2px 9px; border-radius: 99px; font-weight: 800; margin-inline-start: 7px; white-space: nowrap; }
+        /* ====== تصغير عناصر الهيدر على الجوال — تظهر بجانب بعضها لا فوق بعض ====== */
+        @media (max-width: 768px) {
+            .header { gap: 6px; padding: 8px 2.5%; }
+            .home-btn span { display: none; }
+            .home-btn { padding: 8px 10px; font-size: 11px; }
+            .logo-img { height: 28px; max-width: 24vw; }
+            .logo-mid img { height: 28px; max-width: 24vw; }
+            .logo-center img { height: 28px; max-width: 24vw; }
+            .pill { height: 28px; }
+            .pill select { font-size: 9.5px; padding: 0 6px; max-width: 38vw; }
+            .pill-select { height: 28px; font-size: 9.5px; padding: 4px 6px; max-width: 38vw; }
+            .nav-controls, .header-right, .header-left, .header-end { flex-wrap: nowrap; }
+            .cart-box { font-size: 12px; padding: 6px 8px; }
+            .cart-icon { font-size: 18px; }
+        }
+    </style>
+    <style>
+    /* NOVA MOBILE HEADER FIX - منع تراكب اللوجو مع اللغة والعملة في عرض الهاتف */
+    @media (max-width: 768px) {
+        .header { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important;
+                  align-items: center !important; justify-content: space-between !important;
+                  gap: 6px !important; padding: 7px 3% !important; }
+        .header > * { min-width: 0 !important; margin: 0 !important; }
+        .header img, .logo-img, .logo-mid img, .logo-center img { height: 26px !important; max-height: 26px !important;
+                  max-width: 30vw !important; width: auto !important; object-fit: contain !important; }
+        .header select, .pill select, .pill-select, .pill-select select { height: 28px !important; max-height: 28px !important;
+                  font-size: 10.5px !important; padding: 2px 5px !important; max-width: 44vw !important; }
+        .home-btn span { display: none !important; }
+        .home-btn { padding: 6px 9px !important; font-size: 11px !important; }
+    }
     </style>
 </head>
 <body>
@@ -432,9 +484,25 @@
     <div class="filter-container">
         <div class="filter-opt active" id="btn-normal" onclick="setFilter('normal', this)">فواكه عادية</div>
         <div class="filter-opt" id="btn-acc" onclick="setFilter('acc', this)">حسابات</div>
+        <div class="filter-opt" id="btn-skin" onclick="setFilter('skin', this)">ألوان الفواكه</div>
         <div class="filter-opt" id="btn-perm" onclick="setFilter('perm', this)">فواكه دائمة</div>
         <div class="filter-opt" id="btn-pass" onclick="setFilter('pass', this)">قيم باس</div>
         <div class="filter-opt" id="btn-srv" onclick="setFilter('srv', this)">الخدمات</div>
+    </div>
+
+    <div class="promo-banner" dir="rtl">
+        <img class="promo-img" src="https://i.ibb.co/v4c5NX54/file-0000000021bc81f4ba76f6fec5648abd.png" alt="عرض تخفيضات Nova Store" loading="lazy">
+        <div class="promo-line">عرض محدود في Nova Store!</div>
+        <div class="promo-line">🎉 خصومات تصل إلى 15% على جميع الفواكه العادية والحسابات والخدمات بمناسبة التحديث الجديد للماب!</div>
+        <div class="promo-line">🔥فاكهة الغاز الجديد بأقل سعر في السوق</div>
+        <div class="promo-line">⚡فرصتك المناسبة لتجميع العديد من فواكه الفينوم قبل التحديث</div>
+        <div class="promo-line">⏳ الكمية محدودة، والعرض لفترة محدودة فقط!</div>
+        <div class="promo-line">🚀 لا تفوّت الفرصة، اغتنم التخفيضات الآن قبل انتهاء العرض! 🛒</div>
+    </div>
+
+    <div class="pinned-section" dir="rtl">
+        <div class="pinned-title"><i class="fas fa-fire"></i> اقوى العروض</div>
+        <div class="pinned-grid" id="pinnedGrid"></div>
     </div>
 
     <div class="products-grid" id="productGrid"></div>
@@ -463,7 +531,7 @@
 
 
     <script>
-        const rates = { USD: 1, EUR: 0.93, SAR: 3.75, AED: 3.6725, QAR: 3.64, BHD: 0.376, OMR: 0.3845, KWD: 0.31, EGP: 54.80, LYD: 9.3, MAD: 10 };
+        const rates = { USD: 1, EUR: 0.93, SAR: 3.75, AED: 3.6725, QAR: 3.64, BHD: 0.376, OMR: 0.3845, KWD: 0.31, EGP: 58.00, LYD: 9.3, MAD: 10 };
         const symbols = { USD: "$", EUR: "€", SAR: "ر.س", AED: "د.إ", QAR: "ر.ق", BHD: "د.ب", OMR: "ر.ع", KWD: "د.ك", EGP: "ج.م", LYD: "د.ل", MAD: "د.م" };
         /* ====== التحكم بالتوفر (لكل منتج على حدة) ======
            لإعلان نفاد منتج من المخزون: أضف  stock: false  داخل بيانات المنتج.
@@ -472,53 +540,53 @@
 
         const products = [
             // --- الفواكه الدائمة (Perm) ---
-            { nameAr: "فاكهة الماجنيت بيرم (دائمة)", nameEn: "Magnet Fruit Perm", price: 24.00, img: "https://i.ibb.co/5g4hSMnL/Magnet-Fruit-1.webp", cat: "perm", badgeAr: "جديدة", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة التنين بيرم (دائمة)", nameEn: "Dragon Perm", price: 31.00, img: "https://i.ibb.co/0yN7KDQg/Dragon-East-Fruit-1.webp", cat: "perm" },
-            { nameAr: "فاكهة الكيتسوني بيرم (دائمة)", nameEn: "Kitsune Perm", price: 26.00, img: "https://i.ibb.co/CKVRc3vz/Kitsune-Fruit-1.webp", cat: "perm" },
-            { nameAr: "فاكهة الكنترول بيرم (دائمة)", nameEn: "Control Perm", price: 25.50, img: "https://i.ibb.co/H9DWS7y/Control-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الفهد بيرم (دائمة)", nameEn: "Tiger Perm", price: 19.80, img: "https://i.ibb.co/rKBhvT4y/Tiger-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة اليتي بيرم (دائمة)", nameEn: "Yeti Perm", price: 19.80, img: "https://i.ibb.co/vWmttyK/Yeti-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة السبيريت بيرم (دائمة)", nameEn: "Spirit Perm", price: 17.28, img: "https://i.ibb.co/Z6PG2rxn/Spirit-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الغاز بيرم (دائمة)", nameEn: "Gas Perm", price: 18.00, img: "https://i.ibb.co/sJ5KrvYW/Gas-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الفينوم بيرم (دائمة)", nameEn: "Venom Perm", price: 17.50, img: "https://i.ibb.co/fVpDsfbr/Venom-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الشادو بيرم (دائمة)", nameEn: "Shadow Perm", price: 16.57, img: "https://i.ibb.co/hRR5wh6s/Shadow-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الموتشي بيرم (دائمة)", nameEn: "Dough Perm", price: 17.50, img: "https://i.ibb.co/355Jbr6G/Dough-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة التي-ركس بيرم (دائمة)", nameEn: "T-Rex Perm", price: 17.16, img: "https://i.ibb.co/kV4BXnHg/T-Rex-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الماموث بيرم (دائمة)", nameEn: "Mammoth Perm", price: 17.16, img: "https://i.ibb.co/5XZsNjt2/Mammoth-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الجاذبية بيرم (دائمة)", nameEn: "Gravity Perm", price: 16.88, img: "https://i.ibb.co/ZRF2PXjq/Gravity-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة البليزرد بيرم (دائمة)", nameEn: "Blizzard Perm", price: 16.60, img: "https://i.ibb.co/tMd0RwDq/Blizzard-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة البين بيرم (دائمة)", nameEn: "Pain Perm", price: 14.32, img: "https://i.ibb.co/gbsYKM74/Pain-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة البرق بيرم (دائمة)", nameEn: "Lightning Perm", price: 16.00, img: "https://i.ibb.co/CKWSStW9/Lightning-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة البورتال بيرم (دائمة)", nameEn: "Portal Perm", price: 15.00, img: "https://i.ibb.co/p6VbyLYS/Portal-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة العنقاء بيرم (دائمة)", nameEn: "Phoenix Perm", price: 12.20, img: "https://i.ibb.co/PGjvjBmT/Phoenix-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة السبايدر بيرم (دائمة)", nameEn: "Spider Perm", price: 11.64, img: "https://i.ibb.co/Lhg3pPB6/Spider-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الساوند بيرم (دائمة)", nameEn: "Sound Perm", price: 11.08, img: "https://i.ibb.co/zTKVcrgW/Sound-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة البناء بيرم (دائمة)", nameEn: "Creation Perm", price: 10.80, img: "https://i.ibb.co/b5r2P1Nv/Creation-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الحب بيرم (دائمة)", nameEn: "Love Perm", price: 11.00, img: "https://i.ibb.co/dwJLc9Wt/Love-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة البوذا بيرم (دائمة)", nameEn: "Buddha Perm", price: 12.00, img: "https://i.ibb.co/6RJgz0MZ/Buddha-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الزلزال بيرم (دائمة)", nameEn: "Quake Perm", price: 10.40, img: "https://i.ibb.co/pvn6wNyw/Quake-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الماغما بيرم (دائمة)", nameEn: "Magma Perm", price: 10.00, img: "https://i.ibb.co/cXYRM8sP/Magma-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الغوست بيرم (دائمة)", nameEn: "Ghost Perm", price: 8.50, img: "https://i.ibb.co/Kc1R8Ks4/Ghost-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة المطاط بيرم (دائمة)", nameEn: "Rubber Perm", price: 8.32, img: "https://i.ibb.co/v6WRdSWt/Rubber-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الضوء بيرم (دائمة)", nameEn: "Light Perm", price: 9.00, img: "https://i.ibb.co/Mx88pMt7/Light-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الدايموند بيرم (دائمة)", nameEn: "Diamond Perm", price: 8.20, img: "https://i.ibb.co/SwZT5rcb/Diamond-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة النسر بيرم (دائمة)", nameEn: "Eagle Perm", price: 7.85, img: "https://i.ibb.co/xSKxM1b0/Eagle-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الدارك بيرم (دائمة)", nameEn: "Dark Perm", price: 7.50, img: "https://i.ibb.co/fYZfnPtS/Dark-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الساند بيرم (دائمة)", nameEn: "Sand Perm", price: 7.20, img: "https://i.ibb.co/pj4bYVt1/Sand-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الثلج بيرم (دائمة)", nameEn: "Ice Perm", price: 6.90, img: "https://i.ibb.co/84G6yF0z/Ice-Fruit.webp", cat: "perm" },
-            { nameAr: "فاكهة الفليم بيرم (دائمة)", nameEn: "Flame Perm", price: 5.50, img: "https://i.ibb.co/WbGTzqF/Flame-Fruit.webp", cat: "perm" },
+            { nameAr: "فاكهة الماجنيت بيرم (دائمة)", nameEn: "Magnet Fruit Perm", price: 24.00, img: "https://i.ibb.co/5g4hSMnL/Magnet-Fruit-1.webp", cat: "perm", badgeAr: "جديدة", badgeEn: "New", badgePos: "left", stock: false },
+            { nameAr: "فاكهة التنين بيرم (دائمة)", nameEn: "Dragon Perm", price: 31.00, img: "https://i.ibb.co/0yN7KDQg/Dragon-East-Fruit-1.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الكيتسوني بيرم (دائمة)", nameEn: "Kitsune Perm", price: 26.00, img: "https://i.ibb.co/CKVRc3vz/Kitsune-Fruit-1.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الكنترول بيرم (دائمة)", nameEn: "Control Perm", price: 25.50, img: "https://i.ibb.co/H9DWS7y/Control-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الفهد بيرم (دائمة)", nameEn: "Tiger Perm", price: 19.80, img: "https://i.ibb.co/rKBhvT4y/Tiger-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة اليتي بيرم (دائمة)", nameEn: "Yeti Perm", price: 19.80, img: "https://i.ibb.co/vWmttyK/Yeti-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة السبيريت بيرم (دائمة)", nameEn: "Spirit Perm", price: 17.28, img: "https://i.ibb.co/Z6PG2rxn/Spirit-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الغاز بيرم (دائمة)", nameEn: "Gas Perm", price: 18.00, img: "https://i.ibb.co/sJ5KrvYW/Gas-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الفينوم بيرم (دائمة)", nameEn: "Venom Perm", price: 17.50, img: "https://i.ibb.co/fVpDsfbr/Venom-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الشادو بيرم (دائمة)", nameEn: "Shadow Perm", price: 16.57, img: "https://i.ibb.co/hRR5wh6s/Shadow-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الموتشي بيرم (دائمة)", nameEn: "Dough Perm", price: 17.50, img: "https://i.ibb.co/355Jbr6G/Dough-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة التي-ركس بيرم (دائمة)", nameEn: "T-Rex Perm", price: 17.16, img: "https://i.ibb.co/kV4BXnHg/T-Rex-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الماموث بيرم (دائمة)", nameEn: "Mammoth Perm", price: 17.16, img: "https://i.ibb.co/5XZsNjt2/Mammoth-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الجاذبية بيرم (دائمة)", nameEn: "Gravity Perm", price: 16.88, img: "https://i.ibb.co/ZRF2PXjq/Gravity-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة البليزرد بيرم (دائمة)", nameEn: "Blizzard Perm", price: 16.60, img: "https://i.ibb.co/tMd0RwDq/Blizzard-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة البين بيرم (دائمة)", nameEn: "Pain Perm", price: 14.32, img: "https://i.ibb.co/gbsYKM74/Pain-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة البرق بيرم (دائمة)", nameEn: "Lightning Perm", price: 16.00, img: "https://i.ibb.co/CKWSStW9/Lightning-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة البورتال بيرم (دائمة)", nameEn: "Portal Perm", price: 15.00, img: "https://i.ibb.co/p6VbyLYS/Portal-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة العنقاء بيرم (دائمة)", nameEn: "Phoenix Perm", price: 12.20, img: "https://i.ibb.co/PGjvjBmT/Phoenix-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة السبايدر بيرم (دائمة)", nameEn: "Spider Perm", price: 11.64, img: "https://i.ibb.co/Lhg3pPB6/Spider-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الساوند بيرم (دائمة)", nameEn: "Sound Perm", price: 11.08, img: "https://i.ibb.co/zTKVcrgW/Sound-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة البناء بيرم (دائمة)", nameEn: "Creation Perm", price: 10.80, img: "https://i.ibb.co/b5r2P1Nv/Creation-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الحب بيرم (دائمة)", nameEn: "Love Perm", price: 11.00, img: "https://i.ibb.co/dwJLc9Wt/Love-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة البوذا بيرم (دائمة)", nameEn: "Buddha Perm", price: 12.00, img: "https://i.ibb.co/6RJgz0MZ/Buddha-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الزلزال بيرم (دائمة)", nameEn: "Quake Perm", price: 10.40, img: "https://i.ibb.co/pvn6wNyw/Quake-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الماغما بيرم (دائمة)", nameEn: "Magma Perm", price: 10.00, img: "https://i.ibb.co/cXYRM8sP/Magma-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الغوست بيرم (دائمة)", nameEn: "Ghost Perm", price: 8.50, img: "https://i.ibb.co/Kc1R8Ks4/Ghost-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة المطاط بيرم (دائمة)", nameEn: "Rubber Perm", price: 8.32, img: "https://i.ibb.co/v6WRdSWt/Rubber-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الضوء بيرم (دائمة)", nameEn: "Light Perm", price: 9.00, img: "https://i.ibb.co/Mx88pMt7/Light-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الدايموند بيرم (دائمة)", nameEn: "Diamond Perm", price: 8.20, img: "https://i.ibb.co/SwZT5rcb/Diamond-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة النسر بيرم (دائمة)", nameEn: "Eagle Perm", price: 7.85, img: "https://i.ibb.co/xSKxM1b0/Eagle-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الدارك بيرم (دائمة)", nameEn: "Dark Perm", price: 7.50, img: "https://i.ibb.co/fYZfnPtS/Dark-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الساند بيرم (دائمة)", nameEn: "Sand Perm", price: 7.20, img: "https://i.ibb.co/pj4bYVt1/Sand-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الثلج بيرم (دائمة)", nameEn: "Ice Perm", price: 6.90, img: "https://i.ibb.co/84G6yF0z/Ice-Fruit.webp", cat: "perm", stock: false },
+            { nameAr: "فاكهة الفليم بيرم (دائمة)", nameEn: "Flame Perm", price: 5.50, img: "https://i.ibb.co/WbGTzqF/Flame-Fruit.webp", cat: "perm", stock: false },
            
             // --- الفواكه العادية (Physical/Trade) ---
-            { nameAr: "فاكهة الماجنيت (عادية)", nameEn: "Magnet Physical", price: 10.00, img: "https://i.ibb.co/5g4hSMnL/Magnet-Fruit-1.webp", cat: "normal", badgeAr: "جديدة", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة التنين (عادية)", nameEn: "Dragon Physical", price: 18.50, img: "https://i.ibb.co/0yN7KDQg/Dragon-East-Fruit-1.webp", cat: "normal" },
-            { nameAr: "فاكهة الكيتسوني (عادية)", nameEn: "Kitsune Physical", price: 7.50, img: "https://i.ibb.co/CKVRc3vz/Kitsune-Fruit-1.webp", cat: "normal" },
-            { nameAr: "الكنترول (عادية)", nameEn: "Control Physical", price: 4.50, img: "https://i.ibb.co/H9DWS7y/Control-Fruit.webp", cat: "normal" },
+            { nameAr: "فاكهة الماجنيت (عادية)", nameEn: "Magnet Physical", price: 9.00, img: "https://i.ibb.co/5g4hSMnL/Magnet-Fruit-1.webp", cat: "normal", badgeAr: "جديدة", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة التنين (عادية)", nameEn: "Dragon Physical", price: 20.00, img: "https://i.ibb.co/0yN7KDQg/Dragon-East-Fruit-1.webp", cat: "normal" },
+            { nameAr: "فاكهة الكيتسوني (عادية)", nameEn: "Kitsune Physical", price: 8.00, img: "https://i.ibb.co/CKVRc3vz/Kitsune-Fruit-1.webp", cat: "normal" },
+            { nameAr: "الكنترول (عادية)", nameEn: "Control Physical", price: 4.30, img: "https://i.ibb.co/H9DWS7y/Control-Fruit.webp", cat: "normal" },
             { nameAr: "اليتي (عادية)", nameEn: "Yeti Physical", price: 3.50, img: "https://i.ibb.co/vWmttyK/Yeti-Fruit.webp", cat: "normal" },
             { nameAr: "التايغر (عادية)", nameEn: "Tiger Physical", price: 4.00, img: "https://i.ibb.co/rKBhvT4y/Tiger-Fruit.webp", cat: "normal" },
             { nameAr: "الأرواح (عادية)", nameEn: "Spirit Physical", price: 1.10, img: "https://i.ibb.co/Z6PG2rxn/Spirit-Fruit.webp", cat: "normal" },
             { nameAr: "الغاز (عادية)", nameEn: "Gas Physical", price: 2.80, img: "https://i.ibb.co/sJ5KrvYW/Gas-Fruit.webp", cat: "normal" },
-            { nameAr: "الفينوم (عادية)", nameEn: "Venom Physical", price: 2.00, img: "https://i.ibb.co/fVpDsfbr/Venom-Fruit.webp", cat: "normal" },
-            { nameAr: "الشادو (عادية)", nameEn: "Shadow Physical", price: 0.80, img: "https://i.ibb.co/hRR5wh6s/Shadow-Fruit.webp", cat: "normal" },
+            { nameAr: "الفينوم (عادية)", nameEn: "Venom Physical", price: 4.00, img: "https://i.ibb.co/fVpDsfbr/Venom-Fruit.webp", cat: "normal" },
+            { nameAr: "الشادو (عادية)", nameEn: "Shadow Physical", price: 1.50, img: "https://i.ibb.co/hRR5wh6s/Shadow-Fruit.webp", cat: "normal" },
             { nameAr: "الموتشي (عادية)", nameEn: "Dough Physical", price: 2.30, img: "https://i.ibb.co/355Jbr6G/Dough-Fruit.webp", cat: "normal" },
             { nameAr: "التي-ركس (عادية)", nameEn: "T-Rex Physical", price: 1.90, img: "https://i.ibb.co/kV4BXnHg/T-Rex-Fruit.webp", cat: "normal" },
             { nameAr: "الماموث (عادية)", nameEn: "Mammoth Physical", price: 1.15, img: "https://i.ibb.co/5XZsNjt2/Mammoth-Fruit.webp", cat: "normal" },
@@ -529,18 +597,19 @@
             { nameAr: "البوذا (عادية)", nameEn: "Buddha Physical", price: 1.40, img: "https://i.ibb.co/6RJgz0MZ/Buddha-Fruit.webp", cat: "normal" },
 
             // --- فواكه عادية جديدة بأسعار منخفضة جداً (الصور مأخوذة من منتجات الـ Perm المقابلة) ---
-            { nameAr: "فاكهة البليزرد (عادية)", nameEn: "Blizzard Physical (low)", price: 0.50, img: "https://i.ibb.co/tMd0RwDq/Blizzard-Fruit.webp", cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة العنقاء (عادية)", nameEn: "Phoenix Physical (low)", price: 0.40, img: "https://i.ibb.co/PGjvjBmT/Phoenix-Fruit.webp",   cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة الصنع (عادية)", nameEn: "Creation Physical (low)", price: 0.35, img: "https://i.ibb.co/b5r2P1Nv/Creation-Fruit.webp",  cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة الساوند (عادية)", nameEn: "Sound Physical (low)", price: 0.35, img: "https://i.ibb.co/zTKVcrgW/Sound-Fruit.webp",       cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة السبايدر (عادية)", nameEn: "Spider Physical (low)", price: 0.25, img: "https://i.ibb.co/Lhg3pPB6/Spider-Fruit.webp",    cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة الحب (عادية)", nameEn: "Love Physical (low)", price: 0.23, img: "https://i.ibb.co/dwJLc9Wt/Love-Fruit.webp",           cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة الزلزال (عادية)", nameEn: "Quake Physical (low)", price: 0.20, img: "https://i.ibb.co/pvn6wNyw/Quake-Fruit.webp",         cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة الماغما (عادية)", nameEn: "Magma Physical (low)", price: 0.20, img: "https://i.ibb.co/cXYRM8sP/Magma-Fruit.webp",         cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة الضوء (عادية)", nameEn: "Light Physical (low)", price: 0.20, img: "https://i.ibb.co/Mx88pMt7/Light-Fruit.webp",         cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
-            { nameAr: "فاكهة الثلج (عادية)", nameEn: "Ice Physical (low)", price: 0.10, img: "https://i.ibb.co/84G6yF0z/Ice-Fruit.webp",               cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة البليزرد (عادية)", nameEn: "Blizzard Physical (low)", price: 0.60, img: "https://i.ibb.co/tMd0RwDq/Blizzard-Fruit.webp", cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة العنقاء (عادية)", nameEn: "Phoenix Physical (low)", price: 0.50, img: "https://i.ibb.co/PGjvjBmT/Phoenix-Fruit.webp",   cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الصنع (عادية)", nameEn: "Creation Physical (low)", price: 0.45, img: "https://i.ibb.co/b5r2P1Nv/Creation-Fruit.webp",  cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الساوند (عادية)", nameEn: "Sound Physical (low)", price: 0.45, img: "https://i.ibb.co/zTKVcrgW/Sound-Fruit.webp",       cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة السبايدر (عادية)", nameEn: "Spider Physical (low)", price: 0.45, img: "https://i.ibb.co/Lhg3pPB6/Spider-Fruit.webp",    cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الحب (عادية)", nameEn: "Love Physical (low)", price: 0.43, img: "https://i.ibb.co/dwJLc9Wt/Love-Fruit.webp",           cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الزلزال (عادية)", nameEn: "Quake Physical (low)", price: 0.40, img: "https://i.ibb.co/pvn6wNyw/Quake-Fruit.webp",         cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الماغما (عادية)", nameEn: "Magma Physical (low)", price: 0.40, img: "https://i.ibb.co/cXYRM8sP/Magma-Fruit.webp",         cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الضوء (عادية)", nameEn: "Light Physical (low)", price: 0.30, img: "https://i.ibb.co/Mx88pMt7/Light-Fruit.webp",         cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
+            { nameAr: "فاكهة الثلج (عادية)", nameEn: "Ice Physical (low)", price: 0.20, img: "https://i.ibb.co/84G6yF0z/Ice-Fruit.webp",               cat: "normal", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
 
             // --- ألوان الفواكه (Fruit Skins) — تصنيف جديد ---
+            { nameAr: "فاكهة الغاز النارية", nameEn: "hellfire gas", price: 6.50, img: "https://i.ibb.co/pBMdYJBQ/file-00000000470882308c3684264ad00817.png", cat: "skin", badgeAr: "جديد", badgeEn: "New", badgePos: "left" },
             { nameAr: "سكن الماجنيت", nameEn: "Arcsteel Magnet Skin", price: 25.00, img: "https://i.ibb.co/dwn8xXw3/xrysuoaijrnh1.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "جالاكسي كيتسوني", nameEn: "Galaxy Empyrean Kitsune", price: 55.00, img: "https://i.ibb.co/Q3W86FZX/latest-cb-20251226164613.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
             { nameAr: "كيتسوني حمراء", nameEn: "Crimson Kitsune", price: 43.00, img: "https://i.ibb.co/Rpw7cHDg/latest-cb-20251225145618.webp", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
@@ -566,22 +635,22 @@
             { nameAr: "بين حمراء", nameEn: "Torment Pain", price: 4.50, img: "https://i.ibb.co/SwBVF6HC/images-7.jpg", cat: "skin", badgeAr: "الكمية محدودة", badgeEn: "Limited Quantity" },
 
             // --- قيم باس (Game Passes) ---
-            { nameAr: "دبل تخزين الفواكه", nameEn: "Double Fruit Storage", price: 4.00, img: "https://i.ibb.co/pv1bCNdF/Badge-Fruit-Storage.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
-            { nameAr: "دبل دروبات الزعماء", nameEn: "Double Boss Drops", price: 3.60, img: "https://i.ibb.co/bRjdhP60/Badge-Boss-Drops.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
-            { nameAr: "قوارب سريعة", nameEn: "Fast Boats", price: 3.60, img: "https://i.ibb.co/chV3d6Xx/Badge-Boats.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
-            { nameAr: "دبل ماستري", nameEn: "Double Mastery", price: 4.00, img: "https://i.ibb.co/pvHQcPJF/Badge-Masteryx2-1.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
-            { nameAr: "دبل فلوس", nameEn: "Double Money", price: 4.00, img: "https://i.ibb.co/DgPZYrgF/Badge-Moneyx2.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
-            { nameAr: "دارك بليد", nameEn: "Dark Blade", price: 9.00, img: "https://i.ibb.co/CpKP4544/Badge-Dark-Blade.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
-            { nameAr: "فاكهة نوتيفاير", nameEn: "Fruit Notifier", price: 18.50, img: "https://i.ibb.co/b56BCRmM/Badge-Fruit-Notifier.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "دبل تخزين الفواكه", nameEn: "Double Fruit Storage", price: 4.50, img: "https://i.ibb.co/pv1bCNdF/Badge-Fruit-Storage.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "دبل دروبات الزعماء", nameEn: "Double Boss Drops", price: 4.00, img: "https://i.ibb.co/bRjdhP60/Badge-Boss-Drops.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "قوارب سريعة", nameEn: "Fast Boats", price: 4.00, img: "https://i.ibb.co/chV3d6Xx/Badge-Boats.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "دبل ماستري", nameEn: "Double Mastery", price: 4.50, img: "https://i.ibb.co/pvHQcPJF/Badge-Masteryx2-1.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "دبل فلوس", nameEn: "Double Money", price: 4.50, img: "https://i.ibb.co/DgPZYrgF/Badge-Moneyx2.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "دارك بليد", nameEn: "Dark Blade", price: 11.00, img: "https://i.ibb.co/CpKP4544/Badge-Dark-Blade.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
+            { nameAr: "فاكهة نوتيفاير", nameEn: "Fruit Notifier", price: 19.50, img: "https://i.ibb.co/b56BCRmM/Badge-Fruit-Notifier.webp", cat: "pass", badgeAr: "Blox Fruits Values", badgeEn: "Blox Fruits Values" },
            
             // --- الحسابات (Accounts) — القائمة الجديدة كاملة ---
             { nameAr: "حساب لفل 700+", nameEn: "Level 700+ Account", price: 1.5, img: "https://i.ibb.co/TqwqXbnM/20260914-075827.jpg", cat: "acc",
               specsAr: ["لفل الحساب 700 او اكثر ✅", "عالم ثاني مفتوح✅", "اساليب عشوائية✅", "اغراض/سيوف عشوائية من العالم الأول✅", "فلوس عشوائية من ألف إلي 5 مليون✅", "فواكه عشوائية✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
               specsEn: ["Account level 700 or more ✅", "Second sea unlocked✅", "Random fighting styles✅", "Random items/swords from the First Sea✅", "Random money from 1K to 5M✅", "Random fruits✅", "Safe account, not linked to Gmail, direct access✅"] },
-            { nameAr: "حساب لفل +1000", nameEn: "Level 1000+ Account", price: 2, img: "https://i.ibb.co/KjBdvdmG/20260914-080046.jpg", cat: "acc",
+            { nameAr: "حساب لفل +1000", nameEn: "Level 1000+ Account", price: 2.5, img: "https://i.ibb.co/KjBdvdmG/20260914-080046.jpg", cat: "acc",
               specsAr: ["لفل الحساب 1000 او اكثر✅", "اساليب عشوائية✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 10 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
               specsEn: ["Account level 1000 or more✅", "Random fighting styles✅", "Random legendary/rare items and swords✅", "Random money from 100K to 10M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
-            { nameAr: "حساب لفل +1500", nameEn: "Level 1500+ Account", price: 3, img: "https://i.ibb.co/PvWQnwW9/20260914-080624.jpg", cat: "acc",
+            { nameAr: "حساب لفل +1500", nameEn: "Level 1500+ Account", price: 3.5, img: "https://i.ibb.co/PvWQnwW9/20260914-080624.jpg", cat: "acc",
               specsAr: ["لفل الحساب 1500 او اكثر✅", "العالم الثالث مفتوح✅", "اساليب عشوائية✅", "اغراض/سيوف عشوائية من ليجندري و رير و غيرها✅", "فلوس عشوائية من 100 ألف الي 10 مليون✅", "فواكه عشوائية فيه فاكهة ليجندري على الأقل✅", "حساب آمن و غير مربوط بجيميل و تقدر تدخل له مباشرة✅"],
               specsEn: ["Account level 1500 or more✅", "Third sea unlocked✅", "Random fighting styles✅", "Random legendary/rare items and swords✅", "Random money from 100K to 10M✅", "Random fruits with at least one legendary✅", "Safe account, not linked to Gmail, direct access✅"] },
             { nameAr: "حساب لفل 2800 + اسلوب الهيومن", nameEn: "Level 2800 + Godhuman Style", price: 7, img: "https://i.ibb.co/Q3jnmvKB/20260914-081243.jpg", cat: "acc",
@@ -635,6 +704,19 @@
               descAr: "اختر أي غرض تريد نرفعلك الماستري حقه (سواء أسلوب أو فاكهة أو قن أو سيف) وبنرفعك مستواه لين 350 ماستري! ولو طلبت الخدمة مرتين بنرفعلك ياه 600 (ماكس)! خلال أقل من يوم واحد.",
               descEn: "Pick any item you want us to boost — fighting style, fruit, gun, or sword — and we'll raise its mastery to 350! Order the service twice and we'll go up to 600 (max)! Delivered in under one day." }
         ];
+
+        /* ====== الخصومات: 15% فواكه عادية، 10% حسابات وخدمات ======
+           لتعديل النسب: غيّر القيم أدناه (مثال: normal: 0.20 = خصم 20٪).
+           لإلغاء الخصم كاملاً: اجعل القيم 0. */
+        const DISCOUNTS = { normal: 0.15, acc: 0.10, srv: 0.10 };
+        products.forEach(function (p) {
+            const d = DISCOUNTS[p.cat];
+            if (d && !p.isNote) {
+                p.origPrice = p.price;
+                p.price = Math.round(p.price * (1 - d) * 100) / 100;
+                p.discount = Math.round(d * 100);
+            }
+        });
         /* ============================================================
            ⚙️ إعدادات المخزون — عدّلها بنفسك بسهولة
            اكتب اسم المنتج (بالعربية كما هو بالضبط في القائمة أعلاه)
@@ -645,7 +727,7 @@
         const OUT_OF_STOCK = [
             // ضع أسماء المنتجات غير المتوفرة هنا
         ];
-        products.forEach(function (p) { p.inStock = !OUT_OF_STOCK.includes(p.nameAr); });
+        products.forEach(function (p) { p.inStock = (p.stock !== false) && !OUT_OF_STOCK.includes(p.nameAr); });
 
 
         const CART_PAGE_LOCAL = 'Shopbasket.html';
@@ -675,7 +757,7 @@
             ar: {
                 heroTitle: 'Nova Store',
                 heroText: 'مرحبًا بك في Nova Store — وجهتك لشراء منتجات Blox Fruits بأسعار تنافسية، وتسليم سريع، وخدمة موثوقة.',
-                filters: ['فواكه عادية', 'حسابات', 'فواكه دائمة', 'قيم باس', 'الخدمات', 'ألوان الفواكه'],
+                filters: ['فواكه عادية', 'حسابات', 'ألوان الفواكه', 'فواكه دائمة', 'قيم باس', 'الخدمات'],
                 search: 'ابحث عن منتج…',
                 add: 'إضافة للسلة', details: 'عرض التفاصيل', added: 'تمت الإضافة إلى السلة', available: 'متاح حالياً',
                 description: 'الوصف', delivery: 'طريقة الدفع والاستلام',
@@ -692,7 +774,7 @@
             en: {
                 heroTitle: 'Nova Store',
                 heroText: 'Welcome to Nova Store — your destination for Blox Fruits products at competitive prices, fast delivery, and reliable service.',
-                filters: ['Normal Fruits', 'Accounts', 'Perm Fruits', 'Game Pass', 'Services', 'Fruit Skins'],
+                filters: ['Normal Fruits', 'Accounts', 'Fruit Skins', 'Perm Fruits', 'Game Pass', 'Services'],
                 search: 'Search for a product…',
                 add: 'Add to Cart', details: 'View Details', added: 'Added to cart', available: 'Available now',
                 description: 'Description', delivery: 'Payment & Delivery',
@@ -795,12 +877,13 @@
             document.getElementById('heroText').textContent = heroText;
             document.getElementById('btn-normal').textContent = texts[lang].filters[0];
             document.getElementById('btn-acc').textContent = texts[lang].filters[1];
-            document.getElementById('btn-perm').textContent = texts[lang].filters[2];
-            document.getElementById('btn-pass').textContent = texts[lang].filters[3];
-            document.getElementById('btn-srv').textContent = texts[lang].filters[4];
+            document.getElementById('btn-skin').textContent = texts[lang].filters[2];
+            document.getElementById('btn-perm').textContent = texts[lang].filters[3];
+            document.getElementById('btn-pass').textContent = texts[lang].filters[4];
+            document.getElementById('btn-srv').textContent = texts[lang].filters[5];
             document.getElementById('searchInput').placeholder = texts[lang].search;
             applyTranslations(lang);
-            renderProducts();
+            renderProducts(); renderPinned();
         }
 
         // === البحث والعرض ===
@@ -838,14 +921,43 @@
                     <div class="product-card">
                         <div class="thumb-wrap">
                             ${badge ? `<div class="image-badge${p.badgePos === 'left' ? ' left' : ''}">${badge}</div>` : ''}
-                            ${p.stock === false ? `<div class="oos-badge">نفذت من المخزون</div>` : ''}
+                            ${!p.inStock ? `<div class="oos-badge">نفذت من المخزون</div>` : ''}
                             <img src="${p.img}" alt="${lang === 'ar' ? p.nameAr : p.nameEn}">
                         </div>
                         ${tag ? `<div class="mini-tag"><i class="fas fa-bolt"></i>${tag}</div>` : ''}
                         <div class="card-title">${lang === 'ar' ? p.nameAr : p.nameEn}</div>
-                        <div class="price-line">${formatPrice(p.price)}</div>
+                        <div class="price-line">${p.discount ? `<span class="old-price">${formatPrice(p.origPrice)}</span>` : ''}${formatPrice(p.price)}${p.discount ? ` <span class="sale-badge">تخفيض ${p.discount}%</span>` : ''}</div>
                         <button class="btn btn-ghost" onclick="openDetails(${originalIndex})">${tx.details}</button>
-                        <button class="btn btn-primary"${p.stock === false ? ' disabled style="opacity:.5;cursor:not-allowed"' : ''} onclick="addProductToCart(${originalIndex})">${tx.add}</button>
+                        <button class="btn btn-primary"${!p.inStock ? ' disabled style="opacity:.5;cursor:not-allowed"' : ''} onclick="addProductToCart(${originalIndex})">${tx.add}</button>
+                    </div>`;
+            });
+        }
+
+        // === المنتجات المثبتة (اقوى العروض) — تبقى ظاهرة دائماً مهما تغير الفلتر أو البحث ===
+        const PINNED_PRODUCTS = ['الفينوم (عادية)', 'فاكهة الغاز النارية'];
+        function renderPinned() {
+            const wrap = document.getElementById('pinnedGrid');
+            if (!wrap) return;
+            const lang = currentLang();
+            const tx = t();
+            wrap.innerHTML = '';
+            PINNED_PRODUCTS.forEach(function (nm) {
+                const idx = products.findIndex(p => p.nameAr === nm);
+                if (idx < 0) return;
+                const p = products[idx];
+                const badge = lang === 'ar' ? p.badgeAr : p.badgeEn;
+                wrap.innerHTML += `
+                    <div class="product-card pinned-card">
+                        <div class="pinned-pin"><i class="fas fa-thumbtack"></i> عرض مثبت</div>
+                        <div class="thumb-wrap">
+                            ${badge ? `<div class="image-badge${p.badgePos === 'left' ? ' left' : ''}">${badge}</div>` : ''}
+                            ${!p.inStock ? `<div class="oos-badge">نفذت من المخزون</div>` : ''}
+                            <img src="${p.img}" alt="${lang === 'ar' ? p.nameAr : p.nameEn}" loading="lazy">
+                        </div>
+                        <div class="card-title">${lang === 'ar' ? p.nameAr : p.nameEn}</div>
+                        <div class="price-line">${p.discount ? `<span class="old-price">${formatPrice(p.origPrice)}</span>` : ''}${formatPrice(p.price)}${p.discount ? ` <span class="sale-badge">تخفيض ${p.discount}%</span>` : ''}</div>
+                        <button class="btn btn-ghost" onclick="openDetails(${idx})">${tx.details}</button>
+                        <button class="btn btn-primary"${!p.inStock ? ' disabled style="opacity:.5;cursor:not-allowed"' : ''} onclick="addProductToCart(${idx})">${tx.add}</button>
                     </div>`;
             });
         }
@@ -1028,7 +1140,7 @@ Note: The in-game delivery method may vary depending on the available method for
             currentFilter = cat;
             document.querySelectorAll('.filter-opt').forEach(opt => opt.classList.remove('active'));
             el.classList.add('active');
-            renderProducts();
+            renderProducts(); renderPinned();
         }
         function handleSearch() {
             searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -1037,11 +1149,11 @@ Note: The in-game delivery method may vary depending on the available method for
                 document.querySelectorAll('.filter-opt').forEach(opt => opt.classList.remove('active'));
             } else {
                 // أعد تنشيط الفلتر السابق
-                const map = { perm:'btn-perm', normal:'btn-normal', pass:'btn-pass', acc:'btn-acc', srv:'btn-srv' };
+                const map = { perm:'btn-perm', normal:'btn-normal', skin:'btn-skin', pass:'btn-pass', acc:'btn-acc', srv:'btn-srv' };
                 const active = document.getElementById(map[currentFilter]);
                 if (active) active.classList.add('active');
             }
-            renderProducts();
+            renderProducts(); renderPinned();
         }
         function addToCart(item) {
             if (item && item.inStock === false) {
@@ -1166,5 +1278,47 @@ Note: The in-game delivery method may vary depending on the available method for
             <iframe id="chatFrame" src="about:blank" title="Nova Store Chat"></iframe>
         </div>
     </div>
+<script>
+    /* ====== دائرة الدردشة: تفتح contact.html وسط الشاشة (تعمل على كل الصفحات) ====== */
+    function openChat() {
+        var o = document.getElementById('chatOverlay'), f = document.getElementById('chatFrame');
+        if (f && f.getAttribute('src') === 'about:blank') f.setAttribute('src', 'contact.html');
+        if (o) { o.classList.add('show'); document.body.style.overflow = 'hidden'; }
+    }
+    function closeChat() {
+        var o = document.getElementById('chatOverlay');
+        if (o) o.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeChat(); });
+</script>
+<script>
+/* NOVA CHAT BOOT - حماية إضافية: يضمن أن زر الدردشة يفتح صفحة contact.html دائماً */
+(function () {
+    function boot() {
+        try {
+            var ov = document.getElementById('chatOverlay');
+            if (!ov) return;
+            if (typeof window.openChat !== 'function') {
+                window.openChat = function () {
+                    var f = document.getElementById('chatFrame');
+                    if (f && f.getAttribute('src') === 'about:blank') f.setAttribute('src', 'contact.html');
+                    ov.classList.add('show'); document.body.style.overflow = 'hidden';
+                };
+            }
+            if (typeof window.closeChat !== 'function') {
+                window.closeChat = function () { ov.classList.remove('show'); document.body.style.overflow = ''; };
+            }
+            var fab = document.querySelector('.chat-fab');
+            if (fab && fab.getAttribute('data-nova-wired') !== '1') {
+                fab.setAttribute('data-nova-wired', '1');
+                fab.addEventListener('click', function () { try { window.openChat(); } catch (e) {} });
+            }
+        } catch (e) {}
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
+})();
+</script>
 </body>
 </html>

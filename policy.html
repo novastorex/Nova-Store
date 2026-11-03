@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlTag">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,9 +26,52 @@
         a { color:var(--neon-blue); text-decoration:none; }
         a:hover { text-decoration:underline; }
         hr { border:none; border-top:1px solid var(--border); margin:26px 0; }
-        .footer { background:linear-gradient(180deg,#0d3a54,#0a2c40); border-top:3px solid var(--neon-blue); padding:22px 5%; text-align:center; margin-top:30px; }
+            .footer-links { display:flex; justify-content:center; gap:14px; margin-bottom:14px; flex-wrap:wrap; }
+        .footer-links a { color:#fff; text-decoration:none; font-size:13px; font-weight:bold; display:flex; align-items:center; gap:7px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16); padding:9px 15px; border-radius:12px; transition:.3s; }
+        .footer-links a i { color:#ffd24a; }
+        .footer-links a:hover { color:#ffd24a; border-color:#ffd24a; transform:translateY(-3px); }
+    .footer { background:linear-gradient(180deg,#0d3a54,#0a2c40); border-top:3px solid var(--neon-blue); padding:22px 5%; text-align:center; margin-top:30px; }
         .footer a { color:#ffd24a; }
         .footer p { color:#d5e6f2; margin:4px 0; }
+        /* ====== نافذة الدردشة (تفتح contact.html وسط الشاشة) ====== */
+        .chat-overlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 5200; background: rgba(10,25,40,.55); backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; padding: 16px; }
+        .chat-overlay.show { display: flex; }
+        .chat-modal { width: min(420px, 94vw); height: min(640px, 84vh); background: #fff; border-radius: 18px; overflow: hidden; position: relative; box-shadow: 0 30px 70px rgba(10,25,40,.4); border: 2px solid #0090c8; }
+        .chat-modal iframe { width: 100%; height: 100%; border: none; }
+        .chat-close { position: absolute; top: 8px; left: 8px; z-index: 2; width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer; background: rgba(10,25,40,.75); color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; transition: .2s; }
+        .chat-close:hover { background: #ff4d6d; transform: rotate(90deg); }
+        .chat-fab { position: fixed; bottom: 22px; right: 22px; z-index: 5300; width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer; background: linear-gradient(135deg, #0090c8, #006e96); color: #fff; font-size: 22px; box-shadow: 0 8px 22px rgba(0,144,200,.4); display: flex; align-items: center; justify-content: center; transition: transform .25s; }
+        .chat-fab:hover { transform: scale(1.12) rotate(6deg); }
+            /* ====== تصغير عناصر الهيدر على الجوال — تظهر بجانب بعضها لا فوق بعض ====== */
+        @media (max-width: 768px) {
+            .header { gap: 6px; padding: 8px 2.5%; }
+            .home-btn span { display: none; }
+            .home-btn { padding: 8px 10px; font-size: 11px; }
+            .logo-img { height: 28px; max-width: 24vw; }
+            .logo-mid img { height: 28px; max-width: 24vw; }
+            .logo-center img { height: 28px; max-width: 24vw; }
+            .pill { height: 28px; }
+            .pill select { font-size: 9.5px; padding: 0 6px; max-width: 38vw; }
+            .pill-select { height: 28px; font-size: 9.5px; padding: 4px 6px; max-width: 38vw; }
+            .nav-controls, .header-right, .header-left, .header-end { flex-wrap: nowrap; }
+            .cart-box { font-size: 12px; padding: 6px 8px; }
+            .cart-icon { font-size: 18px; }
+        }
+    </style>
+    <style>
+    /* NOVA MOBILE HEADER FIX - منع تراكب اللوجو مع اللغة والعملة في عرض الهاتف */
+    @media (max-width: 768px) {
+        .header { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important;
+                  align-items: center !important; justify-content: space-between !important;
+                  gap: 6px !important; padding: 7px 3% !important; }
+        .header > * { min-width: 0 !important; margin: 0 !important; }
+        .header img, .logo-img, .logo-mid img, .logo-center img { height: 26px !important; max-height: 26px !important;
+                  max-width: 30vw !important; width: auto !important; object-fit: contain !important; }
+        .header select, .pill select, .pill-select, .pill-select select { height: 28px !important; max-height: 28px !important;
+                  font-size: 10.5px !important; padding: 2px 5px !important; max-width: 44vw !important; }
+        .home-btn span { display: none !important; }
+        .home-btn { padding: 6px 9px !important; font-size: 11px !important; }
+    }
     </style>
 </head>
 <body>
@@ -101,8 +144,79 @@
 <p>باستخدام المتجر وإتمام عمليات الشراء، يقر العميل باطلاعه على هذه الشروط والأحكام، مع احتفاظه بجميع الحقوق التي يقررها القانون الواجب التطبيق.</p>
     </div>
     <div class="footer">
+        <div class="footer-links">
+            <a href="index.html"><i class="fas fa-house"></i><span data-ar="الرئيسية" data-en="Home">الرئيسية</span></a>
+            <a href="policy.html"><i class="fas fa-file-contract"></i><span data-ar="الشروط والأحكام" data-en="Terms & Conditions">الشروط والأحكام</span></a>
+            <a href="contact.html"><i class="fas fa-headset"></i><span data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</span></a>
+            <a href="FAQ.html"><i class="fas fa-circle-question"></i><span data-ar="الأسئلة الشائعة" data-en="FAQ">الأسئلة الشائعة</span></a>
+            <a href="deliverymethod.html"><i class="fas fa-truck-fast"></i><span data-ar="طريقة التسليم" data-en="Delivery Method">طريقة التسليم</span></a>
+            <a href="refund.html"><i class="fas fa-rotate-left"></i><span data-ar="سياسة الإستبدال و الإسترجاع" data-en="Refund & Exchange Policy">سياسة الإستبدال و الإسترجاع</span></a>
+        </div>
+
         <p><strong>Nova Store — متجر روبلوكس الأكثر أمانًا وسرعة 🎮</strong></p>
         <p>&copy; 2026 Nova Store. All rights reserved.</p>
     </div>
+
+    <button class="chat-fab" onclick="openChat()" aria-label="الدردشة معنا"><i class="fas fa-comment-dots"></i><span class="dot" style="position:absolute;top:4px;left:4px;width:12px;height:12px;background:#4ade80;border-radius:50%;border:2px solid #fff;"></span></button>
+    <div class="chat-overlay" id="chatOverlay" onclick="if(event.target===this) closeChat()">
+        <div class="chat-modal">
+            <button class="chat-close" onclick="closeChat()" aria-label="إغلاق">&times;</button>
+            <iframe id="chatFrame" src="about:blank" title="Nova Store Chat"></iframe>
+        </div>
+    </div>
+<script>
+    /* ====== دائرة الدردشة: تفتح contact.html وسط الشاشة (تعمل على كل الصفحات) ====== */
+    function openChat() {
+        var o = document.getElementById('chatOverlay'), f = document.getElementById('chatFrame');
+        if (f && f.getAttribute('src') === 'about:blank') f.setAttribute('src', 'contact.html');
+        if (o) { o.classList.add('show'); document.body.style.overflow = 'hidden'; }
+    }
+    function closeChat() {
+        var o = document.getElementById('chatOverlay');
+        if (o) o.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeChat(); });
+</script>
+<script>
+    function applyTranslations(lang) {
+        document.querySelectorAll('[data-ar]').forEach(function (el) { el.textContent = el.getAttribute('data-' + lang); });
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        var lang = localStorage.getItem('selectedLang') || 'ar';
+        if (lang !== 'ar' && lang !== 'en') lang = 'ar';
+        var h = document.getElementById('mainHtml');
+        h.dir = lang === 'en' ? 'ltr' : 'rtl'; h.lang = lang;
+        applyTranslations(lang);
+    });
+</script>
+<script>
+/* NOVA CHAT BOOT - حماية إضافية: يضمن أن زر الدردشة يفتح صفحة contact.html دائماً */
+(function () {
+    function boot() {
+        try {
+            var ov = document.getElementById('chatOverlay');
+            if (!ov) return;
+            if (typeof window.openChat !== 'function') {
+                window.openChat = function () {
+                    var f = document.getElementById('chatFrame');
+                    if (f && f.getAttribute('src') === 'about:blank') f.setAttribute('src', 'contact.html');
+                    ov.classList.add('show'); document.body.style.overflow = 'hidden';
+                };
+            }
+            if (typeof window.closeChat !== 'function') {
+                window.closeChat = function () { ov.classList.remove('show'); document.body.style.overflow = ''; };
+            }
+            var fab = document.querySelector('.chat-fab');
+            if (fab && fab.getAttribute('data-nova-wired') !== '1') {
+                fab.setAttribute('data-nova-wired', '1');
+                fab.addEventListener('click', function () { try { window.openChat(); } catch (e) {} });
+            }
+        } catch (e) {}
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
+})();
+</script>
 </body>
 </html>

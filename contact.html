@@ -41,6 +41,15 @@
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
+    <style>
+    /* NOVA MOBILE HEADER FIX */
+    @media (max-width: 768px) {
+        .header { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important;
+                  align-items: center !important; justify-content: space-between !important; gap: 6px !important; padding: 7px 3% !important; }
+        .header img { height: 26px !important; max-height: 26px !important; max-width: 30vw !important; width: auto !important; }
+        .header select, .pill-select { height: 28px !important; font-size: 10.5px !important; max-width: 44vw !important; }
+    }
+    </style>
 </head>
 <body>
 
